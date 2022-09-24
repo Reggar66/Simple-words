@@ -1,3 +1,5 @@
+import com.example.Dependencies
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -40,7 +42,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.1.1"
+        kotlinCompilerExtensionVersion = Dependencies.Compose.compilerVersion
     }
     packagingOptions {
         resources {
@@ -51,18 +53,19 @@ android {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.7.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
-    implementation("androidx.activity:activity-compose:1.3.1")
-    implementation("androidx.compose.ui:ui:1.1.1")
-    implementation("androidx.compose.ui:ui-tooling-preview:1.1.1")
-    implementation("androidx.compose.material:material:1.1.1")
+    implementation(Dependencies.core)
+    implementation(Dependencies.lifecycleRuntime)
+    implementation(Dependencies.activityCompose)
 
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+    implementation(Dependencies.Compose.ui)
+    implementation(Dependencies.Compose.uiToolingPreview)
+    implementation(Dependencies.Compose.material)
 
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.1.1")
-    debugImplementation("androidx.compose.ui:ui-tooling:1.1.1")
-    debugImplementation("androidx.compose.ui:ui-test-manifest:1.1.1")
+    testImplementation(Dependencies.jUnit)
+    androidTestImplementation(Dependencies.androidx_junit)
+    androidTestImplementation(Dependencies.androidx_espresso)
+
+    androidTestImplementation(Dependencies.Compose.Test.uiTestJunit)
+    debugImplementation(Dependencies.Compose.Debug.uiTooling)
+    debugImplementation(Dependencies.Compose.Debug.uiTestManifest)
 }
