@@ -61,6 +61,8 @@ dependencies {
     implementation(Dependencies.Compose.uiToolingPreview)
     implementation(Dependencies.Compose.material)
 
+    implementation(Dependencies.navigation)
+
     testImplementation(Dependencies.jUnit)
     androidTestImplementation(Dependencies.androidx_junit)
     androidTestImplementation(Dependencies.androidx_espresso)

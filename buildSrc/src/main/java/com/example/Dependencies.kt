@@ -10,6 +10,8 @@ object Dependencies {
     const val lifecycleRuntime = "androidx.lifecycle:lifecycle-runtime-ktx:2.5.1"
     const val activityCompose = "androidx.activity:activity-compose:1.5.1"
 
+    const val navigation = "androidx.navigation:navigation-compose:2.5.2"
+
     object Compose {
         const val compilerVersion = "1.3.1"
         private const val version = "1.2.1"
