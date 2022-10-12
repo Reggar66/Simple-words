@@ -5,5 +5,13 @@ data class QuizItem(val id: Int, val name: String) {
         val mockAnimals by lazy {
             QuizItem(id = 0, name = "Animals")
         }
+
+        val mockFood by lazy {
+            QuizItem(id = 1, name = "Food")
+        }
+
+        val mockSeasons by lazy {
+            QuizItem(id = 2, name = "Seasons")
+        }
     }
 }

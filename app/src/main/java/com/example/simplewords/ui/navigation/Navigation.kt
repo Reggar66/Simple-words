@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import com.example.simplewords.feature.list.QuizListScreen
+import com.example.simplewords.feature.quiz.QuizDetailsScreen
 
 @Composable
 fun NavigationHost(
@@ -29,11 +30,18 @@ fun NavigationHost(
 fun NavGraphBuilder.quizListRoot(navController: NavController) {
     navigation(startDestination = Screen.QuizList.route, route = Root.QuizListRoot.route) {
         composable(Screen.QuizList.route) {
-            QuizListScreen(openQuiz = { /*TODO*/ })
+            QuizListScreen(openQuiz = { navController.navigate(Screen.QuizDetails.createRoute(it.quizItem.id)) })
+        }
+
+        composable(Screen.QuizDetails.route) { navBackStackEntry ->
+            QuizDetailsScreen(
+                quizId = navBackStackEntry.arguments?.getString(Screen.QuizDetails.Key.QUIZ_ID)
+                    ?.toInt()
+            )
         }
     }
 }
 
-fun NavGraphBuilder.quizDetailsRoot(navController: NavController){
+fun NavGraphBuilder.quizDetailsRoot(navController: NavController) {
     /* TODO */
 }
