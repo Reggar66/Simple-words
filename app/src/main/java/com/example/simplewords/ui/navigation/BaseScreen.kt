@@ -2,7 +2,7 @@ package com.example.simplewords.ui.navigation
 
 typealias SimpleNavigation = () -> Unit
 
-typealias SimpleNavigationParam<T> = (T) -> Unit
+typealias SimpleNavigationTakes<T> = (T) -> Unit
 
 abstract class BaseScreen(val route: String)
 

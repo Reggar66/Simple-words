@@ -1,4 +1,4 @@
-package com.example.simplewords.feature.quiz
+package com.example.simplewords.feature.details
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.*
@@ -18,6 +18,7 @@ import com.example.simplewords.common.debugLog
 import com.example.simplewords.data.WordTranslation
 import com.example.simplewords.feature.list.QuizData
 import com.example.simplewords.ui.components.PreviewContainer
+import com.example.simplewords.ui.components.WordItem
 
 @Composable
 fun QuizDetailsScreen(quizId: Int?) {
@@ -38,9 +39,9 @@ fun QuizDetailsScreen(quizId: Int?) {
 
 @Composable
 private fun QuizDetails(quizData: QuizData, onLearnClick: OnClick) {
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(modifier = Modifier.fillMaxWidth()) {
         LazyColumn(
-            contentPadding = PaddingValues(4.dp),
+            contentPadding = PaddingValues(start = 8.dp, top = 8.dp, end = 8.dp, bottom = 54.dp),
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
             items(items = quizData.words) { item ->
@@ -55,21 +56,6 @@ private fun QuizDetails(quizData: QuizData, onLearnClick: OnClick) {
             shape = CircleShape
         ) {
             Text(text = "Learn") // TODO strings
-        }
-    }
-}
-
-@Composable
-fun WordItem(wordTranslation: WordTranslation) {
-    Card {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(4.dp),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(text = wordTranslation.word)
-            Text(text = wordTranslation.translation)
         }
     }
 }
