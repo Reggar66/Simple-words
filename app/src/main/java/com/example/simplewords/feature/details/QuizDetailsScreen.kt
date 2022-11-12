@@ -8,7 +8,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,16 +25,24 @@ fun QuizDetailsScreen(quizId: Int?) {
 
     // TODO change to fetching data from db
     // Simulate fetching from db
-    val quizzes = QuizData.mock
-    val quiz = quizzes.find { it.quizItem.id == quizId }
+    val quizzes by remember {
+        mutableStateOf(QuizData.mock)
+    }
 
+    var quiz: QuizData? by remember {
+        mutableStateOf(quizzes.find { it.quizItem.id == quizId })
+    }
+
+    LaunchedEffect(
+        key1 = quizId,
+        block = {
+            quiz = quizzes.find { it.quizItem.id == quizId }
+        }
+    )
     debugLog { "Fetched quiz: $quiz" }
 
-    if (quiz != null) {
-        QuizDetails(quiz) { }
-    } else {
-        Text(text = "No words :(")
-    }
+    quiz?.let { QuizDetails(it) { } }
+
 }
 
 @Composable

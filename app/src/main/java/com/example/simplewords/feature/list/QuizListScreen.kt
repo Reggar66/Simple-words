@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.simplewords.common.OnClick
 import com.example.simplewords.common.OnClickType
+import com.example.simplewords.common.debugLog
 import com.example.simplewords.data.QuizItemData
 import com.example.simplewords.data.WordTranslation
 import com.example.simplewords.feature.details.QuizDetailsScreen
@@ -51,8 +52,13 @@ private fun QuizListImpl(
     val scaffoldState = rememberBottomSheetScaffoldState()
     val scope = rememberCoroutineScope()
 
-    var selectedQuizId by remember {
-        mutableStateOf(-1)
+    var selectedQuizId:Int? by remember {
+        mutableStateOf(null)
+    }
+
+    debugLog {
+        "Expanded: ${scaffoldState.bottomSheetState.isExpanded} | " +
+                "Collapsed: ${scaffoldState.bottomSheetState.isCollapsed}"
     }
 
     BottomSheetScaffold(
@@ -64,11 +70,17 @@ private fun QuizListImpl(
             Quizzes(
                 quizData = quizListState.quizzes,
                 onItemCLick = {
+                    debugLog { "Item Click" }
                     scope.launch {
-                        if (scaffoldState.bottomSheetState.isExpanded)
+                        if (scaffoldState.bottomSheetState.isExpanded) {
+                            debugLog { "Hide sheet." }
                             scaffoldState.bottomSheetState.collapse()
+                        }
+                        debugLog { "set selected quiz id" }
                         selectedQuizId = it.quizItem.id
+                        debugLog { "Show sheet." }
                         scaffoldState.bottomSheetState.expand()
+                        debugLog { "Showed. isExpanded: ${scaffoldState.bottomSheetState.isExpanded}" }
                     }
                 },
                 onSortClick = onSortClick,
@@ -78,9 +90,7 @@ private fun QuizListImpl(
 }
 
 @Composable
-private fun BottomSheetContent(quizId: Int) {
-    if (quizId == -1)
-        return
+private fun BottomSheetContent(quizId: Int?) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Spacer(modifier = Modifier.height(8.dp))
         Card(
