@@ -1,9 +1,10 @@
-package com.example.simplewords.feature.list
+package com.example.simplewords.feature.quiz.list
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import com.example.simplewords.data.QuizData
 
 class QuizListViewModel : ViewModel() {
 

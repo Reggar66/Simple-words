@@ -12,7 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.simplewords.common.OnClick
-import com.example.simplewords.feature.list.QuizData
+import com.example.simplewords.data.QuizData
+import com.example.simplewords.ui.components.utility.PreviewContainer
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable

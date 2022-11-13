@@ -1,4 +1,4 @@
-package com.example.simplewords.ui.components
+package com.example.simplewords.ui.components.utility
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize

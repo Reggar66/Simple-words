@@ -1,10 +1,9 @@
 @file:OptIn(ExperimentalFoundationApi::class, ExperimentalMaterialApi::class)
 
-package com.example.simplewords.feature.list
+package com.example.simplewords.feature.quiz.list
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -20,12 +19,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.simplewords.common.OnClick
 import com.example.simplewords.common.OnClickType
 import com.example.simplewords.common.debugLog
-import com.example.simplewords.data.QuizItemData
-import com.example.simplewords.data.WordTranslation
-import com.example.simplewords.feature.details.QuizDetailsScreen
-import com.example.simplewords.ui.components.PreviewContainer
+import com.example.simplewords.data.QuizData
+import com.example.simplewords.feature.quiz.details.QuizDetailsScreen
+import com.example.simplewords.ui.components.utility.PreviewContainer
 import com.example.simplewords.ui.components.QuizItem
-import com.example.simplewords.ui.components.WordItem
 import com.example.simplewords.ui.navigation.SimpleNavigationTakes
 import kotlinx.coroutines.launch
 

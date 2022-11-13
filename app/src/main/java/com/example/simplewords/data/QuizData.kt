@@ -1,7 +1,7 @@
-package com.example.simplewords.feature.list
+package com.example.simplewords.data
 
-import com.example.simplewords.data.QuizItemData
-import com.example.simplewords.data.WordTranslation
+import com.example.simplewords.domain.models.QuizItemData
+import com.example.simplewords.domain.models.WordTranslation
 
 data class QuizData(
     val quizItem: QuizItemData,

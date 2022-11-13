@@ -1,4 +1,4 @@
-package com.example.simplewords.data
+package com.example.simplewords.domain.models
 
 data class WordTranslation(
     val id: Int,

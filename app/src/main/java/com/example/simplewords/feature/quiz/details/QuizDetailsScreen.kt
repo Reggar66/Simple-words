@@ -1,4 +1,4 @@
-package com.example.simplewords.feature.details
+package com.example.simplewords.feature.quiz.details
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.*
@@ -6,7 +6,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Button
-import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -15,9 +14,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.simplewords.common.OnClick
 import com.example.simplewords.common.debugLog
-import com.example.simplewords.data.WordTranslation
-import com.example.simplewords.feature.list.QuizData
-import com.example.simplewords.ui.components.PreviewContainer
+import com.example.simplewords.data.QuizData
+import com.example.simplewords.ui.components.utility.PreviewContainer
 import com.example.simplewords.ui.components.WordItem
 
 @Composable
