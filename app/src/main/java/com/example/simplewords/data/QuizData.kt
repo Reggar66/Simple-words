@@ -8,6 +8,9 @@ data class QuizData(
     val words: List<WordTranslation>,
     val learnedWords: List<WordTranslation>
 ) {
+
+    fun isComplete() = words.size == learnedWords.size
+
     companion object {
         val mock by lazy {
             listOf(

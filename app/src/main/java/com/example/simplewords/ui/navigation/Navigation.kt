@@ -9,13 +9,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
+import com.example.simplewords.feature.exercise.ExerciseScreen
 import com.example.simplewords.feature.quiz.list.QuizListScreen
 import com.example.simplewords.feature.quiz.details.QuizDetailsScreen
 
 @Composable
 fun NavigationHost(
-    modifier: Modifier = Modifier,
-    navController: NavHostController = rememberNavController()
+    modifier: Modifier = Modifier, navController: NavHostController = rememberNavController()
 ) {
     NavHost(
         navController = navController,
@@ -23,25 +23,26 @@ fun NavigationHost(
         modifier = modifier
     ) {
         quizListRoot(navController)
-        quizDetailsRoot(navController)
     }
 }
 
 fun NavGraphBuilder.quizListRoot(navController: NavController) {
     navigation(startDestination = Screen.QuizList.route, route = Root.QuizListRoot.route) {
         composable(Screen.QuizList.route) {
-            QuizListScreen(openQuiz = { navController.navigate(Screen.QuizDetails.createRoute(it.quizItem.id)) })
+            QuizListScreen(openExercise = { quizData ->
+                navController.navigate(
+                    route = Screen.Exercise.createRoute(
+                        quizId = quizData.quizItem.id
+                    )
+                )
+            })
         }
 
-        composable(Screen.QuizDetails.route) { navBackStackEntry ->
-            QuizDetailsScreen(
-                quizId = navBackStackEntry.arguments?.getString(Screen.QuizDetails.Key.QUIZ_ID)
-                    ?.toInt()
-            )
+        // TODO separate root?
+        composable(Screen.Exercise.route) { navBackStackEntry ->
+            val quizId =
+                navBackStackEntry.arguments?.getString(Screen.Exercise.Key.QUIZ_ID)?.toInt()
+            ExerciseScreen(quizId = quizId)
         }
     }
-}
-
-fun NavGraphBuilder.quizDetailsRoot(navController: NavController) {
-    /* TODO */
 }

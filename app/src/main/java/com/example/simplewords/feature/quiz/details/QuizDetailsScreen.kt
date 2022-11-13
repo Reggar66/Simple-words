@@ -13,13 +13,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.simplewords.common.OnClick
+import com.example.simplewords.common.OnClickTakes
 import com.example.simplewords.common.debugLog
 import com.example.simplewords.data.QuizData
 import com.example.simplewords.ui.components.utility.PreviewContainer
 import com.example.simplewords.ui.components.WordItem
 
 @Composable
-fun QuizDetailsScreen(quizId: Int?) {
+fun QuizDetailsScreen(quizId: Int?, onLearnClick: OnClick) {
 
     // TODO change to fetching data from db
     // Simulate fetching from db
@@ -39,7 +40,7 @@ fun QuizDetailsScreen(quizId: Int?) {
     )
     debugLog { "Fetched quiz: $quiz" }
 
-    quiz?.let { QuizDetails(it) { } }
+    quiz?.let { QuizDetails(it, onLearnClick = onLearnClick) }
 
 }
 
