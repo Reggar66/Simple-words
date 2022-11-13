@@ -30,9 +30,16 @@ class QuizListViewModel : ViewModel() {
             )
     }
 
+    fun selectQuiz(quizData: QuizData) {
+        quizListState = quizListState.copy(currentlySelectedQuiz = quizData)
+    }
+
     fun shuffle() {
-        quizListState = QuizListScreenState(quizzes = quizzes.shuffled())
+        quizListState = quizListState.copy(quizzes = quizzes.shuffled())
     }
 }
 
-data class QuizListScreenState(val quizzes: List<QuizData> = emptyList())
+data class QuizListScreenState(
+    val quizzes: List<QuizData> = emptyList(),
+    val currentlySelectedQuiz: QuizData? = null
+)

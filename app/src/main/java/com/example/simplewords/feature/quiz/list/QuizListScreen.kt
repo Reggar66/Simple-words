@@ -10,7 +10,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -20,8 +21,8 @@ import com.example.simplewords.common.OnClick
 import com.example.simplewords.common.OnClickTakes
 import com.example.simplewords.data.QuizData
 import com.example.simplewords.feature.quiz.details.QuizDetailsScreen
-import com.example.simplewords.ui.components.utility.PreviewContainer
 import com.example.simplewords.ui.components.QuizItem
+import com.example.simplewords.ui.components.utility.PreviewContainer
 import com.example.simplewords.ui.navigation.SimpleNavigationTakes
 import kotlinx.coroutines.launch
 
@@ -30,12 +31,12 @@ fun QuizListScreen(openExercise: SimpleNavigationTakes<QuizData>) {
     val viewModel = viewModel<QuizListViewModel>()
     val state = viewModel.quizListState
 
-
     QuizListImpl(
         quizListState = state,
         onSortClick = { viewModel.sortByName() },
         onShuffleClick = { viewModel.shuffle() },
-        onLearnClick = { quizData -> openExercise(quizData) })
+        onLearnClick = { quizData -> openExercise(quizData) },
+        onItemCLick = { viewModel.selectQuiz(it) })
 }
 
 @Composable
@@ -43,20 +44,17 @@ private fun QuizListImpl(
     quizListState: QuizListScreenState,
     onSortClick: OnClick,
     onShuffleClick: OnClick,
-    onLearnClick: OnClickTakes<QuizData>
+    onLearnClick: OnClickTakes<QuizData>,
+    onItemCLick: OnClickTakes<QuizData>
 ) {
     val scaffoldState = rememberBottomSheetScaffoldState()
     val scope = rememberCoroutineScope()
 
-    var selectedQuiz: QuizData? by remember {
-        mutableStateOf(null)
-    }
-
     BottomSheetScaffold(
         sheetContent = {
             BottomSheetContent(
-                quizData = selectedQuiz,
-                onLearnClick = { selectedQuiz?.let { onLearnClick(it) } }
+                quizData = quizListState.currentlySelectedQuiz,
+                onLearnClick = { quizListState.currentlySelectedQuiz?.let { onLearnClick(it) } }
             )
         },
         scaffoldState = scaffoldState,
@@ -69,7 +67,7 @@ private fun QuizListImpl(
                     scope.launch {
                         if (scaffoldState.bottomSheetState.isExpanded)
                             scaffoldState.bottomSheetState.collapse()
-                        selectedQuiz = it
+                        onItemCLick(it)
                         scaffoldState.bottomSheetState.expand()
                     }
                 },
