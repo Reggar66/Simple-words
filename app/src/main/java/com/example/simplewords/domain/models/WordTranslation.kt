@@ -5,7 +5,8 @@ data class WordTranslation(
     val quizItemId: Int,
     val word: String,
     val translation: String,
-    val isLearned: Boolean = false
+    val isLearned: Boolean = false,
+    val repeat: Int = 3
 ) {
     companion object {
         val mockAnimals by lazy {
@@ -33,15 +34,24 @@ data class WordTranslation(
                     isLearned = true
                 ),
                 WordTranslation(
-                    id = 1, quizItemId = 0, word = "kot", translation = "cat",
+                    id = 1,
+                    quizItemId = 0,
+                    word = "kot",
+                    translation = "cat",
                     isLearned = true
                 ),
                 WordTranslation(
-                    id = 2, quizItemId = 0, word = "kaczka", translation = "duck",
+                    id = 2,
+                    quizItemId = 0,
+                    word = "kaczka",
+                    translation = "duck",
                     isLearned = true
                 ),
                 WordTranslation(
-                    id = 3, quizItemId = 0, word = "krowa", translation = "cow",
+                    id = 3,
+                    quizItemId = 0,
+                    word = "krowa",
+                    translation = "cow",
                     isLearned = true
                 )
             )
@@ -64,11 +74,16 @@ data class WordTranslation(
                     isLearned = true
                 ),
                 WordTranslation(
-                    id = 6, quizItemId = 1, word = "ser", translation = "cheese",
+                    id = 6, quizItemId = 1,
+                    word = "ser",
+                    translation = "cheese",
                     isLearned = true
                 ),
                 WordTranslation(
-                    id = 7, quizItemId = 1, word = "chleb", translation = "bread",
+                    id = 7,
+                    quizItemId = 1,
+                    word = "chleb",
+                    translation = "bread",
                     isLearned = true
                 ),
             )

@@ -2,7 +2,6 @@ package com.example.simplewords.feature.exercise
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.OutlinedTextField
@@ -10,9 +9,9 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.simplewords.ui.components.utility.PreviewContainer
 
 /* TODO Exercise screen.*/
@@ -20,6 +19,10 @@ import com.example.simplewords.ui.components.utility.PreviewContainer
 @Composable
 fun ExerciseScreen(quizId: Int?) {
     // TODO viewModel stuff.
+
+    val viewModel = hiltViewModel<ExerciseScreenViewModel>()
+
+    viewModel.repoCall()
 
     ExerciseScreenImpl()
 }

@@ -1,8 +1,11 @@
 import com.example.Dependencies
+import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
 
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    kotlin("kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -62,6 +65,10 @@ dependencies {
     implementation(Dependencies.Compose.material)
 
     implementation(Dependencies.navigation)
+
+    implementation(Dependencies.Hilt.android)
+    implementation(Dependencies.Hilt.navigationCompose)
+    kapt(Dependencies.Hilt.compiler)
 
     testImplementation(Dependencies.jUnit)
     androidTestImplementation(Dependencies.androidx_junit)
