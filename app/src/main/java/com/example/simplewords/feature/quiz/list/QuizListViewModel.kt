@@ -15,6 +15,7 @@ class QuizListViewModel : ViewModel() {
 
     init {
         quizListState = QuizListScreenState(quizzes = quizzes)
+        sortByName()
     }
 
     fun sortByName() {

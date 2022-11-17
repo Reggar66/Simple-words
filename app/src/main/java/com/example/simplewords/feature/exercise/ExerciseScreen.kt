@@ -1,17 +1,21 @@
 package com.example.simplewords.feature.exercise
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.animateOffsetAsState
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
-import androidx.compose.material.Card
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.simplewords.common.OnClick
+import com.example.simplewords.common.OnClickTakes
+import com.example.simplewords.domain.models.WordTranslation
 import com.example.simplewords.ui.components.utility.PreviewContainer
 
 /* TODO Exercise screen.*/
@@ -21,14 +25,21 @@ fun ExerciseScreen(quizId: Int?) {
     // TODO viewModel stuff.
 
     val viewModel = hiltViewModel<ExerciseScreenViewModel>()
+    val exerciseScreenState = viewModel.exerciseScreenState
 
-    viewModel.repoCall()
-
-    ExerciseScreenImpl()
+    ExerciseScreenImpl(
+        exerciseScreenState = exerciseScreenState,
+        onValidate = { viewModel.validate(it) },
+        onNextClick = { viewModel.next() }
+    )
 }
 
 @Composable
-private fun ExerciseScreenImpl() {
+private fun ExerciseScreenImpl(
+    exerciseScreenState: ExerciseScreenState,
+    onValidate: OnClickTakes<String> = {},
+    onNextClick: OnClick
+) {
     Column(modifier = Modifier.fillMaxSize()) {
         Card(
             modifier = Modifier
@@ -36,14 +47,30 @@ private fun ExerciseScreenImpl() {
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            QuestionCard(question = "Cat")
+            QuestionCard(
+                question = exerciseScreenState.currentWordTranslation?.word
+                    ?: "Couldn't load word :(",
+                repeats = exerciseScreenState.currentWordTranslation?.repeat ?: 0
+            )
         }
         Column(
             modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "Correct!")
+            Text(
+                modifier = Modifier.offset(),
+                text = when (exerciseScreenState.validationState) {
+                    ValidationState.CORRECT -> "Correct!"
+                    ValidationState.WRONG -> "Wrong."
+                    ValidationState.WAITING -> "What's the answer?"
+                },
+                color = when (exerciseScreenState.validationState) {
+                    ValidationState.CORRECT -> Color.Green // TODO material theme
+                    ValidationState.WRONG -> Color.Red // TODO material theme
+                    ValidationState.WAITING -> MaterialTheme.colors.onSurface
+                }
+            )
         }
         Card(
             modifier = Modifier
@@ -51,20 +78,26 @@ private fun ExerciseScreenImpl() {
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            AnswerCard()
+            AnswerCard(onValidate = {
+                if (exerciseScreenState.validationState == ValidationState.CORRECT)
+                    onNextClick()
+                else
+                    onValidate(it)
+            })
         }
     }
 }
 
 @Composable
-private fun QuestionCard(question: String) {
+private fun QuestionCard(question: String, repeats: Int) {
     Box(modifier = Modifier.fillMaxSize()) {
         Text(modifier = Modifier.align(Alignment.Center), text = question)
+        Text(modifier = Modifier.align(Alignment.BottomStart), text = "Repeats: $repeats")
     }
 }
 
 @Composable
-private fun AnswerCard() {
+private fun AnswerCard(onValidate: OnClickTakes<String>) {
     var inputText by remember {
         mutableStateOf("")
     }
@@ -77,7 +110,7 @@ private fun AnswerCard() {
                 onValueChange = { inputText = it },
                 label = { Text(text = "Answer") })
         }
-        Button(onClick = { /*TODO*/ }) {
+        Button(onClick = { onValidate(inputText) }) {
             Text(text = "Submit")
         }
     }
@@ -88,6 +121,9 @@ private fun AnswerCard() {
 @Composable
 private fun ExerciseScreenPreview() {
     PreviewContainer() {
-        ExerciseScreenImpl()
+        ExerciseScreenImpl(
+            exerciseScreenState = ExerciseScreenState.mock(),
+            onValidate = {},
+            onNextClick = {})
     }
 }
