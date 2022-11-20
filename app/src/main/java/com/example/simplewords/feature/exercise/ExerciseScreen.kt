@@ -26,6 +26,11 @@ fun ExerciseScreen(quizId: Int?) {
 
     val viewModel = hiltViewModel<ExerciseScreenViewModel>()
     val exerciseScreenState = viewModel.exerciseScreenState
+    LaunchedEffect(key1 = quizId, block = {
+        if (quizId != null) {
+            viewModel.getTranslationsForId(quizId)
+        }
+    })
 
     ExerciseScreenImpl(
         exerciseScreenState = exerciseScreenState,
