@@ -5,8 +5,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.ada.simplewords.data.QuizData
+import com.ada.simplewords.domain.repositories.FirebaseRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class QuizListViewModel : ViewModel() {
+@HiltViewModel
+class QuizListViewModel @Inject constructor(val firebaseRepository: FirebaseRepository) :
+    ViewModel() {
 
     var quizListState by mutableStateOf(QuizListScreenState())
         private set

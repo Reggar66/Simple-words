@@ -14,7 +14,7 @@ sealed class Screen(route: String) : BaseScreen(route) {
     object QuizList : Screen("quizList")
 
     object Exercise : Screen(route = "exercise/{${Key.QUIZ_ID}}") {
-        fun createRoute(quizId: Int) = "exercise/$quizId"
+        fun createRoute(quizId: String) = "exercise/$quizId"
 
         object Key {
             const val QUIZ_ID = "quizId"

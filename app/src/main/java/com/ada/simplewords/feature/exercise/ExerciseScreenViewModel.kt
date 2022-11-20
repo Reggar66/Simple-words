@@ -11,7 +11,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class ExerciseScreenViewModel @Inject constructor(private val fakeRepo: FakeRepo, val firebaseRepository: FirebaseRepository) : ViewModel() {
+class ExerciseScreenViewModel @Inject constructor() : ViewModel() {
 
     private var translations: List<WordTranslation>? = null
 
@@ -20,7 +20,7 @@ class ExerciseScreenViewModel @Inject constructor(private val fakeRepo: FakeRepo
 
     fun getTranslationsForId(quizId: Int) {
         translations = QuizData.mock.find {
-            it.quizItem.id == quizId
+            it.quizItem.id == quizId.toString()
         }?.words
 
         exerciseScreenState = ExerciseScreenState(

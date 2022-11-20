@@ -19,7 +19,7 @@ import com.ada.simplewords.ui.components.utility.PreviewContainer
 import com.ada.simplewords.ui.components.WordItem
 
 @Composable
-fun QuizDetailsScreen(quizId: Int?, onLearnClick: OnClick) {
+fun QuizDetailsScreen(quizId: String?, onLearnClick: OnClick) {
 
     // TODO change to fetching data from db
     // Simulate fetching from db

@@ -10,16 +10,18 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.ada.simplewords.common.OnClick
 import com.ada.simplewords.common.OnClickTakes
 import com.ada.simplewords.data.QuizData
+import com.ada.simplewords.domain.models.QuizItemData
+import com.ada.simplewords.domain.models.User
+import com.ada.simplewords.domain.models.WordTranslation
 import com.ada.simplewords.feature.quiz.details.QuizDetailsScreen
 import com.ada.simplewords.ui.components.QuizItem
 import com.ada.simplewords.ui.components.utility.PreviewContainer
@@ -28,22 +30,57 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun QuizListScreen(openExercise: SimpleNavigationTakes<QuizData>) {
-    val viewModel = viewModel<QuizListViewModel>()
+    val viewModel = hiltViewModel<QuizListViewModel>()
     val state = viewModel.quizListState
 
-    QuizListImpl(
-        quizListState = state,
-        onSortClick = { viewModel.sortByName() },
-        onShuffleClick = { viewModel.shuffle() },
-        onLearnClick = { quizData -> openExercise(quizData) },
-        onItemCLick = { viewModel.selectQuiz(it) })
+
+    var showDebug by remember {
+        mutableStateOf(false)
+    }
+
+    Box {
+        QuizListImpl(
+            quizListState = state,
+            onLearnClick = { quizData -> openExercise(quizData) },
+            onItemCLick = { viewModel.selectQuiz(it) })
+
+        Button(
+            modifier = Modifier.align(Alignment.BottomEnd),
+            onClick = { showDebug = !showDebug }) {
+            Text(text = "Debug")
+        }
+
+        // TODO remove buttons
+        if (showDebug)
+            Column(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(4.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Button(onClick = { viewModel.firebaseRepository.saveUser(User.mock()) }) {
+                    Text(text = "Generate Mock User")
+                }
+                Button(onClick = { viewModel.firebaseRepository.saveQuiz(QuizItemData.mockAnimals) }) {
+                    Text(text = "Generate Mock Quiz")
+                }
+
+                Button(onClick = {
+                    viewModel.firebaseRepository.saveQuizWords(
+                        "-NHLALPJBHBDbKfnnQR1",
+                        WordTranslation.mockAnimals
+                    )
+                }) {
+                    Text(text = "Generate Mock Words")
+                }
+            }
+    }
 }
 
 @Composable
 private fun QuizListImpl(
     quizListState: QuizListScreenState,
-    onSortClick: OnClick,
-    onShuffleClick: OnClick,
     onLearnClick: OnClickTakes<QuizData>,
     onItemCLick: OnClickTakes<QuizData>
 ) {
@@ -70,9 +107,7 @@ private fun QuizListImpl(
                         onItemCLick(it)
                         scaffoldState.bottomSheetState.expand()
                     }
-                },
-                onSortClick = onSortClick,
-                onShuffleClick = onShuffleClick
+                }
             )
         })
 }
@@ -96,9 +131,7 @@ private fun BottomSheetContent(quizData: QuizData?, onLearnClick: OnClick) {
 @Composable
 private fun Quizzes(
     quizData: List<QuizData>,
-    onItemCLick: OnClickTakes<QuizData>,
-    onSortClick: OnClick,
-    onShuffleClick: OnClick
+    onItemCLick: OnClickTakes<QuizData>
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         LazyColumn(
@@ -113,21 +146,6 @@ private fun Quizzes(
                     onClick = { onItemCLick(itemQuizData) })
             }
         }
-
-        // TODO remove buttons
-        Row(
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceAround
-        ) {
-            Button(onClick = onSortClick) {
-                Text(text = "Sort")
-            }
-            Button(onClick = onShuffleClick) {
-                Text(text = "Shuffle")
-            }
-        }
     }
 }
 
@@ -136,7 +154,7 @@ private fun Quizzes(
 @Composable
 private fun QuizListPreview() {
     PreviewContainer {
-        Quizzes(quizData = QuizData.mock, onItemCLick = {}, {}) {}
+        Quizzes(quizData = QuizData.mock, onItemCLick = {})
     }
 }
 

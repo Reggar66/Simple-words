@@ -23,9 +23,6 @@ fun ExerciseScreen(quizId: Int?) {
     val viewModel = hiltViewModel<ExerciseScreenViewModel>()
     val exerciseScreenState = viewModel.exerciseScreenState
     LaunchedEffect(key1 = quizId, block = {
-
-        viewModel.firebaseRepository.doStuff()
-
         if (quizId != null) {
             viewModel.getTranslationsForId(quizId)
         }
