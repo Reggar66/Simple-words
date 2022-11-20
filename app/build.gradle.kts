@@ -1,19 +1,19 @@
-import com.example.Dependencies
-import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
+import com.ada.Dependencies
 
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
+    id("com.google.gms.google-services")
 }
 
 android {
-    namespace = "com.example.simplewords"
+    namespace = "com.ada.simplewords"
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "com.example.simplewords"
+        applicationId = "com.ada.simplewords"
         minSdk = 27
         targetSdk = 33
         versionCode = 1
@@ -69,6 +69,9 @@ dependencies {
     implementation(Dependencies.Hilt.android)
     implementation(Dependencies.Hilt.navigationCompose)
     kapt(Dependencies.Hilt.compiler)
+
+    implementation(platform(Dependencies.Firebase.bom))
+    implementation(Dependencies.Firebase.realTimeDatabase)
 
     testImplementation(Dependencies.jUnit)
     androidTestImplementation(Dependencies.androidx_junit)
