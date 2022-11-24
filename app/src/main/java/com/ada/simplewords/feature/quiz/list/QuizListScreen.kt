@@ -19,7 +19,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.ada.simplewords.common.OnClick
 import com.ada.simplewords.common.OnClickTakes
 import com.ada.simplewords.data.QuizData
-import com.ada.simplewords.domain.models.QuizItemData
+import com.ada.simplewords.domain.models.QuizItemModel
 import com.ada.simplewords.domain.models.User
 import com.ada.simplewords.domain.models.WordTranslation
 import com.ada.simplewords.feature.quiz.details.QuizDetailsScreen
@@ -62,8 +62,12 @@ fun QuizListScreen(openExercise: SimpleNavigationTakes<QuizData>) {
                 Button(onClick = { viewModel.firebaseRepository.saveUser(User.mock()) }) {
                     Text(text = "Generate Mock User")
                 }
-                Button(onClick = { viewModel.firebaseRepository.saveQuiz(QuizItemData.mockAnimals) }) {
+                Button(onClick = { viewModel.firebaseRepository.saveQuiz(QuizItemModel.mockAnimals) }) {
                     Text(text = "Generate Mock Quiz")
+                }
+
+                Button(onClick = { viewModel.firebaseRepository.saveQuiz(QuizItemModel.mockFood) }) {
+                    Text(text = "Generate Mock Quiz 2")
                 }
 
                 Button(onClick = {
@@ -124,7 +128,7 @@ private fun BottomSheetContent(quizData: QuizData?, onLearnClick: OnClick) {
                 .padding(horizontal = 100.dp),
             shape = CircleShape
         ) {}
-        QuizDetailsScreen(quizId = quizData?.quizItem?.id, onLearnClick = onLearnClick)
+        QuizDetailsScreen(quizId = quizData?.quizItemModel?.id, onLearnClick = onLearnClick)
     }
 }
 
@@ -138,7 +142,7 @@ private fun Quizzes(
             contentPadding = PaddingValues(4.dp),
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
-            items(items = quizData, key = { it.quizItem.id }) { itemQuizData ->
+            items(items = quizData/*, key = { it.quizItem.id }*/) { itemQuizData ->
                 QuizItem(
                     modifier = Modifier
                         .animateItemPlacement(),

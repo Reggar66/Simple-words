@@ -4,23 +4,54 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.ada.simplewords.common.debugLog
 import com.ada.simplewords.data.QuizData
+import com.ada.simplewords.domain.models.QuizItemModel
 import com.ada.simplewords.domain.repositories.FirebaseRepository
+import com.ada.simplewords.domain.usecases.GetQuizzesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class QuizListViewModel @Inject constructor(val firebaseRepository: FirebaseRepository) :
+class QuizListViewModel @Inject constructor(
+    val firebaseRepository: FirebaseRepository,
+    private val getQuizzesUseCase: GetQuizzesUseCase
+) :
     ViewModel() {
 
     var quizListState by mutableStateOf(QuizListScreenState())
         private set
 
-    private val quizzes: List<QuizData> = QuizData.mock // TODO fetch with repository
+    private var quizzes: List<QuizData> = emptyList() // TODO fetch with repository
 
     init {
-        quizListState = QuizListScreenState(quizzes = quizzes)
-        sortByName()
+        fetchQuizzes()
+    }
+
+    private fun fetchQuizzes() = viewModelScope.launch {
+        debugLog { "fetchQuizzes: launched." }
+        getQuizzesUseCase().collect {
+            debugLog { "fetchQuizzes: downloaded: $it" }
+
+            val newQuizzes = mutableListOf<QuizData>()
+
+            it.forEach {
+                newQuizzes.add(
+                    QuizData(
+                        quizItemModel = it,
+                        words = listOf(),
+                        learnedWords = listOf()
+                    )
+                )
+            }
+
+            quizzes = newQuizzes
+            sortByName()
+        }
+        debugLog { "fetchQuizzes: ended." }
     }
 
     fun sortByName() {
@@ -30,7 +61,7 @@ class QuizListViewModel @Inject constructor(val firebaseRepository: FirebaseRepo
                     // Sorts by completion first then by name, so completed quizzes are at the bottom.
                     compareBy(
                         { it.words.size == it.learnedWords.size },
-                        { it.quizItem.name },
+                        { it.quizItemModel.name },
                     )
                 )
             )

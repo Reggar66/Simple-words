@@ -26,7 +26,7 @@ fun QuizItem(modifier: Modifier = Modifier, quizData: QuizData, onClick: OnClick
         elevation = if (quizData.isComplete()) MaterialTheme.dimensions.quizItemCompleteElevation else MaterialTheme.dimensions.quizItemElevation
     ) {
         Column(modifier = Modifier.padding(4.dp)) {
-            Text(text = quizData.quizItem.name)
+            quizData.quizItemModel.name?.let { Text(text = it) }
             Text(text = "Words: ${quizData.words.size}")
             Text(text = "Progress: ${quizData.learnedWords.size}/${quizData.words.size}")
         }

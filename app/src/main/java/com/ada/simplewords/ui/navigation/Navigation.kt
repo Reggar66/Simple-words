@@ -29,11 +29,13 @@ fun NavGraphBuilder.quizListRoot(navController: NavController) {
     navigation(startDestination = Screen.QuizList.route, route = Root.QuizListRoot.route) {
         composable(Screen.QuizList.route) {
             QuizListScreen(openExercise = { quizData ->
-                navController.navigate(
-                    route = Screen.Exercise.createRoute(
-                        quizId = quizData.quizItem.id
+                quizData.quizItemModel.id?.let {
+                    navController.navigate(
+                        route = Screen.Exercise.createRoute(
+                            quizId = quizData.quizItemModel.id
+                        )
                     )
-                )
+                }
             })
         }
 

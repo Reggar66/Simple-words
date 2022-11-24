@@ -1,10 +1,10 @@
 package com.ada.simplewords.data
 
-import com.ada.simplewords.domain.models.QuizItemData
+import com.ada.simplewords.domain.models.QuizItemModel
 import com.ada.simplewords.domain.models.WordTranslation
 
 data class QuizData(
-    val quizItem: QuizItemData,
+    val quizItemModel: QuizItemModel,
     val words: List<WordTranslation>,
     val learnedWords: List<WordTranslation>
 ) {
@@ -15,19 +15,19 @@ data class QuizData(
         val mock by lazy {
             listOf(
                 QuizData(
-                    quizItem = QuizItemData.mockFood,
+                    quizItemModel = QuizItemModel.mockFood,
                     words = WordTranslation.mockFood,
                     learnedWords = WordTranslation.mockFood.filter { it.isLearned }),
                 QuizData(
-                    quizItem = QuizItemData.mockAnimals,
+                    quizItemModel = QuizItemModel.mockAnimals,
                     words = WordTranslation.mockAnimals,
                     learnedWords = WordTranslation.mockAnimals.filter { it.isLearned }),
                 QuizData(
-                    quizItem = QuizItemData.mockAnimalsCompleted,
+                    quizItemModel = QuizItemModel.mockAnimalsCompleted,
                     words = WordTranslation.mockAnimalsCompleted,
                     learnedWords = WordTranslation.mockAnimalsCompleted.filter { it.isLearned }),
                 QuizData(
-                    quizItem = QuizItemData.mockSeasons,
+                    quizItemModel = QuizItemModel.mockSeasons,
                     words = WordTranslation.mockSeasons,
                     learnedWords = WordTranslation.mockSeasons.filter { it.isLearned }),
             )

@@ -6,7 +6,6 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.ada.simplewords.data.QuizData
 import com.ada.simplewords.domain.models.WordTranslation
-import com.ada.simplewords.domain.repositories.FirebaseRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -20,7 +19,7 @@ class ExerciseScreenViewModel @Inject constructor() : ViewModel() {
 
     fun getTranslationsForId(quizId: Int) {
         translations = QuizData.mock.find {
-            it.quizItem.id == quizId.toString()
+            it.quizItemModel.id == quizId.toString()
         }?.words
 
         exerciseScreenState = ExerciseScreenState(
