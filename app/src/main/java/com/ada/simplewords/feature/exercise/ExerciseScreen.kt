@@ -14,16 +14,13 @@ import com.ada.simplewords.common.OnClick
 import com.ada.simplewords.common.OnClickTakes
 import com.ada.simplewords.ui.components.utility.PreviewContainer
 
-/* TODO Exercise screen.*/
-
 @Composable
-fun ExerciseScreen(quizId: String) {
-    // TODO viewModel stuff.
-
+fun ExerciseScreen(quizId: String?) {
     val viewModel = hiltViewModel<ExerciseScreenViewModel>()
     val exerciseScreenState = viewModel.exerciseScreenState
+
     LaunchedEffect(key1 = quizId, block = {
-        viewModel.getTranslationsForId(quizId)
+        quizId?.let { viewModel.getTranslationsForId(it) }
     })
 
     ExerciseScreenImpl(

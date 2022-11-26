@@ -28,16 +28,16 @@ fun NavigationHost(
 fun NavGraphBuilder.quizListRoot(navController: NavController) {
     navigation(startDestination = Screen.QuizList.route, route = Root.QuizListRoot.route) {
         composable(Screen.QuizList.route) {
-            QuizListScreen(openExercise = { quizData ->
+            QuizListScreen(openExercise = { quiz ->
                 navController
-                    .navigate(route = Screen.Exercise.createRoute(quizId = quizData.quiz.id))
+                    .navigate(route = Screen.Exercise.createRoute(quizId = quiz.id))
             })
         }
 
         // TODO separate root?
         composable(Screen.Exercise.route) { navBackStackEntry ->
             val quizId =
-                navBackStackEntry.arguments?.getString(Screen.Exercise.Key.QUIZ_ID)?.toInt()
+                navBackStackEntry.arguments?.getString(Screen.Exercise.Key.QUIZ_ID)
             ExerciseScreen(quizId = quizId)
         }
     }
