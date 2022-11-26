@@ -1,12 +1,12 @@
 package com.ada.simplewords.data
 
 import com.ada.simplewords.domain.models.QuizItemModel
-import com.ada.simplewords.domain.models.WordTranslation
+import com.ada.simplewords.domain.models.WordTranslationModel
 
 data class QuizData(
     val quizItemModel: QuizItemModel,
-    val words: List<WordTranslation>,
-    val learnedWords: List<WordTranslation>
+    val words: List<WordTranslationModel>,
+    val learnedWords: List<WordTranslationModel>
 ) {
 
     fun isComplete() = words.size == learnedWords.size
@@ -16,20 +16,20 @@ data class QuizData(
             listOf(
                 QuizData(
                     quizItemModel = QuizItemModel.mockFood,
-                    words = WordTranslation.mockFood,
-                    learnedWords = WordTranslation.mockFood.filter { it.isLearned }),
+                    words = WordTranslationModel.mockFood,
+                    learnedWords = WordTranslationModel.mockFood.filter { it.isLearned }),
                 QuizData(
                     quizItemModel = QuizItemModel.mockAnimals,
-                    words = WordTranslation.mockAnimals,
-                    learnedWords = WordTranslation.mockAnimals.filter { it.isLearned }),
+                    words = WordTranslationModel.mockAnimals,
+                    learnedWords = WordTranslationModel.mockAnimals.filter { it.isLearned }),
                 QuizData(
                     quizItemModel = QuizItemModel.mockAnimalsCompleted,
-                    words = WordTranslation.mockAnimalsCompleted,
-                    learnedWords = WordTranslation.mockAnimalsCompleted.filter { it.isLearned }),
+                    words = WordTranslationModel.mockAnimalsCompleted,
+                    learnedWords = WordTranslationModel.mockAnimalsCompleted.filter { it.isLearned }),
                 QuizData(
                     quizItemModel = QuizItemModel.mockSeasons,
-                    words = WordTranslation.mockSeasons,
-                    learnedWords = WordTranslation.mockSeasons.filter { it.isLearned }),
+                    words = WordTranslationModel.mockSeasons,
+                    learnedWords = WordTranslationModel.mockSeasons.filter { it.isLearned }),
             )
         }
     }

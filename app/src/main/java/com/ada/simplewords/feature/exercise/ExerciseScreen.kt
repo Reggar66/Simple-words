@@ -49,9 +49,9 @@ private fun ExerciseScreenImpl(
                 .padding(16.dp)
         ) {
             QuestionCard(
-                question = exerciseScreenState.currentWordTranslation?.word
+                question = exerciseScreenState.currentWordTranslationModel?.word
                     ?: "Couldn't load word :(",
-                repeats = exerciseScreenState.currentWordTranslation?.repeat ?: 0
+                repeats = exerciseScreenState.currentWordTranslationModel?.repeat ?: 0
             )
         }
         Column(

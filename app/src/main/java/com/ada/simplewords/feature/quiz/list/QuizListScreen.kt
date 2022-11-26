@@ -20,8 +20,8 @@ import com.ada.simplewords.common.OnClick
 import com.ada.simplewords.common.OnClickTakes
 import com.ada.simplewords.data.QuizData
 import com.ada.simplewords.domain.models.QuizItemModel
-import com.ada.simplewords.domain.models.User
-import com.ada.simplewords.domain.models.WordTranslation
+import com.ada.simplewords.domain.models.UserModel
+import com.ada.simplewords.domain.models.WordTranslationModel
 import com.ada.simplewords.feature.quiz.details.QuizDetailsScreen
 import com.ada.simplewords.ui.components.QuizItem
 import com.ada.simplewords.ui.components.utility.PreviewContainer
@@ -45,7 +45,7 @@ fun QuizListScreen(openExercise: SimpleNavigationTakes<QuizData>) {
             onItemCLick = { viewModel.selectQuiz(it) })
 
         Button(
-            modifier = Modifier.align(Alignment.BottomEnd),
+            modifier = Modifier.align(Alignment.BottomStart),
             onClick = { showDebug = !showDebug }) {
             Text(text = "Debug")
         }
@@ -59,7 +59,7 @@ fun QuizListScreen(openExercise: SimpleNavigationTakes<QuizData>) {
                 verticalArrangement = Arrangement.spacedBy(4.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Button(onClick = { viewModel.firebaseRepository.saveUser(User.mock()) }) {
+                Button(onClick = { viewModel.firebaseRepository.saveUser(UserModel.mock()) }) {
                     Text(text = "Generate Mock User")
                 }
                 Button(onClick = { viewModel.firebaseRepository.saveQuiz(QuizItemModel.mockAnimals) }) {
@@ -73,7 +73,7 @@ fun QuizListScreen(openExercise: SimpleNavigationTakes<QuizData>) {
                 Button(onClick = {
                     viewModel.firebaseRepository.saveQuizWords(
                         "-NHLALPJBHBDbKfnnQR1",
-                        WordTranslation.mockAnimals
+                        WordTranslationModel.mockAnimals
                     )
                 }) {
                     Text(text = "Generate Mock Words")

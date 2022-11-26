@@ -7,29 +7,10 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.flow.emptyFlow
-import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
-
-
-// TODO extract to separate class.
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class FirebaseModule {
-
-    @Binds
-    abstract fun bindGetQuizzesUseCase(
-        getQuizzesUseCaseImpl: GetQuizzesUseCaseImpl
-    ): GetQuizzesUseCase
-}
 
 class GetQuizzesUseCaseImpl @Inject constructor(firebaseRepository: FirebaseRepository) :
     GetQuizzesUseCase {
@@ -51,14 +32,14 @@ class GetQuizzesUseCaseImpl @Inject constructor(firebaseRepository: FirebaseRepo
             }
 
             override fun onCancelled(error: DatabaseError) {
-                //TODO("Not yet implemented")
+                debugLog { "GetQuizzesUseCase: onCancelled: $error" }
             }
         }
 
         quizzesRef.addValueEventListener(listener)
         awaitClose {
             quizzesRef.removeEventListener(listener).also {
-                debugLog { "Removed listener from $quizzesRef"}
+                debugLog { "Removed listener from $quizzesRef" }
             }
         }
     }

@@ -51,7 +51,7 @@ private fun QuizDetails(quizData: QuizData, onLearnClick: OnClick) {
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
             items(items = quizData.words) { item ->
-                WordItem(wordTranslation = item)
+                WordItem(wordTranslationModel = item)
             }
         }
         Button(

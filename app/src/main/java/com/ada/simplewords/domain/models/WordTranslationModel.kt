@@ -1,6 +1,6 @@
 package com.ada.simplewords.domain.models
 
-data class WordTranslation(
+data class WordTranslationModel(
     val id: Int,
     val quizItemId: Int,
     val word: String,
@@ -11,43 +11,43 @@ data class WordTranslation(
     companion object {
         val mockAnimals by lazy {
             listOf(
-                WordTranslation(
+                WordTranslationModel(
                     id = 0,
                     quizItemId = 0,
                     word = "pies",
                     translation = "dog",
                     isLearned = true
                 ),
-                WordTranslation(id = 1, quizItemId = 0, word = "kot", translation = "cat"),
-                WordTranslation(id = 2, quizItemId = 0, word = "kaczka", translation = "duck"),
-                WordTranslation(id = 3, quizItemId = 0, word = "krowa", translation = "cow")
+                WordTranslationModel(id = 1, quizItemId = 0, word = "kot", translation = "cat"),
+                WordTranslationModel(id = 2, quizItemId = 0, word = "kaczka", translation = "duck"),
+                WordTranslationModel(id = 3, quizItemId = 0, word = "krowa", translation = "cow")
             )
         }
 
         val mockAnimalsCompleted by lazy {
             listOf(
-                WordTranslation(
+                WordTranslationModel(
                     id = 0,
                     quizItemId = 0,
                     word = "pies",
                     translation = "dog",
                     isLearned = true
                 ),
-                WordTranslation(
+                WordTranslationModel(
                     id = 1,
                     quizItemId = 0,
                     word = "kot",
                     translation = "cat",
                     isLearned = true
                 ),
-                WordTranslation(
+                WordTranslationModel(
                     id = 2,
                     quizItemId = 0,
                     word = "kaczka",
                     translation = "duck",
                     isLearned = true
                 ),
-                WordTranslation(
+                WordTranslationModel(
                     id = 3,
                     quizItemId = 0,
                     word = "krowa",
@@ -59,27 +59,27 @@ data class WordTranslation(
 
         val mockFood by lazy {
             listOf(
-                WordTranslation(
+                WordTranslationModel(
                     id = 4,
                     quizItemId = 1,
                     word = "zupa",
                     translation = "soup",
                     isLearned = true
                 ),
-                WordTranslation(
+                WordTranslationModel(
                     id = 5,
                     quizItemId = 1,
                     word = "ryż",
                     translation = "rice",
                     isLearned = true
                 ),
-                WordTranslation(
+                WordTranslationModel(
                     id = 6, quizItemId = 1,
                     word = "ser",
                     translation = "cheese",
                     isLearned = true
                 ),
-                WordTranslation(
+                WordTranslationModel(
                     id = 7,
                     quizItemId = 1,
                     word = "chleb",
@@ -91,27 +91,27 @@ data class WordTranslation(
 
         val mockSeasons by lazy {
             listOf(
-                WordTranslation(
+                WordTranslationModel(
                     id = 8,
                     quizItemId = 2,
                     word = "wiosna",
                     translation = "spring",
                     isLearned = true
                 ),
-                WordTranslation(
+                WordTranslationModel(
                     id = 9,
                     quizItemId = 2,
                     word = "lato",
                     translation = "summer",
                     isLearned = true
                 ),
-                WordTranslation(
+                WordTranslationModel(
                     id = 10,
                     quizItemId = 2,
                     word = "jesień",
                     translation = "autumn"
                 ),
-                WordTranslation(
+                WordTranslationModel(
                     id = 11,
                     quizItemId = 2,
                     word = "zima",

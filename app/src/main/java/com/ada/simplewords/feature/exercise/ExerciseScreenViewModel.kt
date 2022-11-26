@@ -5,14 +5,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.ada.simplewords.data.QuizData
-import com.ada.simplewords.domain.models.WordTranslation
+import com.ada.simplewords.domain.models.WordTranslationModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class ExerciseScreenViewModel @Inject constructor() : ViewModel() {
 
-    private var translations: List<WordTranslation>? = null
+    private var translations: List<WordTranslationModel>? = null
 
     var exerciseScreenState by
     mutableStateOf(ExerciseScreenState(getTranslation(), ValidationState.WAITING))
@@ -23,13 +23,13 @@ class ExerciseScreenViewModel @Inject constructor() : ViewModel() {
         }?.words
 
         exerciseScreenState = ExerciseScreenState(
-            currentWordTranslation = getTranslation(),
+            currentWordTranslationModel = getTranslation(),
             validationState = ValidationState.WAITING
         )
     }
 
     // TODO This get translation even if repeats is lower than 0. Change it.
-    private fun getTranslation(): WordTranslation? {
+    private fun getTranslation(): WordTranslationModel? {
         return if (hasNotLearnedWords())
             translations?.random()
         else null
@@ -47,7 +47,7 @@ class ExerciseScreenViewModel @Inject constructor() : ViewModel() {
         exerciseScreenState = when {
             answer.isMatchingTranslation() -> {
                 translations = translations?.map {
-                    if (it.id == exerciseScreenState.currentWordTranslation?.id) it.copy(
+                    if (it.id == exerciseScreenState.currentWordTranslationModel?.id) it.copy(
                         repeat = it.repeat - 1
                     ) else
                         it
@@ -60,24 +60,24 @@ class ExerciseScreenViewModel @Inject constructor() : ViewModel() {
     }
 
     private fun String.isMatchingTranslation() =
-        exerciseScreenState.currentWordTranslation?.translation?.lowercase() == this.lowercase()
+        exerciseScreenState.currentWordTranslationModel?.translation?.lowercase() == this.lowercase()
             .trim()
 
     fun next() {
         exerciseScreenState = exerciseScreenState.copy(
-            currentWordTranslation = getTranslation(),
+            currentWordTranslationModel = getTranslation(),
             validationState = ValidationState.WAITING
         )
     }
 }
 
 data class ExerciseScreenState(
-    val currentWordTranslation: WordTranslation?,
+    val currentWordTranslationModel: WordTranslationModel?,
     val validationState: ValidationState
 ) {
     companion object {
         fun mock() = ExerciseScreenState(
-            currentWordTranslation = WordTranslation.mockAnimals.first(),
+            currentWordTranslationModel = WordTranslationModel.mockAnimals.first(),
             validationState = ValidationState.WAITING
         )
     }

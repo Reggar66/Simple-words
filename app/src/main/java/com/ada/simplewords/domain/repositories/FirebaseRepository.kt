@@ -1,8 +1,8 @@
 package com.ada.simplewords.domain.repositories
 
 import com.ada.simplewords.domain.models.QuizItemModel
-import com.ada.simplewords.domain.models.User
-import com.ada.simplewords.domain.models.WordTranslation
+import com.ada.simplewords.domain.models.UserModel
+import com.ada.simplewords.domain.models.WordTranslationModel
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -21,17 +21,17 @@ class FirebaseRepository @Inject constructor() {
     private val database =
         Firebase.database("https://simple-words-a3e96-default-rtdb.europe-west1.firebasedatabase.app/")
 
-    private val userId = User.mockUserId() // TODO change to actual.
+    private val userId = UserModel.mockUserId() // TODO change to actual.
 
     private fun currentUserDatabaseRef() = database.getReference(userId)
     private fun userRef() = database.getReference("$userId/user")
     fun quizzesRef() = database.getReference("$userId/quizzes")
     private fun quizWordsRef() = database.getReference("$userId/quizWords")
 
-    fun saveUser(user: User) {
+    fun saveUser(userModel: UserModel) {
         val key = currentUserDatabaseRef().push().key
         key?.let {
-            userRef().setValue(user)
+            userRef().setValue(userModel)
         }
     }
 
@@ -42,7 +42,7 @@ class FirebaseRepository @Inject constructor() {
         }
     }
 
-    fun saveQuizWords(quizId: String, words: List<WordTranslation>) {
+    fun saveQuizWords(quizId: String, words: List<WordTranslationModel>) {
         quizWordsRef().child(quizId).setValue(words)
     }
 
