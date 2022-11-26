@@ -7,11 +7,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ada.simplewords.common.debugLog
 import com.ada.simplewords.data.QuizData
-import com.ada.simplewords.domain.models.QuizItemModel
 import com.ada.simplewords.domain.repositories.FirebaseRepository
 import com.ada.simplewords.domain.usecases.GetQuizzesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -39,7 +37,7 @@ class QuizListViewModel @Inject constructor(
             it.forEach {
                 newQuizzes.add(
                     QuizData(
-                        quizItem = it,
+                        quiz = it,
                         words = listOf(),
                         learnedWords = listOf()
                     )
@@ -58,7 +56,7 @@ class QuizListViewModel @Inject constructor(
                 // Sorts by completion first then by name, so completed quizzes are at the bottom.
                 compareBy(
                     { it.words.size == it.learnedWords.size },
-                    { it.quizItem.name },
+                    { it.quiz.name },
                 )
             )
         )

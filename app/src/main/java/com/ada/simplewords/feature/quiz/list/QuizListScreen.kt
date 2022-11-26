@@ -127,7 +127,7 @@ private fun BottomSheetContent(quizData: QuizData?, onLearnClick: OnClick) {
                 .padding(horizontal = 100.dp),
             shape = CircleShape
         ) {}
-        QuizDetailsScreen(quizId = quizData?.quizItem?.id, onLearnClick = onLearnClick)
+        QuizDetailsScreen(quizId = quizData?.quiz?.id, onLearnClick = onLearnClick)
     }
 }
 
@@ -141,11 +141,11 @@ private fun Quizzes(
             contentPadding = PaddingValues(4.dp),
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
-            items(items = quizData, key = { it.quizItem.id }) { itemQuizData ->
+            items(items = quizData, key = { it.quiz.id }) { itemQuizData ->
                 QuizItem(
                     modifier = Modifier
                         .animateItemPlacement(),
-                    quizItem = itemQuizData.quizItem,
+                    quiz = itemQuizData.quiz,
                     onClick = { onItemCLick(itemQuizData) })
             }
         }

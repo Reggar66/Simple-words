@@ -19,7 +19,7 @@ class ExerciseScreenViewModel @Inject constructor() : ViewModel() {
 
     fun getTranslationsForId(quizId: Int) {
         translations = QuizData.mock.find {
-            it.quizItem.id == quizId.toString()
+            it.quiz.id == quizId.toString()
         }?.words
 
         exerciseScreenState = ExerciseScreenState(

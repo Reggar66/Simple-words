@@ -28,13 +28,13 @@ fun QuizDetailsScreen(quizId: String?, onLearnClick: OnClick) {
     }
 
     var quiz: QuizData? by remember {
-        mutableStateOf(quizzes.find { it.quizItem.id == quizId })
+        mutableStateOf(quizzes.find { it.quiz.id == quizId })
     }
 
     LaunchedEffect(
         key1 = quizId,
         block = {
-            quiz = quizzes.find { it.quizItem.id == quizId }
+            quiz = quizzes.find { it.quiz.id == quizId }
         }
     )
     debugLog { "Fetched quiz: $quiz" }
