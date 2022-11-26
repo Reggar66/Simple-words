@@ -1,6 +1,6 @@
 package com.ada.simplewords.domain.models
 
-data class QuizItemModel(
+data class QuizModel(
     val id: String? = null,
     val name: String? = null,
     val wordsNumber: Int? = null,
@@ -8,35 +8,35 @@ data class QuizItemModel(
 ) {
     companion object {
         val mockAnimals by lazy {
-            QuizItemModel(
+            QuizModel(
                 id = "0",
                 name = "Animals",
                 wordsNumber = WordTranslationModel.mockAnimals.size,
-                completedWords = WordTranslationModel.mockAnimals.count { it.isLearned }
+                completedWords = WordTranslationModel.mockAnimals.count { it.learned == true }
             )
         }
 
         val mockFood by lazy {
-            QuizItemModel(
+            QuizModel(
                 id = "1",
                 name = "Food",
                 wordsNumber = WordTranslationModel.mockFoodCompleted.size,
-                completedWords = WordTranslationModel.mockFoodCompleted.count { it.isLearned })
+                completedWords = WordTranslationModel.mockFoodCompleted.count { it.learned == true })
         }
 
         val mockSeasons by lazy {
-            QuizItemModel(
+            QuizModel(
                 id = "2",
                 name = "Seasons",
                 wordsNumber = WordTranslationModel.mockSeasons.size,
-                completedWords = WordTranslationModel.mockSeasons.count { it.isLearned })
+                completedWords = WordTranslationModel.mockSeasons.count { it.learned == true })
         }
 
         val mockAnimalsCompleted by lazy {
-            QuizItemModel(id = "3",
+            QuizModel(id = "3",
                 name = "Animals Completed",
                 wordsNumber = WordTranslationModel.mockAnimalsCompleted.size,
-                completedWords = WordTranslationModel.mockAnimalsCompleted.count { it.isLearned }
+                completedWords = WordTranslationModel.mockAnimalsCompleted.count { it.learned == true }
             )
         }
     }

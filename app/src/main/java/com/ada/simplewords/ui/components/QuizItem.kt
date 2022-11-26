@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import com.ada.simplewords.common.OnClick
 import com.ada.simplewords.data.Quiz
 import com.ada.simplewords.data.toQuizItemOrNull
-import com.ada.simplewords.domain.models.QuizItemModel
+import com.ada.simplewords.domain.models.QuizModel
 import com.ada.simplewords.ui.components.utility.PreviewContainer
 import com.ada.simplewords.ui.theme.dimensions
 
@@ -40,7 +40,7 @@ fun QuizItem(modifier: Modifier = Modifier, quiz: Quiz, onClick: OnClick) {
 @Composable
 private fun QuizItemPreview() {
     PreviewContainer(modifier = Modifier.padding(8.dp)) {
-        QuizItem(quiz = QuizItemModel.mockSeasons.toQuizItemOrNull() ?: Quiz.empty()) {
+        QuizItem(quiz = QuizModel.mockSeasons.toQuizItemOrNull() ?: Quiz.empty()) {
 
         }
     }

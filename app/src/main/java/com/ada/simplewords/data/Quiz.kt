@@ -1,6 +1,6 @@
 package com.ada.simplewords.data
 
-import com.ada.simplewords.domain.models.QuizItemModel
+import com.ada.simplewords.domain.models.QuizModel
 
 data class Quiz(
     val id: String,
@@ -12,13 +12,19 @@ data class Quiz(
 
     companion object {
         fun empty() = Quiz(id = "", name = "", wordsNumber = 0, completedWords = 0)
+
+        fun mockQuizzes() = listOf(
+            QuizModel.mockAnimals.toQuizItemOrEmpty(),
+            QuizModel.mockFood.toQuizItemOrEmpty(),
+            QuizModel.mockSeasons.toQuizItemOrEmpty(),
+        )
     }
 }
 
 /**
- * Converts [QuizItemModel] to [Quiz] or returns null if any field is null.
+ * Converts [QuizModel] to [Quiz] or returns null if any field is null.
  */
-fun QuizItemModel.toQuizItemOrNull(): Quiz? {
+fun QuizModel.toQuizItemOrNull(): Quiz? {
     return Quiz(
         id = id ?: return null,
         name = name ?: return null,
@@ -28,9 +34,9 @@ fun QuizItemModel.toQuizItemOrNull(): Quiz? {
 }
 
 /**
- * Converts [QuizItemModel] to [Quiz] or returns [Quiz.empty] if any field is null.
+ * Converts [QuizModel] to [Quiz] or returns [Quiz.empty] if any field is null.
  */
-fun QuizItemModel.toQuizItemOrEmpty(): Quiz {
+fun QuizModel.toQuizItemOrEmpty(): Quiz {
     return Quiz(
         id = id ?: return Quiz.empty(),
         name = name ?: return Quiz.empty(),

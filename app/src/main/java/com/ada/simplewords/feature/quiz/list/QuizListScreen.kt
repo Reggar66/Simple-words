@@ -18,10 +18,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ada.simplewords.common.OnClick
 import com.ada.simplewords.common.OnClickTakes
-import com.ada.simplewords.data.QuizData
-import com.ada.simplewords.domain.models.QuizItemModel
+import com.ada.simplewords.data.Quiz
+import com.ada.simplewords.data.toQuizItemOrEmpty
+import com.ada.simplewords.domain.models.QuizModel
 import com.ada.simplewords.domain.models.UserModel
-import com.ada.simplewords.domain.models.WordTranslationModel
 import com.ada.simplewords.feature.quiz.details.QuizDetailsScreen
 import com.ada.simplewords.ui.components.QuizItem
 import com.ada.simplewords.ui.components.utility.PreviewContainer
@@ -29,7 +29,7 @@ import com.ada.simplewords.ui.navigation.SimpleNavigationTakes
 import kotlinx.coroutines.launch
 
 @Composable
-fun QuizListScreen(openExercise: SimpleNavigationTakes<QuizData>) {
+fun QuizListScreen(openExercise: SimpleNavigationTakes<Quiz>) {
     val viewModel = hiltViewModel<QuizListViewModel>()
     val state = viewModel.quizListState
 
@@ -40,7 +40,7 @@ fun QuizListScreen(openExercise: SimpleNavigationTakes<QuizData>) {
     Box {
         QuizListImpl(
             quizListState = state,
-            onLearnClick = { quizData -> openExercise(quizData) },
+            onLearnClick = { quiz -> openExercise(quiz) },
             onItemCLick = { viewModel.selectQuiz(it) })
 
         Button(
@@ -61,21 +61,21 @@ fun QuizListScreen(openExercise: SimpleNavigationTakes<QuizData>) {
                 Button(onClick = { viewModel.firebaseRepository.saveUser(UserModel.mock()) }) {
                     Text(text = "Generate Mock User")
                 }
-                Button(onClick = { viewModel.firebaseRepository.saveQuiz(QuizItemModel.mockAnimals) }) {
-                    Text(text = "Generate Mock Quiz")
+
+                Button(onClick = { viewModel.firebaseRepository.Debug().mockAnimals() }) {
+                    Text(text = "Generate Animals")
                 }
 
-                Button(onClick = { viewModel.firebaseRepository.saveQuiz(QuizItemModel.mockFood) }) {
-                    Text(text = "Generate Mock Quiz 2")
+                Button(onClick = { viewModel.firebaseRepository.Debug().mockAnimalsCompleted() }) {
+                    Text(text = "Generate Animals Completed")
                 }
 
-                Button(onClick = {
-                    viewModel.firebaseRepository.saveQuizWords(
-                        "-NHLALPJBHBDbKfnnQR1",
-                        WordTranslationModel.mockAnimals
-                    )
-                }) {
-                    Text(text = "Generate Mock Words")
+                Button(onClick = { viewModel.firebaseRepository.Debug().mockFood() }) {
+                    Text(text = "Generate Food")
+                }
+
+                Button(onClick = { viewModel.firebaseRepository.Debug().mockSeasons() }) {
+                    Text(text = "Generate Seasons")
                 }
             }
     }
@@ -84,8 +84,8 @@ fun QuizListScreen(openExercise: SimpleNavigationTakes<QuizData>) {
 @Composable
 private fun QuizListImpl(
     quizListState: QuizListScreenState,
-    onLearnClick: OnClickTakes<QuizData>,
-    onItemCLick: OnClickTakes<QuizData>
+    onLearnClick: OnClickTakes<Quiz>,
+    onItemCLick: OnClickTakes<Quiz>
 ) {
     val scaffoldState = rememberBottomSheetScaffoldState()
     val scope = rememberCoroutineScope()
@@ -93,7 +93,7 @@ private fun QuizListImpl(
     BottomSheetScaffold(
         sheetContent = {
             BottomSheetContent(
-                quizData = quizListState.currentlySelectedQuiz,
+                quiz = quizListState.currentlySelectedQuiz,
                 onLearnClick = { quizListState.currentlySelectedQuiz?.let { onLearnClick(it) } }
             )
         },
@@ -102,7 +102,7 @@ private fun QuizListImpl(
         sheetPeekHeight = 0.dp,
         content = {
             Quizzes(
-                quizData = quizListState.quizzes,
+                quiz = quizListState.quizzes,
                 onItemCLick = {
                     scope.launch {
                         if (scaffoldState.bottomSheetState.isExpanded)
@@ -116,7 +116,7 @@ private fun QuizListImpl(
 }
 
 @Composable
-private fun BottomSheetContent(quizData: QuizData?, onLearnClick: OnClick) {
+private fun BottomSheetContent(quiz: Quiz?, onLearnClick: OnClick) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Spacer(modifier = Modifier.height(8.dp))
         // TODO change card bar to something better.
@@ -127,26 +127,26 @@ private fun BottomSheetContent(quizData: QuizData?, onLearnClick: OnClick) {
                 .padding(horizontal = 100.dp),
             shape = CircleShape
         ) {}
-        QuizDetailsScreen(quizId = quizData?.quiz?.id, onLearnClick = onLearnClick)
+        QuizDetailsScreen(quizId = quiz?.id, onLearnClick = onLearnClick)
     }
 }
 
 @Composable
 private fun Quizzes(
-    quizData: List<QuizData>,
-    onItemCLick: OnClickTakes<QuizData>
+    quiz: List<Quiz>,
+    onItemCLick: OnClickTakes<Quiz>
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         LazyColumn(
             contentPadding = PaddingValues(4.dp),
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
-            items(items = quizData, key = { it.quiz.id }) { itemQuizData ->
+            items(items = quiz, key = { it.id }) { quizItem ->
                 QuizItem(
                     modifier = Modifier
                         .animateItemPlacement(),
-                    quiz = itemQuizData.quiz,
-                    onClick = { onItemCLick(itemQuizData) })
+                    quiz = quizItem,
+                    onClick = { onItemCLick(quizItem) })
             }
         }
     }
@@ -157,7 +157,7 @@ private fun Quizzes(
 @Composable
 private fun QuizListPreview() {
     PreviewContainer {
-        Quizzes(quizData = QuizData.mock, onItemCLick = {})
+        Quizzes(quiz = Quiz.mockQuizzes(), onItemCLick = {})
     }
 }
 
@@ -166,6 +166,6 @@ private fun QuizListPreview() {
 @Composable
 private fun BottomSheetPreview() {
     PreviewContainer {
-        BottomSheetContent(quizData = QuizData.mock.first(), onLearnClick = {})
+        BottomSheetContent(quiz = QuizModel.mockAnimals.toQuizItemOrEmpty(), onLearnClick = {})
     }
 }

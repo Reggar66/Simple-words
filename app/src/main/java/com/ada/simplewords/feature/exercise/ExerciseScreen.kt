@@ -17,15 +17,13 @@ import com.ada.simplewords.ui.components.utility.PreviewContainer
 /* TODO Exercise screen.*/
 
 @Composable
-fun ExerciseScreen(quizId: Int?) {
+fun ExerciseScreen(quizId: String) {
     // TODO viewModel stuff.
 
     val viewModel = hiltViewModel<ExerciseScreenViewModel>()
     val exerciseScreenState = viewModel.exerciseScreenState
     LaunchedEffect(key1 = quizId, block = {
-        if (quizId != null) {
-            viewModel.getTranslationsForId(quizId)
-        }
+        viewModel.getTranslationsForId(quizId)
     })
 
     ExerciseScreenImpl(
@@ -49,9 +47,9 @@ private fun ExerciseScreenImpl(
                 .padding(16.dp)
         ) {
             QuestionCard(
-                question = exerciseScreenState.currentWordTranslationModel?.word
+                question = exerciseScreenState.currentWordTranslation?.word
                     ?: "Couldn't load word :(",
-                repeats = exerciseScreenState.currentWordTranslationModel?.repeat ?: 0
+                repeats = exerciseScreenState.currentWordTranslation?.repeat ?: 0
             )
         }
         Column(

@@ -12,46 +12,39 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.ada.simplewords.common.OnClick
 import com.ada.simplewords.common.debugLog
-import com.ada.simplewords.data.QuizData
+import com.ada.simplewords.data.WordTranslation
+import com.ada.simplewords.data.toWordTranslationOrEmpty
+import com.ada.simplewords.domain.models.WordTranslationModel
+import com.ada.simplewords.feature.exercise.ExerciseScreenViewModel
 import com.ada.simplewords.ui.components.utility.PreviewContainer
 import com.ada.simplewords.ui.components.WordItem
 
 @Composable
 fun QuizDetailsScreen(quizId: String?, onLearnClick: OnClick) {
-
-    // TODO change to fetching data from db
-    // Simulate fetching from db
-    val quizzes by remember {
-        mutableStateOf(QuizData.mock)
-    }
-
-    var quiz: QuizData? by remember {
-        mutableStateOf(quizzes.find { it.quiz.id == quizId })
-    }
+    val viewModel = hiltViewModel<QuizDetailsViewModel>()
 
     LaunchedEffect(
         key1 = quizId,
         block = {
-            quiz = quizzes.find { it.quiz.id == quizId }
+            quizId?.let { viewModel.getTranslationsForId(it) }
         }
     )
-    debugLog { "Fetched quiz: $quiz" }
 
-    quiz?.let { QuizDetails(it, onLearnClick = onLearnClick) }
-
+    QuizDetails(viewModel.words, onLearnClick = onLearnClick)
 }
 
 @Composable
-private fun QuizDetails(quizData: QuizData, onLearnClick: OnClick) {
+private fun QuizDetails(words: List<WordTranslation>, onLearnClick: OnClick) {
     Box(modifier = Modifier.fillMaxWidth()) {
         LazyColumn(
             contentPadding = PaddingValues(start = 8.dp, top = 8.dp, end = 8.dp, bottom = 54.dp),
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
-            items(items = quizData.words) { item ->
-                WordItem(wordTranslationModel = item)
+            items(items = words) { item ->
+                WordItem(wordTranslation = item)
             }
         }
         Button(
@@ -71,6 +64,6 @@ private fun QuizDetails(quizData: QuizData, onLearnClick: OnClick) {
 @Composable
 private fun QuizDetailsPreview() {
     PreviewContainer {
-        QuizDetails(QuizData.mock.first()) { }
+        QuizDetails(WordTranslationModel.mockAnimals.map { it.toWordTranslationOrEmpty() }) { }
     }
 }

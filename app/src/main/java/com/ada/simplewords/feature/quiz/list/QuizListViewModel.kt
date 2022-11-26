@@ -6,7 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ada.simplewords.common.debugLog
-import com.ada.simplewords.data.QuizData
+import com.ada.simplewords.data.Quiz
 import com.ada.simplewords.domain.repositories.FirebaseRepository
 import com.ada.simplewords.domain.usecases.GetQuizzesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,7 +21,7 @@ class QuizListViewModel @Inject constructor(
     var quizListState by mutableStateOf(QuizListScreenState())
         private set
 
-    private var quizzes: List<QuizData> = emptyList()
+    private var quizzes: List<Quiz> = emptyList()
 
     init {
         fetchQuizzes()
@@ -32,19 +32,7 @@ class QuizListViewModel @Inject constructor(
         getQuizzesUseCase().collect {
             debugLog { "fetchQuizzes: downloaded: $it" }
 
-            val newQuizzes = mutableListOf<QuizData>()
-
-            it.forEach {
-                newQuizzes.add(
-                    QuizData(
-                        quiz = it,
-                        words = listOf(),
-                        learnedWords = listOf()
-                    )
-                )
-            }
-
-            quizzes = newQuizzes
+            quizzes = it
             sortByName()
         }
         debugLog { "fetchQuizzes: ended." }
@@ -55,14 +43,14 @@ class QuizListViewModel @Inject constructor(
             quizzes = quizzes.sortedWith(
                 // Sorts by completion first then by name, so completed quizzes are at the bottom.
                 compareBy(
-                    { it.words.size == it.learnedWords.size },
-                    { it.quiz.name },
+                    { it.wordsNumber == it.completedWords },
+                    { it.name },
                 )
             )
         )
     }
 
-    fun selectQuiz(quizData: QuizData) {
+    fun selectQuiz(quizData: Quiz) {
         quizListState = quizListState.copy(currentlySelectedQuiz = quizData)
     }
 
@@ -72,6 +60,6 @@ class QuizListViewModel @Inject constructor(
 }
 
 data class QuizListScreenState(
-    val quizzes: List<QuizData> = emptyList(),
-    val currentlySelectedQuiz: QuizData? = null
+    val quizzes: List<Quiz> = emptyList(),
+    val currentlySelectedQuiz: Quiz? = null
 )
