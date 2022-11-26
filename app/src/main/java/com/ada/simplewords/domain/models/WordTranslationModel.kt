@@ -57,7 +57,7 @@ data class WordTranslationModel(
             )
         }
 
-        val mockFood by lazy {
+        val mockFoodCompleted by lazy {
             listOf(
                 WordTranslationModel(
                     id = 4,

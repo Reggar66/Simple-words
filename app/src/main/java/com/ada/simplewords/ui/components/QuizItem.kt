@@ -13,22 +13,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ada.simplewords.common.OnClick
-import com.ada.simplewords.data.QuizData
+import com.ada.simplewords.data.QuizItem
+import com.ada.simplewords.data.toQuizItemOrNull
+import com.ada.simplewords.domain.models.QuizItemModel
 import com.ada.simplewords.ui.components.utility.PreviewContainer
 import com.ada.simplewords.ui.theme.dimensions
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun QuizItem(modifier: Modifier = Modifier, quizData: QuizData, onClick: OnClick) {
+fun QuizItem(modifier: Modifier = Modifier, quizItem: QuizItem, onClick: OnClick) {
     Card(
         modifier = modifier.fillMaxWidth(),
         onClick = onClick,
-        elevation = if (quizData.isComplete()) MaterialTheme.dimensions.quizItemCompleteElevation else MaterialTheme.dimensions.quizItemElevation
+        elevation = if (quizItem.isComplete) MaterialTheme.dimensions.quizItemCompleteElevation else MaterialTheme.dimensions.quizItemElevation
     ) {
         Column(modifier = Modifier.padding(4.dp)) {
-            quizData.quizItemModel.name?.let { Text(text = it) }
-            Text(text = "Words: ${quizData.words.size}")
-            Text(text = "Progress: ${quizData.learnedWords.size}/${quizData.words.size}")
+            quizItem.name?.let { Text(text = it) }
+            Text(text = "Words: ${quizItem.wordsNumber}")
+            Text(text = "Progress: ${quizItem.completedWords}/${quizItem.wordsNumber}")
         }
     }
 }
@@ -38,7 +40,7 @@ fun QuizItem(modifier: Modifier = Modifier, quizData: QuizData, onClick: OnClick
 @Composable
 private fun QuizItemPreview() {
     PreviewContainer(modifier = Modifier.padding(8.dp)) {
-        QuizItem(quizData = QuizData.mock.first()) {
+        QuizItem(quizItem = QuizItemModel.mockSeasons.toQuizItemOrNull() ?: QuizItem.empty()) {
 
         }
     }

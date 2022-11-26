@@ -17,15 +17,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class QuizListViewModel @Inject constructor(
-    val firebaseRepository: FirebaseRepository,
-    private val getQuizzesUseCase: GetQuizzesUseCase
-) :
-    ViewModel() {
+    val firebaseRepository: FirebaseRepository, private val getQuizzesUseCase: GetQuizzesUseCase
+) : ViewModel() {
 
     var quizListState by mutableStateOf(QuizListScreenState())
         private set
 
-    private var quizzes: List<QuizData> = emptyList() // TODO fetch with repository
+    private var quizzes: List<QuizData> = emptyList()
 
     init {
         fetchQuizzes()
@@ -41,7 +39,7 @@ class QuizListViewModel @Inject constructor(
             it.forEach {
                 newQuizzes.add(
                     QuizData(
-                        quizItemModel = it,
+                        quizItem = it,
                         words = listOf(),
                         learnedWords = listOf()
                     )
@@ -54,17 +52,16 @@ class QuizListViewModel @Inject constructor(
         debugLog { "fetchQuizzes: ended." }
     }
 
-    fun sortByName() {
-        quizListState =
-            QuizListScreenState(
-                quizzes = quizzes.sortedWith(
-                    // Sorts by completion first then by name, so completed quizzes are at the bottom.
-                    compareBy(
-                        { it.words.size == it.learnedWords.size },
-                        { it.quizItemModel.name },
-                    )
+    private fun sortByName() {
+        quizListState = QuizListScreenState(
+            quizzes = quizzes.sortedWith(
+                // Sorts by completion first then by name, so completed quizzes are at the bottom.
+                compareBy(
+                    { it.words.size == it.learnedWords.size },
+                    { it.quizItem.name },
                 )
             )
+        )
     }
 
     fun selectQuiz(quizData: QuizData) {

@@ -33,7 +33,6 @@ fun QuizListScreen(openExercise: SimpleNavigationTakes<QuizData>) {
     val viewModel = hiltViewModel<QuizListViewModel>()
     val state = viewModel.quizListState
 
-
     var showDebug by remember {
         mutableStateOf(false)
     }
@@ -128,7 +127,7 @@ private fun BottomSheetContent(quizData: QuizData?, onLearnClick: OnClick) {
                 .padding(horizontal = 100.dp),
             shape = CircleShape
         ) {}
-        QuizDetailsScreen(quizId = quizData?.quizItemModel?.id, onLearnClick = onLearnClick)
+        QuizDetailsScreen(quizId = quizData?.quizItem?.id, onLearnClick = onLearnClick)
     }
 }
 
@@ -142,11 +141,11 @@ private fun Quizzes(
             contentPadding = PaddingValues(4.dp),
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
-            items(items = quizData/*, key = { it.quizItem.id }*/) { itemQuizData ->
+            items(items = quizData, key = { it.quizItem.id }) { itemQuizData ->
                 QuizItem(
                     modifier = Modifier
                         .animateItemPlacement(),
-                    quizData = itemQuizData,
+                    quizItem = itemQuizData.quizItem,
                     onClick = { onItemCLick(itemQuizData) })
             }
         }
