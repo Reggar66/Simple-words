@@ -1,9 +1,6 @@
 package com.ada.simplewords.common.module.binders
 
-import com.ada.simplewords.domain.usecases.GetQuizzesUseCase
-import com.ada.simplewords.domain.usecases.GetQuizzesUseCaseImpl
-import com.ada.simplewords.domain.usecases.GetWordsUseCase
-import com.ada.simplewords.domain.usecases.GetWordsUseCaseImpl
+import com.ada.simplewords.domain.usecases.*
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -22,4 +19,9 @@ abstract class FirebaseModule {
     abstract fun bindGetWordsUseCase(
         getWordsUseCaseImpl: GetWordsUseCaseImpl
     ): GetWordsUseCase
+
+    @Binds
+    abstract fun bindGetWordsByOneUseCase(
+        getWordsByOneUseCaseImpl: GetWordsByOneUseCaseImpl
+    ): GetWordsByOneUseCase
 }

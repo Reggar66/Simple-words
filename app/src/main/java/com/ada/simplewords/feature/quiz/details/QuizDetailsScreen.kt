@@ -8,6 +8,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.runtime.snapshots.SnapshotStateMap
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -18,6 +19,7 @@ import com.ada.simplewords.common.debugLog
 import com.ada.simplewords.data.WordTranslation
 import com.ada.simplewords.data.toWordTranslationOrEmpty
 import com.ada.simplewords.domain.models.WordTranslationModel
+import com.ada.simplewords.domain.usecases.Key
 import com.ada.simplewords.feature.exercise.ExerciseScreenViewModel
 import com.ada.simplewords.ui.components.utility.PreviewContainer
 import com.ada.simplewords.ui.components.WordItem
@@ -29,22 +31,25 @@ fun QuizDetailsScreen(quizId: String?, onLearnClick: OnClick) {
     LaunchedEffect(
         key1 = quizId,
         block = {
-            quizId?.let { viewModel.getTranslationsForId(it) }
+            quizId?.let {
+                //viewModel.getTranslationsForId(it)
+                viewModel.getTranslationsForIdByOne(it)
+            }
         }
     )
 
-    QuizDetails(viewModel.words, onLearnClick = onLearnClick)
+    QuizDetails(viewModel.hashWords.toList(), onLearnClick = onLearnClick)
 }
 
 @Composable
-private fun QuizDetails(words: List<WordTranslation>, onLearnClick: OnClick) {
+private fun QuizDetails(words: List<Pair<Key, WordTranslation>>, onLearnClick: OnClick) {
     Box(modifier = Modifier.fillMaxWidth()) {
         LazyColumn(
             contentPadding = PaddingValues(start = 8.dp, top = 8.dp, end = 8.dp, bottom = 54.dp),
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
             items(items = words) { item ->
-                WordItem(wordTranslation = item)
+                WordItem(wordTranslation = item.second)
             }
         }
         Button(
@@ -64,6 +69,11 @@ private fun QuizDetails(words: List<WordTranslation>, onLearnClick: OnClick) {
 @Composable
 private fun QuizDetailsPreview() {
     PreviewContainer {
-        QuizDetails(WordTranslationModel.mockAnimals.map { it.toWordTranslationOrEmpty() }) { }
+        QuizDetails(
+            WordTranslationModel.mockAnimals
+                .mapIndexed { index, wordTranslationModel ->
+                    index.toString() to wordTranslationModel.toWordTranslationOrEmpty()
+                }
+        ) { }
     }
 }
