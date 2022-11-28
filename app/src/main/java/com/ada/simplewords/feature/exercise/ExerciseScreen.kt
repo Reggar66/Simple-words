@@ -20,7 +20,9 @@ fun ExerciseScreen(quizId: String?) {
     val exerciseScreenState = viewModel.exerciseScreenState
 
     LaunchedEffect(key1 = quizId, block = {
-        quizId?.let { viewModel.getTranslationsForId(it) }
+        quizId?.let {
+            viewModel.observeTranslations(quizId = it)
+        }
     })
 
     ExerciseScreenImpl(

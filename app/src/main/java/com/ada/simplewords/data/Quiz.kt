@@ -8,6 +8,7 @@ data class Quiz(
     val name: String,
     val wordsNumber: Int,
     val completedWords: Int
+    // TODO add languages that are used i.e. Pair("Polish", "English")
 ) {
     val isComplete get() = completedWords == wordsNumber
 
