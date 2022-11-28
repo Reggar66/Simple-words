@@ -10,6 +10,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Add
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,9 +21,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.ada.simplewords.common.OnClick
 import com.ada.simplewords.common.OnClickTakes
 import com.ada.simplewords.data.Quiz
-import com.ada.simplewords.data.toQuizItemOrEmpty
+import com.ada.simplewords.data.mapper.toQuizItemOrEmpty
 import com.ada.simplewords.domain.models.QuizModel
 import com.ada.simplewords.domain.models.UserModel
+import com.ada.simplewords.feature.quiz.create.CreateQuizScreen
 import com.ada.simplewords.feature.quiz.details.QuizDetailsScreen
 import com.ada.simplewords.ui.components.QuizItem
 import com.ada.simplewords.ui.components.utility.PreviewContainer
@@ -41,7 +44,7 @@ fun QuizListScreen(openExercise: SimpleNavigationTakes<Quiz>) {
         QuizListImpl(
             quizListState = state,
             onLearnClick = { quiz -> openExercise(quiz) },
-            onItemCLick = { viewModel.selectQuiz(it) })
+            onItemClick = { viewModel.selectQuiz(it) })
 
         Button(
             modifier = Modifier.align(Alignment.BottomStart),
@@ -81,20 +84,29 @@ fun QuizListScreen(openExercise: SimpleNavigationTakes<Quiz>) {
     }
 }
 
+enum class BottomContent {
+    Words,
+    Create
+}
+
 @Composable
 private fun QuizListImpl(
     quizListState: QuizListScreenState,
     onLearnClick: OnClickTakes<Quiz>,
-    onItemCLick: OnClickTakes<Quiz>
+    onItemClick: OnClickTakes<Quiz>
 ) {
     val scaffoldState = rememberBottomSheetScaffoldState()
     val scope = rememberCoroutineScope()
+    val bottomContent = remember {
+        mutableStateOf(BottomContent.Words)
+    }
 
     BottomSheetScaffold(
         sheetContent = {
             BottomSheetContent(
                 quiz = quizListState.currentlySelectedQuiz,
-                onLearnClick = { quizListState.currentlySelectedQuiz?.let { onLearnClick(it) } }
+                onLearnClick = { quizListState.currentlySelectedQuiz?.let { onLearnClick(it) } },
+                bottomContent = bottomContent.value
             )
         },
         scaffoldState = scaffoldState,
@@ -105,18 +117,37 @@ private fun QuizListImpl(
                 quiz = quizListState.quizzes,
                 onItemCLick = {
                     scope.launch {
-                        if (scaffoldState.bottomSheetState.isExpanded)
-                            scaffoldState.bottomSheetState.collapse()
-                        onItemCLick(it)
+                        scaffoldState.bottomSheetState.collapse()
+                        bottomContent.value = BottomContent.Words
+
+                        onItemClick(it)
                         scaffoldState.bottomSheetState.expand()
                     }
                 }
             )
-        })
+        },
+        floatingActionButton = {
+            FloatingActionButton(onClick = {
+                scope.launch {
+                    scaffoldState.bottomSheetState.collapse()
+                    bottomContent.value = BottomContent.Create
+
+                    scaffoldState.bottomSheetState.expand()
+                }
+            }) {
+                Icon(imageVector = Icons.Rounded.Add, contentDescription = null)
+            }
+        },
+        floatingActionButtonPosition = FabPosition.End
+    )
 }
 
 @Composable
-private fun BottomSheetContent(quiz: Quiz?, onLearnClick: OnClick) {
+private fun BottomSheetContent(
+    quiz: Quiz?,
+    onLearnClick: OnClick,
+    bottomContent: BottomContent = BottomContent.Words
+) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Spacer(modifier = Modifier.height(8.dp))
         // TODO change card bar to something better.
@@ -127,7 +158,11 @@ private fun BottomSheetContent(quiz: Quiz?, onLearnClick: OnClick) {
                 .padding(horizontal = 100.dp),
             shape = CircleShape
         ) {}
-        QuizDetailsScreen(quizId = quiz?.id, onLearnClick = onLearnClick)
+
+        when (bottomContent) {
+            BottomContent.Words -> QuizDetailsScreen(quizId = quiz?.id, onLearnClick = onLearnClick)
+            BottomContent.Create -> CreateQuizScreen()
+        }
     }
 }
 

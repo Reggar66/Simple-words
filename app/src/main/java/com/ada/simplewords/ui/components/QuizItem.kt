@@ -14,7 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ada.simplewords.common.OnClick
 import com.ada.simplewords.data.Quiz
-import com.ada.simplewords.data.toQuizItemOrNull
+import com.ada.simplewords.data.mapper.toQuizItemOrNull
 import com.ada.simplewords.domain.models.QuizModel
 import com.ada.simplewords.ui.components.utility.PreviewContainer
 import com.ada.simplewords.ui.theme.dimensions

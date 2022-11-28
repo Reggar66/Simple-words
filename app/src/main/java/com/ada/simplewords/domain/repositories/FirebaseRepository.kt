@@ -37,7 +37,7 @@ class FirebaseRepository @Inject constructor() {
     }
 
     /**
-     * Saves [QuizModel] to database.
+     * Saves [QuizModel] to database with newly generated key.
      * @return String key for saved quiz or null if unsuccessful.
      */
     fun saveQuiz(quizModel: QuizModel): String? {

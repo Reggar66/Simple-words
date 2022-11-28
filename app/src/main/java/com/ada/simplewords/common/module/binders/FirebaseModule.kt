@@ -24,4 +24,9 @@ abstract class FirebaseModule {
     abstract fun bindGetWordsByOneUseCase(
         getWordsByOneUseCaseImpl: GetWordsByOneUseCaseImpl
     ): GetWordsByOneUseCase
+
+    @Binds
+    abstract fun bindCreateQuiz(
+        createQuizUseCaseImpl: CreateQuizUseCaseImpl
+    ): CreateQuizUseCase
 }
