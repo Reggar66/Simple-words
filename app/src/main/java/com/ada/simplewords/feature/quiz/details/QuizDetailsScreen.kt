@@ -8,19 +8,16 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
-import androidx.compose.runtime.snapshots.SnapshotStateMap
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ada.simplewords.common.OnClick
-import com.ada.simplewords.common.debugLog
 import com.ada.simplewords.data.WordTranslation
 import com.ada.simplewords.data.toWordTranslationOrEmpty
 import com.ada.simplewords.domain.models.WordTranslationModel
 import com.ada.simplewords.domain.usecases.Key
-import com.ada.simplewords.feature.exercise.ExerciseScreenViewModel
 import com.ada.simplewords.ui.components.utility.PreviewContainer
 import com.ada.simplewords.ui.components.WordItem
 
@@ -32,8 +29,7 @@ fun QuizDetailsScreen(quizId: String?, onLearnClick: OnClick) {
         key1 = quizId,
         block = {
             quizId?.let {
-                //viewModel.getTranslationsForId(it)
-                viewModel.getTranslationsForIdByOne(it)
+                viewModel.observeWords(it)
             }
         }
     )

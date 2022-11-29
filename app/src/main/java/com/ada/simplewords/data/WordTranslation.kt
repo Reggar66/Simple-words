@@ -3,7 +3,7 @@ package com.ada.simplewords.data
 import com.ada.simplewords.domain.models.WordTranslationModel
 
 data class WordTranslation(
-    val id: Int,
+    val id: Long,
     val quizItemId: String,
     val word: String,
     val translation: String,

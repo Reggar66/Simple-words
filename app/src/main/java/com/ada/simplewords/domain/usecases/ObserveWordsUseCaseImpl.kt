@@ -18,9 +18,8 @@ private const val PREFIX = "GetWordsByOneUseCase:"
 
 typealias Key = String // TODO move to somewhere.
 
-// TODO Change name to observe?
-class GetWordsByOneUseCaseImpl @Inject constructor(private val firebaseRepository: FirebaseRepository) :
-    GetWordsByOneUseCase {
+class ObserveWordsUseCaseImpl @Inject constructor(private val firebaseRepository: FirebaseRepository) :
+    ObserveWordsUseCase {
     override fun invoke(quizId: String): Flow<WordResult> = callbackFlow {
         val wordsRef = firebaseRepository.wordsRef(quizId)
 
@@ -42,6 +41,17 @@ class GetWordsByOneUseCaseImpl @Inject constructor(private val firebaseRepositor
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
                 debugLog { "$PREFIX onChildChanged: $snapshot" }
+
+                val wordTranslation =
+                    snapshot.getValue<WordTranslationModel>()?.toWordTranslationOrNull()
+
+                snapshot.key?.let { key ->
+                    wordTranslation?.let { translation ->
+                        trySend(WordResult(Event.Changed, key to translation)).also {
+                            debugLog { "$PREFIX tried send: $wordTranslation" }
+                        }
+                    }
+                }
             }
 
             override fun onChildRemoved(snapshot: DataSnapshot) {

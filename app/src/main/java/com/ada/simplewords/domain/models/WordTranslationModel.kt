@@ -1,13 +1,25 @@
 package com.ada.simplewords.domain.models
 
+import com.ada.simplewords.domain.usecases.Key
+
 data class WordTranslationModel(
-    val id: Int? = null,
+    val id: Long? = null, // TODO remove id field, or set it with generated key from database.
     val quizItemId: String? = null,
     val word: String? = null,
     val translation: String? = null,
     val learned: Boolean? = null,
     val repeat: Int? = null
 ) {
+
+    fun toMap() = mapOf<Key, Any?>(
+        "id" to id,
+        "quizItemId" to quizItemId,
+        "word" to word,
+        "translation" to translation,
+        "learned" to learned,
+        "repeat" to repeat
+    )
+
     companion object {
         val mockAnimals by lazy {
             listOf(

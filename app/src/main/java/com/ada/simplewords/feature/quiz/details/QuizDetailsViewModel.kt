@@ -9,7 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.ada.simplewords.common.debugLog
 import com.ada.simplewords.data.WordTranslation
 import com.ada.simplewords.domain.usecases.Event
-import com.ada.simplewords.domain.usecases.GetWordsByOneUseCase
+import com.ada.simplewords.domain.usecases.ObserveWordsUseCase
 import com.ada.simplewords.domain.usecases.GetWordsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -20,7 +20,7 @@ private const val PREFIX = "QuizDetailsViewModel:"
 @HiltViewModel
 class QuizDetailsViewModel @Inject constructor(
     private val getWordsUseCase: GetWordsUseCase,
-    private val getWordsByOneUseCase: GetWordsByOneUseCase
+    private val observeWordsUseCase: ObserveWordsUseCase
 ) :
     ViewModel() {
 
@@ -34,15 +34,18 @@ class QuizDetailsViewModel @Inject constructor(
         }
     }
 
-    fun getTranslationsForIdByOne(quizId: String) = viewModelScope.launch {
-        getWordsByOneUseCase(quizId = quizId).collect {
+    fun observeWords(quizId: String) = viewModelScope.launch {
+        hashWords.clear()
+        observeWordsUseCase(quizId = quizId).collect {
             debugLog { "$PREFIX Received: $it" }
 
             when (it.event) {
                 Event.Added -> hashWords[it.word.first] = it.word.second
-                Event.Changed -> {/* TODO */}
+                Event.Changed -> {/* TODO */
+                }
                 Event.Removed -> hashWords.remove(it.word.first)
-                Event.Moved -> {/* TODO */}
+                Event.Moved -> {/* TODO */
+                }
             }
         }
     }

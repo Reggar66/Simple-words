@@ -21,12 +21,17 @@ abstract class FirebaseModule {
     ): GetWordsUseCase
 
     @Binds
-    abstract fun bindGetWordsByOneUseCase(
-        getWordsByOneUseCaseImpl: GetWordsByOneUseCaseImpl
-    ): GetWordsByOneUseCase
+    abstract fun bindObserveWordsUseCase(
+        observeWordsUseCaseImpl: ObserveWordsUseCaseImpl
+    ): ObserveWordsUseCase
 
     @Binds
     abstract fun bindCreateQuiz(
         createQuizUseCaseImpl: CreateQuizUseCaseImpl
     ): CreateQuizUseCase
+
+    @Binds
+    abstract fun bindUpdateWordUseCase(
+        updateWordUseCaseImpl: UpdateWordUseCaseImpl
+    ): UpdateWordUseCase
 }

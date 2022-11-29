@@ -1,10 +1,13 @@
 package com.ada.simplewords.domain.repositories
 
+import com.ada.simplewords.common.debugLog
 import com.ada.simplewords.domain.models.QuizModel
 import com.ada.simplewords.domain.models.UserModel
 import com.ada.simplewords.domain.models.WordTranslationModel
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.DatabaseReference.CompletionListener
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -13,6 +16,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Inject
 
+private const val TAG = "FirebaseRepository"
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -28,6 +32,8 @@ class FirebaseRepository @Inject constructor() {
     fun quizzesRef() = database.getReference("$userId/quizzes")
     private fun quizWordsRef() = database.getReference("$userId/quizWords")
     fun wordsRef(quizId: String) = database.getReference("$userId/quizWords/$quizId")
+    private fun wordRef(quizId: String, wordId: Long) =
+        database.getReference("$userId/quizWords/$quizId/$wordId")
 
     fun saveUser(userModel: UserModel) {
         val key = currentUserDatabaseRef().push().key
@@ -52,16 +58,18 @@ class FirebaseRepository @Inject constructor() {
         quizWordsRef().child(quizId).setValue(words)
     }
 
-    fun getQuizzes() {
-        quizzesRef().addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                TODO("Not yet implemented")
+    fun updateWord(wordTranslationModel: WordTranslationModel) {
+        wordTranslationModel.apply {
+            quizItemId?.let { quizId ->
+                id?.let { wordId ->
+                    wordRef(quizId, wordId).updateChildren(
+                        wordTranslationModel.toMap()
+                    ) { error, ref ->
+                        debugLog(TAG) { "updateWord, onComplete: error: $error | ref: $ref" }
+                    }
+                }
             }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-        })
+        }
     }
 
     inner class Debug {
