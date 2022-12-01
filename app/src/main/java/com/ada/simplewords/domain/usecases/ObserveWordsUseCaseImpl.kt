@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import javax.inject.Inject
 
-private const val PREFIX = "GetWordsByOneUseCase:"
+private const val PREFIX = "ObserveWordsByOneUseCase:"
 
 class ObserveWordsUseCaseImpl @Inject constructor(private val firebaseRepository: FirebaseRepository) :
     ObserveWordsUseCase {

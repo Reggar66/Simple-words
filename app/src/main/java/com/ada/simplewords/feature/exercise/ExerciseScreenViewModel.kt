@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ada.simplewords.common.Key
 import com.ada.simplewords.common.debugLog
+import com.ada.simplewords.data.Quiz
 import com.ada.simplewords.data.WordTranslation
 import com.ada.simplewords.data.toWordTranslationOrEmpty
 import com.ada.simplewords.domain.models.WordTranslationModel
@@ -17,17 +18,25 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ExerciseScreenViewModel @Inject constructor(
-    private val getWordsUseCase: GetWordsUseCase,
     private val observeWordsUseCase: ObserveWordsUseCase,
-    private val updateWordUseCase: UpdateWordUseCase
+    private val updateWordUseCase: UpdateWordUseCase,
+    private val observeQuizUseCase: ObserveQuizUseCase,
+    private val updateQuizUseCase: UpdateQuizUseCase
 ) : ViewModel() {
 
+    private var quiz: Quiz? = null
     private val words = mutableMapOf<Key, WordTranslation>()
 
     var exerciseScreenState by
     mutableStateOf(ExerciseScreenState(getTranslation(), ValidationState.WAITING))
 
-    fun observeTranslations(quizId: String) = viewModelScope.launch {
+    fun observeQuiz(quizId: Key) = viewModelScope.launch {
+        observeQuizUseCase.invoke(quizId).collect {
+            quiz = it
+        }
+    }
+
+    fun observeTranslations(quizId: Key) = viewModelScope.launch {
         debugLog { "observeTranslations: Start" }
         observeWordsUseCase.invoke(quizId = quizId).collect {
             when (it.event) {
@@ -39,6 +48,7 @@ class ExerciseScreenViewModel @Inject constructor(
                     debugLog { "Before: ${words[it.word.first]} | ${it.word.second}" }
                     words[it.word.first] = it.word.second
                     debugLog { "After: ${words[it.word.first]} | ${it.word.second}" }
+                    updateQuiz()
                 }
                 else -> {
                     /*Nothing*/
@@ -46,6 +56,31 @@ class ExerciseScreenViewModel @Inject constructor(
             }
         }
         debugLog { "observeTranslations: End" }
+    }
+
+    fun validate(answer: String) {
+        exerciseScreenState = when {
+            answer.isMatchingTranslation() -> {
+                alterRepeats()
+                exerciseScreenState.copy(validationState = ValidationState.CORRECT)
+            }
+            else -> exerciseScreenState.copy(validationState = ValidationState.WRONG)
+        }
+    }
+
+    fun next() {
+        exerciseScreenState = exerciseScreenState.copy(
+            currentWordTranslation = getTranslation(),
+            validationState = ValidationState.WAITING
+        )
+    }
+
+    private fun updateQuiz() {
+        val completedWords = countCompletedWords()
+        if (quiz?.completedWords != completedWords)
+            quiz?.let {
+                updateQuizUseCase.invoke(it.copy(completedWords = completedWords))
+            }
     }
 
     private fun getTranslation(): WordTranslation? {
@@ -62,16 +97,6 @@ class ExerciseScreenViewModel @Inject constructor(
         return false
     }
 
-    fun validate(answer: String) {
-        exerciseScreenState = when {
-            answer.isMatchingTranslation() -> {
-                alterRepeats()
-                exerciseScreenState.copy(validationState = ValidationState.CORRECT)
-            }
-            else -> exerciseScreenState.copy(validationState = ValidationState.WRONG)
-        }
-    }
-
     private fun alterRepeats() {
         val currentWord = exerciseScreenState.currentWordTranslation
         currentWord?.let {
@@ -81,19 +106,14 @@ class ExerciseScreenViewModel @Inject constructor(
     }
 
     private fun isAllLearned(): Boolean {
-        return words.size == words.toList().count { it.second.isLearned }
+        return words.size == countCompletedWords()
     }
+
+    private fun countCompletedWords() = words.toList().count { it.second.isLearned }
 
     private fun String.isMatchingTranslation() =
         exerciseScreenState.currentWordTranslation?.translation?.lowercase() == this.lowercase()
             .trim()
-
-    fun next() {
-        exerciseScreenState = exerciseScreenState.copy(
-            currentWordTranslation = getTranslation(),
-            validationState = ValidationState.WAITING
-        )
-    }
 }
 
 data class ExerciseScreenState(

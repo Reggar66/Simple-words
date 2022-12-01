@@ -21,6 +21,7 @@ fun ExerciseScreen(quizId: String?) {
 
     LaunchedEffect(key1 = quizId, block = {
         quizId?.let {
+            viewModel.observeQuiz(quizId = it)
             viewModel.observeTranslations(quizId = it)
         }
     })

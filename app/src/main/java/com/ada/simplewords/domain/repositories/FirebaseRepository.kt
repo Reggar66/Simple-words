@@ -26,7 +26,7 @@ class FirebaseRepository @Inject constructor() {
     private fun currentUserDatabaseRef() = database.getReference(userId)
     private fun userRef() = database.getReference("$userId/user")
     fun quizzesRef() = database.getReference("$userId/quizzes")
-    private fun quizRef(quizId: Key) = database.getReference("$userId/quizzes/$quizId")
+    fun quizRef(quizId: Key) = database.getReference("$userId/quizzes/$quizId")
     private fun quizWordsRef() = database.getReference("$userId/quizWords")
     fun wordsRef(quizId: Key) = database.getReference("$userId/quizWords/$quizId")
     private fun wordRef(quizId: Key, wordId: Key) =
