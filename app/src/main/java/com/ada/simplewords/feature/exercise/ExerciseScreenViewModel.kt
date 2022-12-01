@@ -69,10 +69,14 @@ class ExerciseScreenViewModel @Inject constructor(
     }
 
     fun next() {
-        exerciseScreenState = exerciseScreenState.copy(
-            currentWordTranslation = getTranslation(),
-            validationState = ValidationState.WAITING
-        )
+        exerciseScreenState = if (isAllLearned())
+            exerciseScreenState.copy(completed = true)
+        else {
+            exerciseScreenState.copy(
+                currentWordTranslation = getTranslation(),
+                validationState = ValidationState.WAITING
+            )
+        }
     }
 
     private fun updateQuiz() {

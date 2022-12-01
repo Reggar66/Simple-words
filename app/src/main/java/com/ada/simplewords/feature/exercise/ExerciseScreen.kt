@@ -14,6 +14,9 @@ import com.ada.simplewords.common.OnClick
 import com.ada.simplewords.common.OnClickTakes
 import com.ada.simplewords.ui.components.utility.PreviewContainer
 
+
+/* TODO Show completed message */
+
 @Composable
 fun ExerciseScreen(quizId: String?) {
     val viewModel = hiltViewModel<ExerciseScreenViewModel>()
@@ -77,12 +80,15 @@ private fun ExerciseScreenImpl(
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            AnswerCard(onValidate = {
-                if (exerciseScreenState.validationState == ValidationState.CORRECT)
-                    onNextClick()
-                else
-                    onValidate(it)
-            })
+            AnswerCard(
+                onValidate = {
+                    if (exerciseScreenState.validationState == ValidationState.CORRECT)
+                        onNextClick()
+                    else
+                        onValidate(it)
+                },
+                validationState = exerciseScreenState.validationState
+            )
         }
     }
 }
@@ -96,10 +102,16 @@ private fun QuestionCard(question: String, repeats: Int) {
 }
 
 @Composable
-private fun AnswerCard(onValidate: OnClickTakes<String>) {
+private fun AnswerCard(onValidate: OnClickTakes<String>, validationState: ValidationState) {
     var inputText by remember {
         mutableStateOf("")
     }
+
+    LaunchedEffect(key1 = validationState, block = {
+        if (validationState == ValidationState.WAITING)
+            inputText = ""
+    })
+
     Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
         Box(modifier = Modifier.weight(1f)) {
             OutlinedTextField(modifier = Modifier
@@ -110,7 +122,7 @@ private fun AnswerCard(onValidate: OnClickTakes<String>) {
                 label = { Text(text = "Answer") })
         }
         Button(onClick = { onValidate(inputText) }) {
-            Text(text = "Submit")
+            Text(text = if (validationState == ValidationState.CORRECT) "Next" else "Submit")
         }
     }
 }
