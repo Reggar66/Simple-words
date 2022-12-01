@@ -31,6 +31,8 @@ import com.ada.simplewords.ui.components.utility.PreviewContainer
 import com.ada.simplewords.ui.navigation.SimpleNavigationTakes
 import kotlinx.coroutines.launch
 
+/* TODO block opening completed quiz. Add option to redo completed quiz from beginning */
+
 @Composable
 fun QuizListScreen(openExercise: SimpleNavigationTakes<Quiz>) {
     val viewModel = hiltViewModel<QuizListViewModel>()
