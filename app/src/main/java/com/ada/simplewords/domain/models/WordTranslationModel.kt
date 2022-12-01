@@ -1,9 +1,9 @@
 package com.ada.simplewords.domain.models
 
-import com.ada.simplewords.domain.usecases.Key
+import com.ada.simplewords.common.Key
 
 data class WordTranslationModel(
-    val id: Long? = null, // TODO remove id field, or set it with generated key from database.
+    val id: Key? = null,
     val quizItemId: String? = null,
     val word: String? = null,
     val translation: String? = null,
@@ -24,7 +24,7 @@ data class WordTranslationModel(
         val mockAnimals by lazy {
             listOf(
                 WordTranslationModel(
-                    id = 0,
+                    id = "0",
                     quizItemId = "0",
                     word = "pies",
                     translation = "dog",
@@ -32,7 +32,7 @@ data class WordTranslationModel(
                     repeat = 3
                 ),
                 WordTranslationModel(
-                    id = 1, 
+                    id = "1",
                     quizItemId = "0",
                     word = "kot",
                     translation = "cat",
@@ -40,7 +40,7 @@ data class WordTranslationModel(
                     repeat = 3
                 ),
                 WordTranslationModel(
-                    id = 2, 
+                    id = "2",
                     quizItemId = "0",
                     word = "kaczka",
                     translation = "duck",
@@ -48,7 +48,7 @@ data class WordTranslationModel(
                     repeat = 3
                 ),
                 WordTranslationModel(
-                    id = 3, 
+                    id = "3",
                     quizItemId = "0",
                     word = "krowa",
                     translation = "cow",
@@ -61,7 +61,7 @@ data class WordTranslationModel(
         val mockAnimalsCompleted by lazy {
             listOf(
                 WordTranslationModel(
-                    id = 0,
+                    id = "0",
                     quizItemId = "0",
                     word = "pies",
                     translation = "dog",
@@ -69,7 +69,7 @@ data class WordTranslationModel(
                     repeat = 3
                 ),
                 WordTranslationModel(
-                    id = 1,
+                    id = "1",
                     quizItemId = "0",
                     word = "kot",
                     translation = "cat",
@@ -77,7 +77,7 @@ data class WordTranslationModel(
                     repeat = 3
                 ),
                 WordTranslationModel(
-                    id = 2,
+                    id = "2",
                     quizItemId = "0",
                     word = "kaczka",
                     translation = "duck",
@@ -85,7 +85,7 @@ data class WordTranslationModel(
                     repeat = 3
                 ),
                 WordTranslationModel(
-                    id = 3,
+                    id = "3",
                     quizItemId = "0",
                     word = "krowa",
                     translation = "cow",
@@ -98,7 +98,7 @@ data class WordTranslationModel(
         val mockFoodCompleted by lazy {
             listOf(
                 WordTranslationModel(
-                    id = 4,
+                    id = "4",
                     quizItemId = "0",
                     word = "zupa",
                     translation = "soup",
@@ -106,7 +106,7 @@ data class WordTranslationModel(
                     repeat = 3
                 ),
                 WordTranslationModel(
-                    id = 5,
+                    id = "5",
                     quizItemId = "0",
                     word = "ryż",
                     translation = "rice",
@@ -114,14 +114,14 @@ data class WordTranslationModel(
                     repeat = 3
                 ),
                 WordTranslationModel(
-                    id = 6, quizItemId = "0",
+                    id = "6", quizItemId = "0",
                     word = "ser",
                     translation = "cheese",
                     learned = true,
                     repeat = 3
                 ),
                 WordTranslationModel(
-                    id = 7,
+                    id = "7",
                     quizItemId = "0",
                     word = "chleb",
                     translation = "bread",
@@ -134,7 +134,7 @@ data class WordTranslationModel(
         val mockSeasons by lazy {
             listOf(
                 WordTranslationModel(
-                    id = 8,
+                    id = "8",
                     quizItemId = "0",
                     word = "wiosna",
                     translation = "spring",
@@ -142,7 +142,7 @@ data class WordTranslationModel(
                     repeat = 3
                 ),
                 WordTranslationModel(
-                    id = 9,
+                    id = "9",
                     quizItemId = "0",
                     word = "lato",
                     translation = "summer",
@@ -150,7 +150,7 @@ data class WordTranslationModel(
                     repeat = 3
                 ),
                 WordTranslationModel(
-                    id = 10,
+                    id = "10",
                     quizItemId = "0",
                     word = "jesień",
                     translation = "autumn",
@@ -158,7 +158,7 @@ data class WordTranslationModel(
                     repeat = 3
                 ),
                 WordTranslationModel(
-                    id = 11,
+                    id = "11",
                     quizItemId = "0",
                     word = "zima",
                     translation = "winter",

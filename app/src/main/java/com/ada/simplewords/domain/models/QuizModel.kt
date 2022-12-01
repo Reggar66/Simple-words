@@ -1,11 +1,21 @@
 package com.ada.simplewords.domain.models
 
+import com.ada.simplewords.common.Key
+
 data class QuizModel(
-    val id: String? = null,
+    val id: Key? = null,
     val name: String? = null,
     val wordsNumber: Int? = null,
     val completedWords: Int? = null
 ) {
+
+    fun toMap() = mapOf<Key, Any?>(
+        "id" to id,
+        "name" to name,
+        "wordsNumber" to wordsNumber,
+        "completedWords" to completedWords
+    )
+
     companion object {
         val mockAnimals by lazy {
             QuizModel(

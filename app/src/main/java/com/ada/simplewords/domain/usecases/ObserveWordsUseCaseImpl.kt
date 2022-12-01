@@ -1,5 +1,6 @@
 package com.ada.simplewords.domain.usecases
 
+import com.ada.simplewords.common.Key
 import com.ada.simplewords.common.debugLog
 import com.ada.simplewords.data.WordTranslation
 import com.ada.simplewords.data.toWordTranslationOrNull
@@ -15,8 +16,6 @@ import kotlinx.coroutines.flow.callbackFlow
 import javax.inject.Inject
 
 private const val PREFIX = "GetWordsByOneUseCase:"
-
-typealias Key = String // TODO move to somewhere.
 
 class ObserveWordsUseCaseImpl @Inject constructor(private val firebaseRepository: FirebaseRepository) :
     ObserveWordsUseCase {

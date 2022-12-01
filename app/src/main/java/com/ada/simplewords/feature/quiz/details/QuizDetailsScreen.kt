@@ -13,11 +13,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.ada.simplewords.common.Key
 import com.ada.simplewords.common.OnClick
 import com.ada.simplewords.data.WordTranslation
 import com.ada.simplewords.data.toWordTranslationOrEmpty
 import com.ada.simplewords.domain.models.WordTranslationModel
-import com.ada.simplewords.domain.usecases.Key
 import com.ada.simplewords.ui.components.utility.PreviewContainer
 import com.ada.simplewords.ui.components.WordItem
 

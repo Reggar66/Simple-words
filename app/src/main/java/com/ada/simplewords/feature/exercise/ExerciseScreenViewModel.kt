@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ada.simplewords.common.Key
 import com.ada.simplewords.common.debugLog
 import com.ada.simplewords.data.WordTranslation
 import com.ada.simplewords.data.toWordTranslationOrEmpty

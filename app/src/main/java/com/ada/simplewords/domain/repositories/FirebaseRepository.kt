@@ -1,14 +1,10 @@
 package com.ada.simplewords.domain.repositories
 
+import com.ada.simplewords.common.Key
 import com.ada.simplewords.common.debugLog
 import com.ada.simplewords.domain.models.QuizModel
 import com.ada.simplewords.domain.models.UserModel
 import com.ada.simplewords.domain.models.WordTranslationModel
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.DatabaseReference.CompletionListener
-import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import dagger.Module
@@ -30,9 +26,10 @@ class FirebaseRepository @Inject constructor() {
     private fun currentUserDatabaseRef() = database.getReference(userId)
     private fun userRef() = database.getReference("$userId/user")
     fun quizzesRef() = database.getReference("$userId/quizzes")
+    private fun quizRef(quizId: Key) = database.getReference("$userId/quizzes/$quizId")
     private fun quizWordsRef() = database.getReference("$userId/quizWords")
-    fun wordsRef(quizId: String) = database.getReference("$userId/quizWords/$quizId")
-    private fun wordRef(quizId: String, wordId: Long) =
+    fun wordsRef(quizId: Key) = database.getReference("$userId/quizWords/$quizId")
+    private fun wordRef(quizId: Key, wordId: Key) =
         database.getReference("$userId/quizWords/$quizId/$wordId")
 
     fun saveUser(userModel: UserModel) {
@@ -46,7 +43,7 @@ class FirebaseRepository @Inject constructor() {
      * Saves [QuizModel] to database with newly generated key.
      * @return String key for saved quiz or null if unsuccessful.
      */
-    fun saveQuiz(quizModel: QuizModel): String? {
+    fun saveQuiz(quizModel: QuizModel): Key? {
         val key = quizzesRef().push().key
         key?.let {
             quizzesRef().child(it).setValue(quizModel.copy(id = key))
@@ -54,8 +51,33 @@ class FirebaseRepository @Inject constructor() {
         return key
     }
 
-    fun saveQuizWords(quizId: String, words: List<WordTranslationModel>) {
-        quizWordsRef().child(quizId).setValue(words)
+    fun updateQuiz(quizModel: QuizModel) {
+        quizModel.apply {
+            id?.let { id ->
+                quizRef(id).updateChildren(quizModel.toMap()) { error, ref ->
+                    debugLog(TAG) { "updateQuiz, onComplete: error: $error | ref: $ref" }
+                }
+            }
+        }
+    }
+
+    fun saveQuizWords(quizId: Key, words: List<WordTranslationModel>) {
+        words.forEach {
+            saveQuizWord(quizId, it)
+        }
+    }
+
+    /**
+     * Saves [WordTranslationModel] to database with generated and applied unique [Key],
+     * also applies given quizId.
+     */
+    fun saveQuizWord(quizId: Key, word: WordTranslationModel): Key? {
+        val key = quizWordsRef().push().key
+        key?.let {
+            quizWordsRef().child(quizId).child(key)
+                .setValue(word.copy(id = key, quizItemId = quizId))
+        }
+        return key
     }
 
     fun updateWord(wordTranslationModel: WordTranslationModel) {

@@ -1,10 +1,11 @@
 package com.ada.simplewords.data
 
+import com.ada.simplewords.common.Key
 import com.ada.simplewords.domain.models.WordTranslationModel
 
 data class WordTranslation(
-    val id: Long,
-    val quizItemId: String,
+    val id: Key,
+    val quizItemId: Key,
     val word: String,
     val translation: String,
     val isLearned: Boolean = false,
@@ -12,7 +13,7 @@ data class WordTranslation(
 ) {
     companion object {
         fun empty() = WordTranslation(
-            id = 0,
+            id = "",
             quizItemId = "",
             word = "",
             translation = "",
