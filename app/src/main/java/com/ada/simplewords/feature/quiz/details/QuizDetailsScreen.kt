@@ -53,14 +53,26 @@ fun QuizDetailsScreen(quizId: String?, onLearnClick: OnClick) {
 
     val state = viewModel.quizDetailsState.collectAsState()
 
-    QuizDetails(state.value, onLearnClick = onLearnClick)
+    QuizDetails(
+        state.value,
+        onLearnClick = onLearnClick,
+        onRedoClick = {
+            // TODO: Add confirmation dialog.
+            viewModel.restartQuiz().invokeOnCompletion {
+                onLearnClick()
+            }
+        }
+    )
 }
 
 @Composable
 private fun QuizDetails(
     quizDetailsState: QuizDetailsState,
-    onLearnClick: OnClick
+    onLearnClick: OnClick,
+    onRedoClick: OnClick
 ) {
+    val isComplete = quizDetailsState.quiz?.isComplete
+
     Box(modifier = Modifier.fillMaxWidth()) {
         LazyColumn(
             contentPadding = PaddingValues(start = 8.dp, top = 8.dp, end = 8.dp, bottom = 54.dp),
@@ -74,12 +86,20 @@ private fun QuizDetails(
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(4.dp),
-            onClick = onLearnClick,
+            onClick = {
+                when (isComplete) {
+                    true -> {
+                        onRedoClick()
+                    }
+                    else -> {
+                        onLearnClick()
+                    }
+                }
+            },
             shape = CircleShape
         ) {
-            debugLog { "ObserveQuiz: isComplete: ${quizDetailsState.quiz?.isComplete}" }
             Text(
-                text = when (quizDetailsState.quiz?.isComplete) {
+                text = when (isComplete) {
                     true -> "Redo" // TODO strings
                     else -> "Learn"
                 }
@@ -94,7 +114,6 @@ private fun QuizDetails(
 private fun QuizDetailsPreview() {
     PreviewContainer {
         QuizDetails(
-            QuizDetailsState.mock()
-        ) {}
+            QuizDetailsState.mock(), {}) {}
     }
 }

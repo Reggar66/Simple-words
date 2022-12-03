@@ -7,9 +7,7 @@ import com.ada.simplewords.common.Key
 import com.ada.simplewords.common.debugLog
 import com.ada.simplewords.data.Quiz
 import com.ada.simplewords.data.WordTranslation
-import com.ada.simplewords.domain.usecases.Event
-import com.ada.simplewords.domain.usecases.ObserveWordsUseCase
-import com.ada.simplewords.domain.usecases.ObserveQuizUseCase
+import com.ada.simplewords.domain.usecases.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,17 +22,20 @@ private const val PREFIX = "QuizDetailsViewModel:"
 class QuizDetailsViewModel @Inject constructor(
     private val observeQuizUseCase: ObserveQuizUseCase,
     private val observeWordsUseCase: ObserveWordsUseCase,
+    private val updateWordUseCase: UpdateWordUseCase,
+    private val updateQuizUseCase: UpdateQuizUseCase
 ) : ViewModel() {
 
     private val _words = mutableStateMapOf<Key, WordTranslation>()
+    private var _quiz: Quiz? = null
     private val _quizDetailsState = MutableStateFlow(QuizDetailsState.empty().copy(words = _words))
     val quizDetailsState get() = _quizDetailsState.asStateFlow()
-
 
     fun observeQuiz(quizId: Key) = viewModelScope.launch(Dispatchers.IO) {
         observeQuizUseCase.invoke(quizId = quizId).collect { quiz: Quiz ->
             debugLog { "ObserveQuiz: got: $quiz" }
             _quizDetailsState.update {
+                _quiz = quiz
                 it.copy(quiz = quiz)
             }
         }
@@ -58,5 +59,12 @@ class QuizDetailsViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun restartQuiz() = viewModelScope.launch {
+        _words.forEach {
+            updateWordUseCase.invoke(it.value.copy(repeat = 3, isLearned = false))
+        }
+        _quiz?.let { updateQuizUseCase.invoke(it.copy(wordsNumber = _words.size, completedWords = 0)) }
     }
 }
