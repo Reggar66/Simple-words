@@ -1,6 +1,6 @@
 package com.ada.simplewords.data
 
-import com.ada.simplewords.data.mapper.toQuizItemOrEmpty
+import com.ada.simplewords.data.mapper.toQuizOrEmpty
 import com.ada.simplewords.domain.models.QuizModel
 
 data class Quiz(
@@ -16,9 +16,9 @@ data class Quiz(
         fun empty() = Quiz(id = "", name = "", wordsNumber = 0, completedWords = 0)
 
         fun mockQuizzes() = listOf(
-            QuizModel.mockAnimals.toQuizItemOrEmpty(),
-            QuizModel.mockFood.toQuizItemOrEmpty(),
-            QuizModel.mockSeasons.toQuizItemOrEmpty(),
+            QuizModel.mockAnimals.toQuizOrEmpty(),
+            QuizModel.mockFood.toQuizOrEmpty(),
+            QuizModel.mockSeasons.toQuizOrEmpty(),
         )
     }
 }

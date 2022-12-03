@@ -6,7 +6,7 @@ import com.ada.simplewords.domain.models.QuizModel
 /**
  * Converts [QuizModel] to [Quiz] or returns null if any field is null.
  */
-fun QuizModel.toQuizItemOrNull(): Quiz? {
+fun QuizModel.toQuizOrNull(): Quiz? {
     return Quiz(
         id = id ?: return null,
         name = name ?: return null,
@@ -18,7 +18,7 @@ fun QuizModel.toQuizItemOrNull(): Quiz? {
 /**
  * Converts [QuizModel] to [Quiz] or returns [Quiz.empty] if any field is null.
  */
-fun QuizModel.toQuizItemOrEmpty(): Quiz {
+fun QuizModel.toQuizOrEmpty(): Quiz {
     return Quiz(
         id = id ?: return Quiz.empty(),
         name = name ?: return Quiz.empty(),

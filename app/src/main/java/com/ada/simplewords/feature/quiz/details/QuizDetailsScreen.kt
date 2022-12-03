@@ -15,11 +15,27 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ada.simplewords.common.Key
 import com.ada.simplewords.common.OnClick
+import com.ada.simplewords.common.debugLog
+import com.ada.simplewords.data.Quiz
 import com.ada.simplewords.data.WordTranslation
 import com.ada.simplewords.data.toWordTranslationOrEmpty
 import com.ada.simplewords.domain.models.WordTranslationModel
 import com.ada.simplewords.ui.components.utility.PreviewContainer
 import com.ada.simplewords.ui.components.WordItem
+
+data class QuizDetailsState(val quiz: Quiz?, val words: Map<Key, WordTranslation>) {
+    companion object {
+        fun empty() = QuizDetailsState(quiz = Quiz.empty(), words = emptyMap())
+        fun mock() = empty().copy(words = WordTranslationModel.mockAnimals.let {
+            val map = mutableMapOf<Key, WordTranslation>()
+            it.forEachIndexed { index, wordTranslationModel ->
+                map[index.toString()] = wordTranslationModel.toWordTranslationOrEmpty()
+            }
+            return@let map
+        }
+        )
+    }
+}
 
 @Composable
 fun QuizDetailsScreen(quizId: String?, onLearnClick: OnClick) {
@@ -29,22 +45,28 @@ fun QuizDetailsScreen(quizId: String?, onLearnClick: OnClick) {
         key1 = quizId,
         block = {
             quizId?.let {
+                viewModel.observeQuiz(it)
                 viewModel.observeWords(it)
             }
         }
     )
 
-    QuizDetails(viewModel.hashWords.toList(), onLearnClick = onLearnClick)
+    val state = viewModel.quizDetailsState.collectAsState()
+
+    QuizDetails(state.value, onLearnClick = onLearnClick)
 }
 
 @Composable
-private fun QuizDetails(words: List<Pair<Key, WordTranslation>>, onLearnClick: OnClick) {
+private fun QuizDetails(
+    quizDetailsState: QuizDetailsState,
+    onLearnClick: OnClick
+) {
     Box(modifier = Modifier.fillMaxWidth()) {
         LazyColumn(
             contentPadding = PaddingValues(start = 8.dp, top = 8.dp, end = 8.dp, bottom = 54.dp),
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
-            items(items = words) { item ->
+            items(items = quizDetailsState.words.toList()) { item ->
                 WordItem(wordTranslation = item.second)
             }
         }
@@ -55,7 +77,13 @@ private fun QuizDetails(words: List<Pair<Key, WordTranslation>>, onLearnClick: O
             onClick = onLearnClick,
             shape = CircleShape
         ) {
-            Text(text = "Learn") // TODO strings
+            debugLog { "ObserveQuiz: isComplete: ${quizDetailsState.quiz?.isComplete}" }
+            Text(
+                text = when (quizDetailsState.quiz?.isComplete) {
+                    true -> "Redo" // TODO strings
+                    else -> "Learn"
+                }
+            )
         }
     }
 }
@@ -66,10 +94,7 @@ private fun QuizDetails(words: List<Pair<Key, WordTranslation>>, onLearnClick: O
 private fun QuizDetailsPreview() {
     PreviewContainer {
         QuizDetails(
-            WordTranslationModel.mockAnimals
-                .mapIndexed { index, wordTranslationModel ->
-                    index.toString() to wordTranslationModel.toWordTranslationOrEmpty()
-                }
-        ) { }
+            QuizDetailsState.mock()
+        ) {}
     }
 }

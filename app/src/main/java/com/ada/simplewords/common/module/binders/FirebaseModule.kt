@@ -41,7 +41,7 @@ abstract class FirebaseModule {
     ): UpdateQuizUseCase
 
     @Binds
-    abstract fun bindGetQuizUseCase(
-        getQuizUseCaseImpl: ObserveQuizUseCaseImpl
+    abstract fun bindObserveQuizUse(
+        ObserveQuizUseImpl: ObserveQuizUseCaseImpl
     ): ObserveQuizUseCase
 }

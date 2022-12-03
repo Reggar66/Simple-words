@@ -3,7 +3,7 @@ package com.ada.simplewords.domain.usecases
 import com.ada.simplewords.common.Key
 import com.ada.simplewords.common.debugLog
 import com.ada.simplewords.data.Quiz
-import com.ada.simplewords.data.mapper.toQuizItemOrNull
+import com.ada.simplewords.data.mapper.toQuizOrNull
 import com.ada.simplewords.domain.models.QuizModel
 import com.ada.simplewords.domain.repositories.FirebaseRepository
 import com.google.firebase.database.DataSnapshot
@@ -25,7 +25,7 @@ class ObserveQuizUseCaseImpl @Inject constructor(private val firebaseRepository:
         val listener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 debugLog { "$PREFIX onDataChange: $snapshot" }
-                val quiz = snapshot.getValue<QuizModel>()?.toQuizItemOrNull()
+                val quiz = snapshot.getValue<QuizModel>()?.toQuizOrNull()
                 quiz?.let {
                     trySend(it).also {
                         debugLog { "$PREFIX tried send: $quiz" }

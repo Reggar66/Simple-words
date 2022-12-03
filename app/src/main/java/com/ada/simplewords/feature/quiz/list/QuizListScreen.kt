@@ -21,7 +21,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.ada.simplewords.common.OnClick
 import com.ada.simplewords.common.OnClickTakes
 import com.ada.simplewords.data.Quiz
-import com.ada.simplewords.data.mapper.toQuizItemOrEmpty
+import com.ada.simplewords.data.mapper.toQuizOrEmpty
 import com.ada.simplewords.domain.models.QuizModel
 import com.ada.simplewords.domain.models.UserModel
 import com.ada.simplewords.feature.quiz.create.CreateQuizScreen
@@ -203,6 +203,6 @@ private fun QuizListPreview() {
 @Composable
 private fun BottomSheetPreview() {
     PreviewContainer {
-        BottomSheetContent(quiz = QuizModel.mockAnimals.toQuizItemOrEmpty(), onLearnClick = {})
+        BottomSheetContent(quiz = QuizModel.mockAnimals.toQuizOrEmpty(), onLearnClick = {})
     }
 }

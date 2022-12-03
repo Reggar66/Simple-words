@@ -2,7 +2,7 @@ package com.ada.simplewords.domain.usecases
 
 import com.ada.simplewords.common.debugLog
 import com.ada.simplewords.data.Quiz
-import com.ada.simplewords.data.mapper.toQuizItemOrNull
+import com.ada.simplewords.data.mapper.toQuizOrNull
 import com.ada.simplewords.domain.models.QuizModel
 import com.ada.simplewords.domain.repositories.FirebaseRepository
 import com.google.firebase.database.DataSnapshot
@@ -29,7 +29,7 @@ class GetQuizzesUseCaseImpl @Inject constructor(firebaseRepository: FirebaseRepo
                 val quizModel = snapshot.getValue<HashMap<String, QuizModel>>()
                 val quizzes = mutableListOf<Quiz>()
                 quizModel?.forEach { (key, quizz) ->
-                    quizz.toQuizItemOrNull()?.let {
+                    quizz.toQuizOrNull()?.let {
                         quizzes.add(it)
                     }
                 }
