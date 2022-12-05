@@ -20,7 +20,7 @@ fun MainScreen() {
     SimpleWordsTheme {
         // A surface container using the 'background' color from the theme
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
-            DebugContainer {
+            DebugOverlay {
                 NavigationHost()
             }
         }
@@ -28,7 +28,7 @@ fun MainScreen() {
 }
 
 @Composable
-private fun DebugContainer(content: @Composable () -> Unit) {
+private fun DebugOverlay(content: @Composable () -> Unit) {
 
     val viewModel = hiltViewModel<DebugViewModel>()
     var showDebug by remember {
