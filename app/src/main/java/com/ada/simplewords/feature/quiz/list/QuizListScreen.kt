@@ -31,59 +31,16 @@ import com.ada.simplewords.ui.components.utility.PreviewContainer
 import com.ada.simplewords.ui.navigation.SimpleNavigationTakes
 import kotlinx.coroutines.launch
 
-/* TODO block opening completed quiz. Add option to redo completed quiz from beginning */
-
 @Composable
 fun QuizListScreen(openExercise: SimpleNavigationTakes<Quiz>) {
     val viewModel = hiltViewModel<QuizListViewModel>()
     val state = viewModel.quizListState
 
-    var showDebug by remember {
-        mutableStateOf(false)
-    }
-
-    Box {
-        QuizListImpl(
-            quizListState = state,
-            onLearnClick = { quiz -> openExercise(quiz) },
-            onItemClick = { viewModel.selectQuiz(it) })
-
-        Button(
-            modifier = Modifier.align(Alignment.BottomStart),
-            onClick = { showDebug = !showDebug }) {
-            Text(text = "Debug")
-        }
-
-        // TODO remove buttons
-        if (showDebug)
-            Column(
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(4.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Button(onClick = { viewModel.firebaseRepository.saveUser(UserModel.mock()) }) {
-                    Text(text = "Generate Mock User")
-                }
-
-                Button(onClick = { viewModel.firebaseRepository.Debug().mockAnimals() }) {
-                    Text(text = "Generate Animals")
-                }
-
-                Button(onClick = { viewModel.firebaseRepository.Debug().mockAnimalsCompleted() }) {
-                    Text(text = "Generate Animals Completed")
-                }
-
-                Button(onClick = { viewModel.firebaseRepository.Debug().mockFood() }) {
-                    Text(text = "Generate Food")
-                }
-
-                Button(onClick = { viewModel.firebaseRepository.Debug().mockSeasons() }) {
-                    Text(text = "Generate Seasons")
-                }
-            }
-    }
+    QuizListImpl(
+        quizListState = state,
+        onLearnClick = { quiz -> openExercise(quiz) },
+        onItemClick = { viewModel.selectQuiz(it) }
+    )
 }
 
 enum class BottomContent {
@@ -125,22 +82,17 @@ private fun QuizListImpl(
                         onItemClick(it)
                         scaffoldState.bottomSheetState.expand()
                     }
+                },
+                onCreateClick = {
+                    scope.launch {
+                        scaffoldState.bottomSheetState.collapse()
+                        bottomContent.value = BottomContent.Create
+
+                        scaffoldState.bottomSheetState.expand()
+                    }
                 }
             )
-        },
-        floatingActionButton = {
-            FloatingActionButton(onClick = {
-                scope.launch {
-                    scaffoldState.bottomSheetState.collapse()
-                    bottomContent.value = BottomContent.Create
-
-                    scaffoldState.bottomSheetState.expand()
-                }
-            }) {
-                Icon(imageVector = Icons.Rounded.Add, contentDescription = null)
-            }
-        },
-        floatingActionButtonPosition = FabPosition.End
+        }
     )
 }
 
@@ -171,7 +123,8 @@ private fun BottomSheetContent(
 @Composable
 private fun Quizzes(
     quiz: List<Quiz>,
-    onItemCLick: OnClickTakes<Quiz>
+    onItemCLick: OnClickTakes<Quiz>,
+    onCreateClick: OnClick
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         LazyColumn(
@@ -186,6 +139,16 @@ private fun Quizzes(
                     onClick = { onItemCLick(quizItem) })
             }
         }
+
+        Button(
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(16.dp),
+            onClick = onCreateClick,
+            shape = CircleShape
+        ) {
+            Text(text = "Create") // TODO: Strings
+        }
     }
 }
 
@@ -194,7 +157,7 @@ private fun Quizzes(
 @Composable
 private fun QuizListPreview() {
     PreviewContainer {
-        Quizzes(quiz = Quiz.mockQuizzes(), onItemCLick = {})
+        Quizzes(quiz = Quiz.mockQuizzes(), onItemCLick = {}, onCreateClick = {})
     }
 }
 
