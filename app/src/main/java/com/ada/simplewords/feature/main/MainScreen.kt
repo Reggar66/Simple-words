@@ -11,7 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ada.simplewords.BuildConfig
-import com.ada.simplewords.domain.models.UserModel
 import com.ada.simplewords.feature.debug.DebugViewModel
 import com.ada.simplewords.ui.navigation.NavigationHost
 import com.ada.simplewords.ui.theme.SimpleWordsTheme
@@ -41,7 +40,9 @@ private fun DebugContainer(content: @Composable () -> Unit) {
 
         if (BuildConfig.DEBUG)
             Button(
-                modifier = Modifier.align(Alignment.BottomStart),
+                modifier = Modifier
+                    .align(Alignment.BottomStart)
+                    .padding(4.dp),
                 onClick = { showDebug = !showDebug }) {
                 Text(text = "Debug")
             }

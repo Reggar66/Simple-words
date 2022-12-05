@@ -20,4 +20,6 @@ sealed class Screen(route: String) : BaseScreen(route) {
             const val QUIZ_ID = "quizId"
         }
     }
+
+    object Create : Screen(route = "create")
 }

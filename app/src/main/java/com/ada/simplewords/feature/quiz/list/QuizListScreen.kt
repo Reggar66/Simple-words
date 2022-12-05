@@ -4,6 +4,7 @@ package com.ada.simplewords.feature.quiz.list
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -11,12 +12,15 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ada.simplewords.common.OnClick
 import com.ada.simplewords.common.OnClickTakes
@@ -28,44 +32,43 @@ import com.ada.simplewords.feature.quiz.create.CreateQuizScreen
 import com.ada.simplewords.feature.quiz.details.QuizDetailsScreen
 import com.ada.simplewords.ui.components.QuizItem
 import com.ada.simplewords.ui.components.utility.PreviewContainer
+import com.ada.simplewords.ui.navigation.SimpleNavigation
 import com.ada.simplewords.ui.navigation.SimpleNavigationTakes
 import kotlinx.coroutines.launch
 
 @Composable
-fun QuizListScreen(openExercise: SimpleNavigationTakes<Quiz>) {
+fun QuizListScreen(openExercise: SimpleNavigationTakes<Quiz>, openCreate: SimpleNavigation) {
     val viewModel = hiltViewModel<QuizListViewModel>()
     val state = viewModel.quizListState
 
     QuizListImpl(
         quizListState = state,
         onLearnClick = { quiz -> openExercise(quiz) },
-        onItemClick = { viewModel.selectQuiz(it) }
+        onItemClick = { viewModel.selectQuiz(it) },
+        onCreateClick = { openCreate() }
     )
-}
-
-enum class BottomContent {
-    Words,
-    Create
 }
 
 @Composable
 private fun QuizListImpl(
     quizListState: QuizListScreenState,
     onLearnClick: OnClickTakes<Quiz>,
-    onItemClick: OnClickTakes<Quiz>
+    onItemClick: OnClickTakes<Quiz>,
+    onCreateClick: OnClick
 ) {
     val scaffoldState = rememberBottomSheetScaffoldState()
     val scope = rememberCoroutineScope()
-    val bottomContent = remember {
-        mutableStateOf(BottomContent.Words)
-    }
 
     BottomSheetScaffold(
         sheetContent = {
             BottomSheetContent(
                 quiz = quizListState.currentlySelectedQuiz,
                 onLearnClick = { quizListState.currentlySelectedQuiz?.let { onLearnClick(it) } },
-                bottomContent = bottomContent.value
+                onCloseClick = {
+                    scope.launch {
+                        scaffoldState.bottomSheetState.collapse()
+                    }
+                },
             )
         },
         scaffoldState = scaffoldState,
@@ -76,21 +79,11 @@ private fun QuizListImpl(
                 quiz = quizListState.quizzes,
                 onItemCLick = {
                     scope.launch {
-                        scaffoldState.bottomSheetState.collapse()
-                        bottomContent.value = BottomContent.Words
-
                         onItemClick(it)
                         scaffoldState.bottomSheetState.expand()
                     }
                 },
-                onCreateClick = {
-                    scope.launch {
-                        scaffoldState.bottomSheetState.collapse()
-                        bottomContent.value = BottomContent.Create
-
-                        scaffoldState.bottomSheetState.expand()
-                    }
-                }
+                onCreateClick = onCreateClick
             )
         }
     )
@@ -100,23 +93,35 @@ private fun QuizListImpl(
 private fun BottomSheetContent(
     quiz: Quiz?,
     onLearnClick: OnClick,
-    bottomContent: BottomContent = BottomContent.Words
+    onCloseClick: OnClick,
 ) {
-    Column(modifier = Modifier.fillMaxWidth()) {
+    Column(modifier = Modifier.fillMaxWidth(), verticalArrangement = Arrangement.Center) {
         Spacer(modifier = Modifier.height(8.dp))
-        // TODO change card bar to something better.
-        Card(
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(10.dp)
-                .padding(horizontal = 100.dp),
-            shape = CircleShape
-        ) {}
+                .padding(4.dp)
+        ) {
+            Icon(
+                modifier = Modifier
+                    .clickable { onCloseClick() }
+                    .size(40.dp)
+                    .clip(CircleShape),
+                imageVector = Icons.Rounded.KeyboardArrowDown,
+                contentDescription = null
+            )
 
-        when (bottomContent) {
-            BottomContent.Words -> QuizDetailsScreen(quizId = quiz?.id, onLearnClick = onLearnClick)
-            BottomContent.Create -> CreateQuizScreen()
+            Text(
+                text = quiz?.name ?: "",
+                modifier = Modifier.weight(1f),
+                textAlign = TextAlign.Center,
+                fontSize = 24.sp
+            )
+
+            Spacer(modifier = Modifier.width(40.dp))
         }
+
+        QuizDetailsScreen(quizId = quiz?.id, onLearnClick = onLearnClick)
     }
 }
 
@@ -166,6 +171,10 @@ private fun QuizListPreview() {
 @Composable
 private fun BottomSheetPreview() {
     PreviewContainer {
-        BottomSheetContent(quiz = QuizModel.mockAnimals.toQuizOrEmpty(), onLearnClick = {})
+        BottomSheetContent(
+            quiz = QuizModel.mockAnimals.toQuizOrEmpty(),
+            onLearnClick = {},
+            onCloseClick = {}
+        )
     }
 }

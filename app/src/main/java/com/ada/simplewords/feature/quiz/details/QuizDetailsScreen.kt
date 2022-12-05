@@ -73,7 +73,7 @@ private fun QuizDetails(
 ) {
     val isComplete = quizDetailsState.quiz?.isComplete
 
-    Box(modifier = Modifier.fillMaxWidth()) {
+    Box(modifier = Modifier.fillMaxSize()) {
         LazyColumn(
             contentPadding = PaddingValues(start = 8.dp, top = 8.dp, end = 8.dp, bottom = 54.dp),
             verticalArrangement = Arrangement.spacedBy(4.dp)

@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import com.ada.simplewords.feature.exercise.ExerciseScreen
+import com.ada.simplewords.feature.quiz.create.CreateQuizScreen
 import com.ada.simplewords.feature.quiz.list.QuizListScreen
 
 @Composable
@@ -28,17 +29,29 @@ fun NavigationHost(
 fun NavGraphBuilder.quizListRoot(navController: NavController) {
     navigation(startDestination = Screen.QuizList.route, route = Root.QuizListRoot.route) {
         composable(Screen.QuizList.route) {
-            QuizListScreen(openExercise = { quiz ->
-                navController
-                    .navigate(route = Screen.Exercise.createRoute(quizId = quiz.id))
-            })
+            QuizListScreen(
+                openExercise = { quiz ->
+                    navController
+                        .navigate(route = Screen.Exercise.createRoute(quizId = quiz.id))
+                },
+                openCreate = {
+                    navController.navigate(route = Screen.Create.route)
+                }
+            )
         }
 
-        // TODO separate root?
         composable(Screen.Exercise.route) { navBackStackEntry ->
             val quizId =
                 navBackStackEntry.arguments?.getString(Screen.Exercise.Key.QUIZ_ID)
             ExerciseScreen(quizId = quizId)
         }
+
+        composable(Screen.Create.route) {
+            CreateQuizScreen()
+        }
     }
+}
+
+fun NavGraphBuilder.loginRoot(navController: NavController) {
+    // TODO: Login nav root
 }
