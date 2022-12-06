@@ -47,7 +47,7 @@ fun NavGraphBuilder.quizListRoot(navController: NavController) {
         }
 
         composable(Screen.Create.route) {
-            CreateQuizScreen()
+            CreateQuizScreen(closeScreen = { navController.popBackStack() })
         }
     }
 }

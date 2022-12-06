@@ -51,6 +51,14 @@ class FirebaseRepository @Inject constructor() {
         return key
     }
 
+    fun saveQuizWithWords(quiz: QuizModel, words: List<WordTranslationModel>) {
+        val key = quizzesRef().push().key
+        key?.let {
+            quizzesRef().child(key).setValue(quiz.copy(id = key))
+            saveQuizWords(key, words)
+        }
+    }
+
     fun updateQuiz(quizModel: QuizModel) {
         quizModel.apply {
             id?.let { id ->
