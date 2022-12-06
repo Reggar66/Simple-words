@@ -26,6 +26,7 @@ class QuizDetailsViewModel @Inject constructor(
     private val updateQuizUseCase: UpdateQuizUseCase
 ) : ViewModel() {
 
+    // TODO: Rewrite to use MutableStateFlow. And sort words by name.
     private val _words = mutableStateMapOf<Key, WordTranslation>()
     private var _quiz: Quiz? = null
     private val _quizDetailsState = MutableStateFlow(QuizDetailsState.empty().copy(words = _words))
