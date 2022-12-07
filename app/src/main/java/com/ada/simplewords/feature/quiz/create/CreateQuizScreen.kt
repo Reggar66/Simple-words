@@ -1,21 +1,27 @@
 package com.ada.simplewords.feature.quiz.create
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Check
+import androidx.compose.material.icons.rounded.Close
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.ada.simplewords.common.OnClick
 import com.ada.simplewords.common.OnClickTakes
+import com.ada.simplewords.common.debugLog
 import com.ada.simplewords.ui.components.utility.PreviewContainer
 import com.ada.simplewords.ui.navigation.SimpleNavigation
 import kotlinx.coroutines.delay
@@ -31,6 +37,7 @@ fun CreateQuizScreen(closeScreen: SimpleNavigation) {
             closeScreen()
         },
         onAddClick = { viewModel.addWordWithTranslation(it) },
+        onRemoveClick = { viewModel.removeTranslation(it) }
     )
 }
 
@@ -38,7 +45,8 @@ fun CreateQuizScreen(closeScreen: SimpleNavigation) {
 private fun CreateQuizScreenImpl(
     currentWords: List<WordWithTranslation>,
     onCreateQuizClick: OnClickTakes<String>,
-    onAddClick: OnClickTakes<WordWithTranslation>
+    onAddClick: OnClickTakes<WordWithTranslation>,
+    onRemoveClick: OnClickTakes<Int>
 ) {
 
     var name by remember {
@@ -63,8 +71,8 @@ private fun CreateQuizScreenImpl(
         ) {
 
             /* List of already added */
-            items(currentWords) { item ->
-                Item(item = item)
+            itemsIndexed(currentWords) { idx, item ->
+                Item(item = item, onRemoveClick = { onRemoveClick(idx) })
             }
 
             item {
@@ -86,23 +94,42 @@ private fun CreateQuizScreenImpl(
         }
     }
 
+    val lastSize = remember {
+        mutableStateOf(lazyListState.layoutInfo.totalItemsCount)
+    }
+
     val numberOfItems = remember { derivedStateOf { lazyListState.layoutInfo.totalItemsCount } }
     LaunchedEffect(key1 = numberOfItems.value, block = {
-        delay(200)
-        lazyListState.scrollToItem(lazyListState.layoutInfo.totalItemsCount - 1)
+        debugLog { "${lastSize.value} | ${numberOfItems.value}" }
+        if (lastSize.value <= numberOfItems.value) {
+            delay(200)
+            lazyListState.scrollToItem(lazyListState.layoutInfo.totalItemsCount - 1)
+        }
+        lastSize.value = numberOfItems.value
     })
 }
 
 @Composable
-private fun Item(item: WordWithTranslation) {
+private fun Item(item: WordWithTranslation, onRemoveClick: OnClick) {
     Card {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp)
+                .padding(8.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Text(modifier = Modifier.weight(1f), text = item.word)
             Text(modifier = Modifier.weight(1f), text = item.translation)
+
+            Icon(
+                modifier = Modifier
+                    .clip(CircleShape)
+                    .clickable { onRemoveClick() }
+                    .padding(4.dp),
+                imageVector = Icons.Rounded.Close,
+                contentDescription = null
+            )
+
         }
     }
 }
@@ -169,6 +196,8 @@ private fun CreateQuizPreview() {
         CreateQuizScreenImpl(
             currentWords = WordWithTranslation.mock(),
             onCreateQuizClick = {},
-            onAddClick = {})
+            onAddClick = {},
+            onRemoveClick = {}
+        )
     }
 }

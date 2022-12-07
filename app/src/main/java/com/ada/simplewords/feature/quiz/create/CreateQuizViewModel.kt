@@ -31,4 +31,8 @@ class CreateQuizViewModel @Inject constructor(private val createQuizUseCase: Cre
     fun addWordWithTranslation(word: WordWithTranslation) {
         _wordsToCreate.add(word)
     }
+
+    fun removeTranslation(index: Int) {
+        _wordsToCreate.removeAt(index)
+    }
 }
