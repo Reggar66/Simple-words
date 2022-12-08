@@ -24,6 +24,7 @@ class ExerciseScreenViewModel @Inject constructor(
     private val updateQuizUseCase: UpdateQuizUseCase
 ) : ViewModel() {
 
+    // TODO: Rewrite to use MutableStateFlow.
     private var quiz: Quiz? = null
     private val words = mutableMapOf<Key, WordTranslation>()
 

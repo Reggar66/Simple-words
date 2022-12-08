@@ -23,17 +23,17 @@ import com.ada.simplewords.domain.models.WordTranslationModel
 import com.ada.simplewords.ui.components.utility.PreviewContainer
 import com.ada.simplewords.ui.components.WordItem
 
-data class QuizDetailsState(val quiz: Quiz?, val words: Map<Key, WordTranslation>) {
+data class QuizDetailsState(val quiz: Quiz?, val words: List<Pair<Key, WordTranslation>>) {
     companion object {
-        fun empty() = QuizDetailsState(quiz = Quiz.empty(), words = emptyMap())
-        fun mock() = empty().copy(words = WordTranslationModel.mockAnimals.let {
-            val map = mutableMapOf<Key, WordTranslation>()
-            it.forEachIndexed { index, wordTranslationModel ->
-                map[index.toString()] = wordTranslationModel.toWordTranslationOrEmpty()
-            }
-            return@let map
-        }
-        )
+        fun empty() = QuizDetailsState(quiz = Quiz.empty(), words = emptyList())
+//        fun mock() = empty().copy(words = WordTranslationModel.mockAnimals.let {
+//            val map = mutableMapOf<Key, WordTranslation>()
+//            it.forEachIndexed { index, wordTranslationModel ->
+//                map[index.toString()] = wordTranslationModel.toWordTranslationOrEmpty()
+//            }
+//            return@let map
+//        }
+//        )
     }
 }
 
@@ -78,7 +78,7 @@ private fun QuizDetails(
             contentPadding = PaddingValues(start = 8.dp, top = 8.dp, end = 8.dp, bottom = 54.dp),
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
-            items(items = quizDetailsState.words.toList()) { item ->
+            items(items = quizDetailsState.words) { item ->
                 WordItem(wordTranslation = item.second)
             }
         }
@@ -112,8 +112,8 @@ private fun QuizDetails(
 @Preview(uiMode = UI_MODE_NIGHT_YES)
 @Composable
 private fun QuizDetailsPreview() {
-    PreviewContainer {
-        QuizDetails(
-            QuizDetailsState.mock(), {}) {}
-    }
+//    PreviewContainer {
+//        QuizDetails(
+//            QuizDetailsState.mock(), {}) {}
+//    }
 }

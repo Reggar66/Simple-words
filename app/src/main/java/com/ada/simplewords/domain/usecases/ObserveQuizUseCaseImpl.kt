@@ -40,7 +40,9 @@ class ObserveQuizUseCaseImpl @Inject constructor(private val firebaseRepository:
 
         quizRef.addValueEventListener(listener)
         awaitClose {
-            quizRef.removeEventListener(listener)
+            quizRef.removeEventListener(listener).also {
+                debugLog { "$PREFIX removed listener for quiz id: $quizId" }
+            }
         }
     }
 }

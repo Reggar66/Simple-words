@@ -79,7 +79,9 @@ class ObserveWordsUseCaseImpl @Inject constructor(private val firebaseRepository
 
         wordsRef.addChildEventListener(listener)
         awaitClose {
-            wordsRef.removeEventListener(listener)
+            wordsRef.removeEventListener(listener).also {
+                debugLog { "$PREFIX removed listener for quiz id: $quizId" }
+            }
         }
     }
 }
