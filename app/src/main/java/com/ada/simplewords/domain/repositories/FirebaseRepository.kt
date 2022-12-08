@@ -17,7 +17,6 @@ private const val TAG = "FirebaseRepository"
 @Module
 @InstallIn(SingletonComponent::class)
 class FirebaseRepository @Inject constructor() {
-    /* TODO Firebase repository. */
     private val database =
         Firebase.database("https://simple-words-a3e96-default-rtdb.europe-west1.firebasedatabase.app/")
 

@@ -1,27 +1,28 @@
+@file:OptIn(ExperimentalFoundationApi::class)
+
 package com.ada.simplewords.feature.quiz.create
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Check
-import androidx.compose.material.icons.rounded.Close
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ada.simplewords.common.OnClick
 import com.ada.simplewords.common.OnClickTakes
 import com.ada.simplewords.common.debugLog
+import com.ada.simplewords.ui.components.SwipeMenu
 import com.ada.simplewords.ui.components.utility.PreviewContainer
 import com.ada.simplewords.ui.navigation.SimpleNavigation
 import kotlinx.coroutines.delay
@@ -57,7 +58,9 @@ private fun CreateQuizScreenImpl(
 
     Column(modifier = Modifier.fillMaxSize()) {
         OutlinedTextField(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 8.dp),
             value = name,
             onValueChange = { name = it },
             label = { Text(text = "Quiz Name") } // TODO strings
@@ -72,7 +75,10 @@ private fun CreateQuizScreenImpl(
 
             /* List of already added */
             itemsIndexed(currentWords) { idx, item ->
-                Item(item = item, onRemoveClick = { onRemoveClick(idx) })
+                Item(
+                    item = item,
+                    onRemoveClick = { onRemoveClick(idx) },
+                    onEditClick = {/*TODO*/ })
             }
 
             item {
@@ -110,26 +116,27 @@ private fun CreateQuizScreenImpl(
 }
 
 @Composable
-private fun Item(item: WordWithTranslation, onRemoveClick: OnClick) {
-    Card {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(modifier = Modifier.weight(1f), text = item.word)
-            Text(modifier = Modifier.weight(1f), text = item.translation)
-
-            Icon(
+private fun Item(item: WordWithTranslation, onRemoveClick: OnClick, onEditClick: OnClick) {
+    SwipeMenu(onRemoveClick = onRemoveClick, onEditClick = onEditClick) {
+        Card(Modifier.height(IntrinsicSize.Min)) {
+            Row(
                 modifier = Modifier
-                    .clip(CircleShape)
-                    .clickable { onRemoveClick() }
-                    .padding(4.dp),
-                imageVector = Icons.Rounded.Close,
-                contentDescription = null
-            )
-
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(modifier = Modifier.weight(1f), text = item.word)
+                Divider(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .width(1.dp)
+                )
+                Text(
+                    modifier = Modifier.weight(1f),
+                    text = item.translation,
+                    textAlign = TextAlign.End
+                )
+            }
         }
     }
 }
