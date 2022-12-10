@@ -18,7 +18,7 @@ data class WordTranslation(
             word = "",
             translation = "",
             isLearned = false,
-            repeat = 0
+            repeat = 3
         )
     }
 }

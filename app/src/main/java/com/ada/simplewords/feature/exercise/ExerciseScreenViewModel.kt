@@ -96,7 +96,7 @@ class ExerciseScreenViewModel @Inject constructor(
 
     private fun hasNotLearnedWords(): Boolean {
         words.toList().forEach {
-            if (!it.second.isLearned)
+            if (!it.second.isLearned && it.second.repeat > 0)
                 return true
         }
         return false
