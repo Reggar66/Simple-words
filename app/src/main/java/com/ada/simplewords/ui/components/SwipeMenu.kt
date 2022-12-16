@@ -17,7 +17,7 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import com.ada.simplewords.common.OnClick
+import com.ada.common.OnClick
 import com.ada.simplewords.common.extensions.toPx
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt

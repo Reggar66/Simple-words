@@ -10,8 +10,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.ada.simplewords.common.OnClick
-import com.ada.simplewords.common.OnClickTakes
+import com.ada.common.OnClick
+import com.ada.common.OnClickTakes
 import com.ada.simplewords.ui.components.utility.PreviewContainer
 
 

@@ -2,11 +2,10 @@ package com.ada.simplewords.feature.quiz.details
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ada.simplewords.common.Key
-import com.ada.simplewords.common.debugLog
+import com.ada.common.Key
+import com.ada.common.debugLog
 import com.ada.data.Quiz
 import com.ada.data.WordTranslation
-import com.ada.simplewords.domain.usecases.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -20,15 +19,15 @@ private const val PREFIX = "QuizDetailsViewModel:"
 
 @HiltViewModel
 class QuizDetailsViewModel @Inject constructor(
-    private val observeQuizUseCase: ObserveQuizUseCase,
-    private val observeWordsUseCase: ObserveWordsUseCase,
-    private val updateWordUseCase: UpdateWordUseCase,
-    private val updateQuizUseCase: UpdateQuizUseCase
+    private val observeQuizUseCase: com.ada.domain.usecases.ObserveQuizUseCase,
+    private val observeWordsUseCase: com.ada.domain.usecases.ObserveWordsUseCase,
+    private val updateWordUseCase: com.ada.domain.usecases.UpdateWordUseCase,
+    private val updateQuizUseCase: com.ada.domain.usecases.UpdateQuizUseCase
 ) : ViewModel() {
 
     private var wordsJob: Job? = null
     private var quizJob: Job? = null
-    private val _words = mutableMapOf<Key, com.ada.data.WordTranslation>()
+    private val _words = mutableMapOf<Key, WordTranslation>()
     private var _quiz: com.ada.data.Quiz? = null
     private val _quizDetailsState =
         MutableStateFlow(QuizDetailsState.empty().copy(words = _words.toList().sortedByWord()))
@@ -56,28 +55,28 @@ class QuizDetailsViewModel @Inject constructor(
                 debugLog { "$PREFIX Received: $wordResult" }
 
                 when (wordResult.event) {
-                    Event.Added -> {
+                    com.ada.domain.usecases.Event.Added -> {
                         _words[wordResult.word.first] = wordResult.word.second
                         _quizDetailsState.update {
                             it.copy(words = _words.toList().sortedByWord())
                         }
                     }
-                    Event.Changed -> {/* TODO */
+                    com.ada.domain.usecases.Event.Changed -> {/* TODO */
                     }
-                    Event.Removed -> {
+                    com.ada.domain.usecases.Event.Removed -> {
                         _words.remove(wordResult.word.first)
                         _quizDetailsState.update {
                             it.copy(words = _words.toList().sortedByWord())
                         }
                     }
-                    Event.Moved -> {/* TODO */
+                    com.ada.domain.usecases.Event.Moved -> {/* TODO */
                     }
                 }
             }
         }
     }
 
-    private fun List<Pair<Key, com.ada.data.WordTranslation>>.sortedByWord() = this.sortedBy { it.second.word }
+    private fun List<Pair<Key, WordTranslation>>.sortedByWord() = this.sortedBy { it.second.word }
 
     fun restartQuiz() = viewModelScope.launch {
         _words.forEach {

@@ -22,11 +22,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.ada.simplewords.common.OnClick
-import com.ada.simplewords.common.OnClickTakes
+import com.ada.common.OnClick
+import com.ada.common.OnClickTakes
 import com.ada.data.Quiz
-import com.ada.data.mapper.toQuizOrEmpty
-import com.example.domain.models.QuizModel
+import com.ada.domain.mapper.toQuizOrEmpty
+import com.ada.domain.models.QuizModel
 import com.ada.simplewords.feature.quiz.details.QuizDetailsScreen
 import com.ada.simplewords.ui.components.QuizItem
 import com.ada.simplewords.ui.components.utility.PreviewContainer
@@ -160,7 +160,8 @@ private fun Quizzes(
 @Composable
 private fun QuizListPreview() {
     PreviewContainer {
-        Quizzes(quiz = com.ada.data.Quiz.mockQuizzes(), onItemCLick = {}, onCreateClick = {})
+        // TODO: Fix mock quizzes
+        //Quizzes(quiz = Quiz.mockQuizzes(), onItemCLick = {}, onCreateClick = {})
     }
 }
 
@@ -170,7 +171,7 @@ private fun QuizListPreview() {
 private fun BottomSheetPreview() {
     PreviewContainer {
         BottomSheetContent(
-            quiz = com.example.domain.models.QuizModel.mockAnimals.toQuizOrEmpty(),
+            quiz = QuizModel.mockAnimals.toQuizOrEmpty(),
             onLearnClick = {},
             onCloseClick = {}
         )

@@ -1,10 +1,10 @@
-package com.ada.simplewords.domain.repositories
+package com.ada.domain.repositories
 
-import com.ada.simplewords.common.Key
-import com.ada.simplewords.common.debugLog
-import com.example.domain.models.QuizModel
-import com.example.domain.models.UserModel
-import com.example.domain.models.WordTranslationModel
+import com.ada.common.Key
+import com.ada.common.debugLog
+import com.ada.domain.models.QuizModel
+import com.ada.domain.models.UserModel
+import com.ada.domain.models.WordTranslationModel
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import dagger.Module
@@ -20,7 +20,7 @@ class FirebaseRepository @Inject constructor() {
     private val database =
         Firebase.database("https://simple-words-a3e96-default-rtdb.europe-west1.firebasedatabase.app/")
 
-    private val userId = com.example.domain.models.UserModel.mockUserId() // TODO change to actual.
+    private val userId = UserModel.mockUserId() // TODO change to actual.
 
     private fun currentUserDatabaseRef() = database.getReference(userId)
     private fun userRef() = database.getReference("$userId/user")
@@ -31,7 +31,7 @@ class FirebaseRepository @Inject constructor() {
     private fun wordRef(quizId: Key, wordId: Key) =
         database.getReference("$userId/quizWords/$quizId/$wordId")
 
-    fun saveUser(userModel: com.example.domain.models.UserModel) {
+    fun saveUser(userModel: UserModel) {
         val key = currentUserDatabaseRef().push().key
         key?.let {
             userRef().setValue(userModel)
@@ -42,7 +42,7 @@ class FirebaseRepository @Inject constructor() {
      * Saves [QuizModel] to database with newly generated key.
      * @return String key for saved quiz or null if unsuccessful.
      */
-    fun saveQuiz(quizModel: com.example.domain.models.QuizModel): Key? {
+    fun saveQuiz(quizModel: QuizModel): Key? {
         val key = quizzesRef().push().key
         key?.let {
             quizzesRef().child(it).setValue(quizModel.copy(id = key))
@@ -50,7 +50,7 @@ class FirebaseRepository @Inject constructor() {
         return key
     }
 
-    fun saveQuizWithWords(quiz: com.example.domain.models.QuizModel, words: List<com.example.domain.models.WordTranslationModel>) {
+    fun saveQuizWithWords(quiz: QuizModel, words: List<WordTranslationModel>) {
         val key = quizzesRef().push().key
         key?.let {
             quizzesRef().child(key).setValue(quiz.copy(id = key))
@@ -58,7 +58,7 @@ class FirebaseRepository @Inject constructor() {
         }
     }
 
-    fun updateQuiz(quizModel: com.example.domain.models.QuizModel) {
+    fun updateQuiz(quizModel: QuizModel) {
         quizModel.apply {
             id?.let { id ->
                 quizRef(id).updateChildren(quizModel.toMap()) { error, ref ->
@@ -68,7 +68,7 @@ class FirebaseRepository @Inject constructor() {
         }
     }
 
-    fun saveQuizWords(quizId: Key, words: List<com.example.domain.models.WordTranslationModel>) {
+    fun saveQuizWords(quizId: Key, words: List<WordTranslationModel>) {
         words.forEach {
             saveQuizWord(quizId, it)
         }
@@ -78,7 +78,7 @@ class FirebaseRepository @Inject constructor() {
      * Saves [WordTranslationModel] to database with generated and applied unique [Key],
      * also applies given quizId.
      */
-    fun saveQuizWord(quizId: Key, word: com.example.domain.models.WordTranslationModel): Key? {
+    fun saveQuizWord(quizId: Key, word: WordTranslationModel): Key? {
         val key = quizWordsRef().push().key
         key?.let {
             quizWordsRef().child(quizId).child(key)
@@ -87,7 +87,7 @@ class FirebaseRepository @Inject constructor() {
         return key
     }
 
-    fun updateWord(wordTranslationModel: com.example.domain.models.WordTranslationModel) {
+    fun updateWord(wordTranslationModel: WordTranslationModel) {
         wordTranslationModel.apply {
             quizItemId?.let { quizId ->
                 id?.let { wordId ->
@@ -103,38 +103,38 @@ class FirebaseRepository @Inject constructor() {
 
     inner class Debug {
         fun mockAnimals() {
-            val quizKey = saveQuiz(com.example.domain.models.QuizModel.mockAnimals)
+            val quizKey = saveQuiz(QuizModel.mockAnimals)
             quizKey?.let { key ->
                 saveQuizWords(
                     key,
-                    com.example.domain.models.WordTranslationModel.mockAnimals.map { it.copy(quizItemId = key) })
+                    WordTranslationModel.mockAnimals.map { it.copy(quizItemId = key) })
             }
         }
 
         fun mockAnimalsCompleted() {
-            val quizKey = saveQuiz(com.example.domain.models.QuizModel.mockAnimalsCompleted)
+            val quizKey = saveQuiz(QuizModel.mockAnimalsCompleted)
             quizKey?.let { key ->
                 saveQuizWords(
                     key,
-                    com.example.domain.models.WordTranslationModel.mockAnimalsCompleted.map { it.copy(quizItemId = key) })
+                    WordTranslationModel.mockAnimalsCompleted.map { it.copy(quizItemId = key) })
             }
         }
 
         fun mockFood() {
-            val quizKey = saveQuiz(com.example.domain.models.QuizModel.mockFood)
+            val quizKey = saveQuiz(QuizModel.mockFood)
             quizKey?.let { key ->
                 saveQuizWords(
                     key,
-                    com.example.domain.models.WordTranslationModel.mockFoodCompleted.map { it.copy(quizItemId = key) })
+                    WordTranslationModel.mockFoodCompleted.map { it.copy(quizItemId = key) })
             }
         }
 
         fun mockSeasons() {
-            val quizKey = saveQuiz(com.example.domain.models.QuizModel.mockSeasons)
+            val quizKey = saveQuiz(QuizModel.mockSeasons)
             quizKey?.let { key ->
                 saveQuizWords(
                     key,
-                    com.example.domain.models.WordTranslationModel.mockSeasons.map { it.copy(quizItemId = key) })
+                    WordTranslationModel.mockSeasons.map { it.copy(quizItemId = key) })
             }
         }
     }

@@ -1,4 +1,5 @@
 import com.ada.Dependencies
+import com.ada.ProjectConfig
 
 plugins {
     id("com.android.application")
@@ -10,12 +11,12 @@ plugins {
 
 android {
     namespace = "com.ada.simplewords"
-    compileSdk = 33
+    compileSdk = ProjectConfig.compileSdk
 
     defaultConfig {
         applicationId = "com.ada.simplewords"
-        minSdk = 27
-        targetSdk = 33
+        minSdk = ProjectConfig.minSdk
+        targetSdk = ProjectConfig.targetSdk
         versionCode = 1
         versionName = "1.0"
 
@@ -55,6 +56,9 @@ android {
 }
 
 dependencies {
+    implementation(project(":data")) // TODO: probably remove dependency once everything is refactored
+    implementation(project(":common"))
+    implementation(project(":domain"))
 
     implementation(Dependencies.core)
     implementation(Dependencies.lifecycleRuntime)

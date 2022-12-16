@@ -1,15 +1,19 @@
+import com.ada.ProjectConfig
+
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    kotlin("kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
-    namespace = "com.example.domain"
-    compileSdk = 32
+    namespace = "com.ada.domain"
+    compileSdk = ProjectConfig.compileSdk
 
     defaultConfig {
-        minSdk = 27
-        targetSdk = 32
+        minSdk = ProjectConfig.minSdk
+        targetSdk = ProjectConfig.targetSdk
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -34,14 +38,13 @@ android {
 }
 
 dependencies {
-
     implementation(project(":common"))
+    implementation(project(":data"))
 
+    implementation(com.ada.Dependencies.Hilt.android)
+    implementation(com.ada.Dependencies.Hilt.navigationCompose)
+    kapt(com.ada.Dependencies.Hilt.compiler)
 
-    implementation("androidx.core:core-ktx:1.7.0")
-    implementation("androidx.appcompat:appcompat:1.5.1")
-    implementation("com.google.android.material:material:1.7.0")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.4")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.0")
+    implementation(platform(com.ada.Dependencies.Firebase.bom))
+    implementation(com.ada.Dependencies.Firebase.realTimeDatabase)
 }

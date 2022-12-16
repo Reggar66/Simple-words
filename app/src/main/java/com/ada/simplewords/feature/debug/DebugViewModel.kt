@@ -1,8 +1,8 @@
 package com.ada.simplewords.feature.debug
 
 import androidx.lifecycle.ViewModel
-import com.example.domain.models.UserModel
-import com.ada.simplewords.domain.repositories.FirebaseRepository
+import com.ada.domain.models.UserModel
+import com.ada.domain.repositories.FirebaseRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -11,7 +11,7 @@ class DebugViewModel @Inject constructor(private val firebaseRepository: Firebas
     ViewModel() {
 
     fun createMockUser() {
-        firebaseRepository.saveUser(com.example.domain.models.UserModel.mock())
+        firebaseRepository.saveUser(UserModel.mock())
     }
 
     fun createMockQuizAnimals() {

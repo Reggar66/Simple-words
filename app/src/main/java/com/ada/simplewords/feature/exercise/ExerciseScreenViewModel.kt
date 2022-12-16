@@ -5,28 +5,27 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ada.simplewords.common.Key
-import com.ada.simplewords.common.debugLog
+import com.ada.common.Key
+import com.ada.common.debugLog
 import com.ada.data.Quiz
 import com.ada.data.WordTranslation
-import com.ada.data.toWordTranslationOrEmpty
-import com.example.domain.models.WordTranslationModel
-import com.ada.simplewords.domain.usecases.*
+import com.ada.domain.models.WordTranslationModel
+import com.ada.domain.models.toWordTranslationOrEmpty
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ExerciseScreenViewModel @Inject constructor(
-    private val observeWordsUseCase: ObserveWordsUseCase,
-    private val updateWordUseCase: UpdateWordUseCase,
-    private val observeQuizUseCase: ObserveQuizUseCase,
-    private val updateQuizUseCase: UpdateQuizUseCase
+    private val observeWordsUseCase: com.ada.domain.usecases.ObserveWordsUseCase,
+    private val updateWordUseCase: com.ada.domain.usecases.UpdateWordUseCase,
+    private val observeQuizUseCase: com.ada.domain.usecases.ObserveQuizUseCase,
+    private val updateQuizUseCase: com.ada.domain.usecases.UpdateQuizUseCase
 ) : ViewModel() {
 
     // TODO: Rewrite to use MutableStateFlow.
-    private var quiz: com.ada.data.Quiz? = null
-    private val words = mutableMapOf<Key, com.ada.data.WordTranslation>()
+    private var quiz: Quiz? = null
+    private val words = mutableMapOf<Key, WordTranslation>()
 
     var exerciseScreenState by
     mutableStateOf(ExerciseScreenState(getTranslation(), ValidationState.WAITING))
@@ -41,11 +40,11 @@ class ExerciseScreenViewModel @Inject constructor(
         debugLog { "observeTranslations: Start" }
         observeWordsUseCase.invoke(quizId = quizId).collect {
             when (it.event) {
-                Event.Added -> {
+                com.ada.domain.usecases.Event.Added -> {
                     words[it.word.first] = it.word.second
                     next()
                 }
-                Event.Changed -> {
+                com.ada.domain.usecases.Event.Changed -> {
                     debugLog { "Before: ${words[it.word.first]} | ${it.word.second}" }
                     words[it.word.first] = it.word.second
                     debugLog { "After: ${words[it.word.first]} | ${it.word.second}" }
@@ -128,7 +127,7 @@ data class ExerciseScreenState(
 ) {
     companion object {
         fun mock() = ExerciseScreenState(
-            currentWordTranslation = com.example.domain.models.WordTranslationModel.mockAnimals.first()
+            currentWordTranslation = WordTranslationModel.mockAnimals.first()
                 .toWordTranslationOrEmpty(),
             validationState = ValidationState.WAITING
         )

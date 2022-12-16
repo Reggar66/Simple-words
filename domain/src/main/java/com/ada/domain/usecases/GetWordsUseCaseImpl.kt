@@ -1,10 +1,9 @@
-package com.ada.simplewords.domain.usecases
+package com.ada.domain.usecases
 
-import com.ada.simplewords.common.debugLog
-import com.ada.data.WordTranslation
-import com.ada.data.toWordTranslationOrNull
-import com.example.domain.models.WordTranslationModel
-import com.ada.simplewords.domain.repositories.FirebaseRepository
+import com.ada.common.debugLog
+import com.ada.domain.models.WordTranslationModel
+import com.ada.domain.models.toWordTranslationOrNull
+import com.ada.domain.repositories.FirebaseRepository
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -25,7 +24,7 @@ class GetWordsUseCaseImpl @Inject constructor(private val firebaseRepository: Fi
             override fun onDataChange(snapshot: DataSnapshot) {
                 debugLog { "GetWordsUseCase: onDataChanged: $snapshot" }
                 val wordTranslationModels =
-                    snapshot.getValue<List<com.example.domain.models.WordTranslationModel>>()
+                    snapshot.getValue<List<WordTranslationModel>>()
                 val wordTranslations = mutableListOf<com.ada.data.WordTranslation>()
 
                 debugLog { snapshot.value?.javaClass }

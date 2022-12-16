@@ -1,13 +1,13 @@
-package com.ada.simplewords.domain.usecases
+package com.ada.domain.usecases
 
 import com.ada.data.WordTranslation
-import com.ada.data.mapper.toWordTranslationModel
-import com.ada.simplewords.domain.repositories.FirebaseRepository
+import com.ada.domain.mapper.toWordTranslationModel
+import com.ada.domain.repositories.FirebaseRepository
 import javax.inject.Inject
 
 class UpdateWordUseCaseImpl @Inject constructor(private val firebaseRepository: FirebaseRepository) :
     UpdateWordUseCase {
-    override fun invoke(wordTranslation: com.ada.data.WordTranslation) {
+    override fun invoke(wordTranslation: WordTranslation) {
         firebaseRepository.updateWord(wordTranslation.toWordTranslationModel())
     }
 }

@@ -5,23 +5,22 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ada.simplewords.common.debugLog
+import com.ada.common.debugLog
 import com.ada.data.Quiz
-import com.ada.simplewords.domain.repositories.FirebaseRepository
-import com.ada.simplewords.domain.usecases.GetQuizzesUseCase
+import com.ada.domain.repositories.FirebaseRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class QuizListViewModel @Inject constructor(
-    val firebaseRepository: FirebaseRepository, private val getQuizzesUseCase: GetQuizzesUseCase
+    val firebaseRepository: FirebaseRepository, private val getQuizzesUseCase: com.ada.domain.usecases.GetQuizzesUseCase
 ) : ViewModel() {
 
     var quizListState by mutableStateOf(QuizListScreenState())
         private set
 
-    private var quizzes: List<com.ada.data.Quiz> = emptyList()
+    private var quizzes: List<Quiz> = emptyList()
 
     init {
         fetchQuizzes()
@@ -50,7 +49,7 @@ class QuizListViewModel @Inject constructor(
         )
     }
 
-    fun selectQuiz(quizData: com.ada.data.Quiz) {
+    fun selectQuiz(quizData: Quiz) {
         quizListState = quizListState.copy(currentlySelectedQuiz = quizData)
     }
 
@@ -60,6 +59,6 @@ class QuizListViewModel @Inject constructor(
 }
 
 data class QuizListScreenState(
-    val quizzes: List<com.ada.data.Quiz> = emptyList(),
-    val currentlySelectedQuiz: com.ada.data.Quiz? = null
+    val quizzes: List<Quiz> = emptyList(),
+    val currentlySelectedQuiz: Quiz? = null
 )

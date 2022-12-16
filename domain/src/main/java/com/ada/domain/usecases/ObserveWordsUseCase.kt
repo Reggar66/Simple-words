@@ -1,4 +1,4 @@
-package com.ada.simplewords.domain.usecases
+package com.ada.domain.usecases
 
 import kotlinx.coroutines.flow.Flow
 

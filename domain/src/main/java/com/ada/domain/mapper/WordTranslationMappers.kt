@@ -1,4 +1,4 @@
-package com.ada.data.mapper
+package com.ada.domain.mapper
 
 import com.ada.data.WordTranslation
 import com.ada.domain.models.WordTranslationModel

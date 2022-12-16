@@ -1,6 +1,6 @@
-package com.ada.simplewords.common.module.binders
+package com.ada.domain.di
 
-import com.ada.simplewords.domain.usecases.*
+import com.ada.domain.usecases.*
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

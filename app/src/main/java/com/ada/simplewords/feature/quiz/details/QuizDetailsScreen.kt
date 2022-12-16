@@ -13,10 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.ada.simplewords.common.Key
-import com.ada.simplewords.common.OnClick
-import com.ada.data.Quiz
-import com.ada.data.WordTranslation
+import com.ada.common.Key
+import com.ada.common.OnClick
 import com.ada.simplewords.ui.components.WordItem
 
 data class QuizDetailsState(val quiz: com.ada.data.Quiz?, val words: List<Pair<Key, com.ada.data.WordTranslation>>) {
