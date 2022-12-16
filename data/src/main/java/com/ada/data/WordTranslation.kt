@@ -1,4 +1,4 @@
-package com.ada.simplewords.data
+package com.ada.data
 
 import com.ada.simplewords.common.Key
 import com.ada.simplewords.domain.models.WordTranslationModel
@@ -36,11 +36,11 @@ fun WordTranslationModel.toWordTranslationOrNull(): WordTranslation? {
 
 fun WordTranslationModel.toWordTranslationOrEmpty(): WordTranslation {
     return WordTranslation(
-        id = id ?: return WordTranslation.empty(),
-        quizItemId = quizItemId ?: return WordTranslation.empty(),
-        word = word ?: return WordTranslation.empty(),
-        translation = translation ?: return WordTranslation.empty(),
-        isLearned = learned ?: return WordTranslation.empty(),
-        repeat = repeat ?: return WordTranslation.empty()
+        id = id ?: return com.ada.data.WordTranslation.empty(),
+        quizItemId = quizItemId ?: return com.ada.data.WordTranslation.empty(),
+        word = word ?: return com.ada.data.WordTranslation.empty(),
+        translation = translation ?: return com.ada.data.WordTranslation.empty(),
+        isLearned = learned ?: return com.ada.data.WordTranslation.empty(),
+        repeat = repeat ?: return com.ada.data.WordTranslation.empty()
     )
 }

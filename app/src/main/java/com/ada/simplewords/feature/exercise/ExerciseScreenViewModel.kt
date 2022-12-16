@@ -7,10 +7,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ada.simplewords.common.Key
 import com.ada.simplewords.common.debugLog
-import com.ada.simplewords.data.Quiz
-import com.ada.simplewords.data.WordTranslation
-import com.ada.simplewords.data.toWordTranslationOrEmpty
-import com.ada.simplewords.domain.models.WordTranslationModel
+import com.ada.data.Quiz
+import com.ada.data.WordTranslation
+import com.ada.data.toWordTranslationOrEmpty
+import com.example.domain.models.WordTranslationModel
 import com.ada.simplewords.domain.usecases.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -25,8 +25,8 @@ class ExerciseScreenViewModel @Inject constructor(
 ) : ViewModel() {
 
     // TODO: Rewrite to use MutableStateFlow.
-    private var quiz: Quiz? = null
-    private val words = mutableMapOf<Key, WordTranslation>()
+    private var quiz: com.ada.data.Quiz? = null
+    private val words = mutableMapOf<Key, com.ada.data.WordTranslation>()
 
     var exerciseScreenState by
     mutableStateOf(ExerciseScreenState(getTranslation(), ValidationState.WAITING))
@@ -88,7 +88,7 @@ class ExerciseScreenViewModel @Inject constructor(
             }
     }
 
-    private fun getTranslation(): WordTranslation? {
+    private fun getTranslation(): com.ada.data.WordTranslation? {
         return if (hasNotLearnedWords())
             words.toList().filter { !it.second.isLearned && it.second.repeat > 0 }.random().second
         else null
@@ -122,13 +122,13 @@ class ExerciseScreenViewModel @Inject constructor(
 }
 
 data class ExerciseScreenState(
-    val currentWordTranslation: WordTranslation?,
+    val currentWordTranslation: com.ada.data.WordTranslation?,
     val validationState: ValidationState,
     val completed: Boolean = false
 ) {
     companion object {
         fun mock() = ExerciseScreenState(
-            currentWordTranslation = WordTranslationModel.mockAnimals.first()
+            currentWordTranslation = com.example.domain.models.WordTranslationModel.mockAnimals.first()
                 .toWordTranslationOrEmpty(),
             validationState = ValidationState.WAITING
         )

@@ -2,9 +2,9 @@ package com.ada.simplewords.domain.usecases
 
 import com.ada.simplewords.common.Key
 import com.ada.simplewords.common.debugLog
-import com.ada.simplewords.data.WordTranslation
-import com.ada.simplewords.data.toWordTranslationOrNull
-import com.ada.simplewords.domain.models.WordTranslationModel
+import com.ada.data.WordTranslation
+import com.ada.data.toWordTranslationOrNull
+import com.example.domain.models.WordTranslationModel
 import com.ada.simplewords.domain.repositories.FirebaseRepository
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
@@ -27,7 +27,7 @@ class ObserveWordsUseCaseImpl @Inject constructor(private val firebaseRepository
                 debugLog { "$PREFIX onChildAdded: $snapshot" }
 
                 val wordTranslation =
-                    snapshot.getValue<WordTranslationModel>()?.toWordTranslationOrNull()
+                    snapshot.getValue<com.example.domain.models.WordTranslationModel>()?.toWordTranslationOrNull()
 
                 snapshot.key?.let { key ->
                     wordTranslation?.let { translation ->
@@ -42,7 +42,7 @@ class ObserveWordsUseCaseImpl @Inject constructor(private val firebaseRepository
                 debugLog { "$PREFIX onChildChanged: $snapshot" }
 
                 val wordTranslation =
-                    snapshot.getValue<WordTranslationModel>()?.toWordTranslationOrNull()
+                    snapshot.getValue<com.example.domain.models.WordTranslationModel>()?.toWordTranslationOrNull()
 
                 snapshot.key?.let { key ->
                     wordTranslation?.let { translation ->
@@ -57,7 +57,7 @@ class ObserveWordsUseCaseImpl @Inject constructor(private val firebaseRepository
                 debugLog { "$PREFIX onChildRemoved: $snapshot" }
 
                 val wordTranslation =
-                    snapshot.getValue<WordTranslationModel>()?.toWordTranslationOrNull()
+                    snapshot.getValue<com.example.domain.models.WordTranslationModel>()?.toWordTranslationOrNull()
 
                 snapshot.key?.let { key ->
                     wordTranslation?.let { translation ->
@@ -93,4 +93,4 @@ enum class Event {
     Moved
 }
 
-data class WordResult(val event: Event, val word: Pair<Key, WordTranslation>)
+data class WordResult(val event: Event, val word: Pair<Key, com.ada.data.WordTranslation>)

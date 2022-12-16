@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ada.simplewords.common.Key
 import com.ada.simplewords.common.debugLog
-import com.ada.simplewords.data.Quiz
-import com.ada.simplewords.data.WordTranslation
+import com.ada.data.Quiz
+import com.ada.data.WordTranslation
 import com.ada.simplewords.domain.usecases.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -28,8 +28,8 @@ class QuizDetailsViewModel @Inject constructor(
 
     private var wordsJob: Job? = null
     private var quizJob: Job? = null
-    private val _words = mutableMapOf<Key, WordTranslation>()
-    private var _quiz: Quiz? = null
+    private val _words = mutableMapOf<Key, com.ada.data.WordTranslation>()
+    private var _quiz: com.ada.data.Quiz? = null
     private val _quizDetailsState =
         MutableStateFlow(QuizDetailsState.empty().copy(words = _words.toList().sortedByWord()))
 
@@ -38,7 +38,7 @@ class QuizDetailsViewModel @Inject constructor(
     fun observeQuiz(quizId: Key) {
         quizJob?.cancel()
         quizJob = viewModelScope.launch(Dispatchers.IO) {
-            observeQuizUseCase.invoke(quizId = quizId).collect { quiz: Quiz ->
+            observeQuizUseCase.invoke(quizId = quizId).collect { quiz: com.ada.data.Quiz ->
                 debugLog { "ObserveQuiz: got: $quiz" }
                 _quizDetailsState.update {
                     _quiz = quiz
@@ -77,7 +77,7 @@ class QuizDetailsViewModel @Inject constructor(
         }
     }
 
-    private fun List<Pair<Key, WordTranslation>>.sortedByWord() = this.sortedBy { it.second.word }
+    private fun List<Pair<Key, com.ada.data.WordTranslation>>.sortedByWord() = this.sortedBy { it.second.word }
 
     fun restartQuiz() = viewModelScope.launch {
         _words.forEach {

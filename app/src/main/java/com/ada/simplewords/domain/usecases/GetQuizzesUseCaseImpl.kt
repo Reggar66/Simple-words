@@ -1,9 +1,9 @@
 package com.ada.simplewords.domain.usecases
 
 import com.ada.simplewords.common.debugLog
-import com.ada.simplewords.data.Quiz
-import com.ada.simplewords.data.mapper.toQuizOrNull
-import com.ada.simplewords.domain.models.QuizModel
+import com.ada.data.Quiz
+import com.ada.data.mapper.toQuizOrNull
+import com.example.domain.models.QuizModel
 import com.ada.simplewords.domain.repositories.FirebaseRepository
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -19,15 +19,15 @@ class GetQuizzesUseCaseImpl @Inject constructor(firebaseRepository: FirebaseRepo
 
     private val quizzesRef = firebaseRepository.quizzesRef()
 
-    override fun invoke(): Flow<List<Quiz>> = callbackFlow {
+    override fun invoke(): Flow<List<com.ada.data.Quiz>> = callbackFlow {
 
         // TODO rewrite to ChildEventListener
         val listener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 debugLog { "GetQuizzesUseCase: onDataChanged: $snapshot" }
 
-                val quizModel = snapshot.getValue<HashMap<String, QuizModel>>()
-                val quizzes = mutableListOf<Quiz>()
+                val quizModel = snapshot.getValue<HashMap<String, com.example.domain.models.QuizModel>>()
+                val quizzes = mutableListOf<com.ada.data.Quiz>()
                 quizModel?.forEach { (key, quizz) ->
                     quizz.toQuizOrNull()?.let {
                         quizzes.add(it)

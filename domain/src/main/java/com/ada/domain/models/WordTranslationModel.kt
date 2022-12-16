@@ -1,6 +1,6 @@
-package com.ada.simplewords.domain.models
+package com.ada.domain.models
 
-import com.ada.simplewords.common.Key
+import com.ada.common.Key
 
 data class WordTranslationModel(
     val id: Key? = null,

@@ -1,7 +1,7 @@
-package com.ada.simplewords.data
+package com.ada.data
 
-import com.ada.simplewords.data.mapper.toQuizOrEmpty
-import com.ada.simplewords.domain.models.QuizModel
+import com.ada.data.mapper.toQuizOrEmpty
+import com.ada.domain.models.QuizModel
 
 data class Quiz(
     val id: String,

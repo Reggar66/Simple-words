@@ -24,11 +24,9 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ada.simplewords.common.OnClick
 import com.ada.simplewords.common.OnClickTakes
-import com.ada.simplewords.data.Quiz
-import com.ada.simplewords.data.mapper.toQuizOrEmpty
-import com.ada.simplewords.domain.models.QuizModel
-import com.ada.simplewords.domain.models.UserModel
-import com.ada.simplewords.feature.quiz.create.CreateQuizScreen
+import com.ada.data.Quiz
+import com.ada.data.mapper.toQuizOrEmpty
+import com.example.domain.models.QuizModel
 import com.ada.simplewords.feature.quiz.details.QuizDetailsScreen
 import com.ada.simplewords.ui.components.QuizItem
 import com.ada.simplewords.ui.components.utility.PreviewContainer
@@ -37,7 +35,7 @@ import com.ada.simplewords.ui.navigation.SimpleNavigationTakes
 import kotlinx.coroutines.launch
 
 @Composable
-fun QuizListScreen(openExercise: SimpleNavigationTakes<Quiz>, openCreate: SimpleNavigation) {
+fun QuizListScreen(openExercise: SimpleNavigationTakes<com.ada.data.Quiz>, openCreate: SimpleNavigation) {
     val viewModel = hiltViewModel<QuizListViewModel>()
     val state = viewModel.quizListState
 
@@ -52,8 +50,8 @@ fun QuizListScreen(openExercise: SimpleNavigationTakes<Quiz>, openCreate: Simple
 @Composable
 private fun QuizListImpl(
     quizListState: QuizListScreenState,
-    onLearnClick: OnClickTakes<Quiz>,
-    onItemClick: OnClickTakes<Quiz>,
+    onLearnClick: OnClickTakes<com.ada.data.Quiz>,
+    onItemClick: OnClickTakes<com.ada.data.Quiz>,
     onCreateClick: OnClick
 ) {
     val scaffoldState = rememberBottomSheetScaffoldState()
@@ -91,7 +89,7 @@ private fun QuizListImpl(
 
 @Composable
 private fun BottomSheetContent(
-    quiz: Quiz?,
+    quiz: com.ada.data.Quiz?,
     onLearnClick: OnClick,
     onCloseClick: OnClick,
 ) {
@@ -127,8 +125,8 @@ private fun BottomSheetContent(
 
 @Composable
 private fun Quizzes(
-    quiz: List<Quiz>,
-    onItemCLick: OnClickTakes<Quiz>,
+    quiz: List<com.ada.data.Quiz>,
+    onItemCLick: OnClickTakes<com.ada.data.Quiz>,
     onCreateClick: OnClick
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
@@ -162,7 +160,7 @@ private fun Quizzes(
 @Composable
 private fun QuizListPreview() {
     PreviewContainer {
-        Quizzes(quiz = Quiz.mockQuizzes(), onItemCLick = {}, onCreateClick = {})
+        Quizzes(quiz = com.ada.data.Quiz.mockQuizzes(), onItemCLick = {}, onCreateClick = {})
     }
 }
 
@@ -172,7 +170,7 @@ private fun QuizListPreview() {
 private fun BottomSheetPreview() {
     PreviewContainer {
         BottomSheetContent(
-            quiz = QuizModel.mockAnimals.toQuizOrEmpty(),
+            quiz = com.example.domain.models.QuizModel.mockAnimals.toQuizOrEmpty(),
             onLearnClick = {},
             onCloseClick = {}
         )

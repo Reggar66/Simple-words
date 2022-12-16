@@ -1,7 +1,7 @@
-package com.ada.simplewords.data.mapper
+package com.ada.data.mapper
 
-import com.ada.simplewords.data.Quiz
-import com.ada.simplewords.domain.models.QuizModel
+import com.ada.data.Quiz
+import com.ada.domain.models.QuizModel
 
 /**
  * Converts [QuizModel] to [Quiz] or returns null if any field is null.

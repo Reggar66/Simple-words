@@ -14,3 +14,6 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Simple words"
 include(":app")
+include(":domain")
+include(":data")
+include(":common")

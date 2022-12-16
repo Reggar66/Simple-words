@@ -1,4 +1,4 @@
-package com.ada.simplewords.common
+package com.ada.common
 
 typealias OnClick = () -> Unit
 

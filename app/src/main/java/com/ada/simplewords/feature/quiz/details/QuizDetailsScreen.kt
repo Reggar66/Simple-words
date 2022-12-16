@@ -15,17 +15,13 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ada.simplewords.common.Key
 import com.ada.simplewords.common.OnClick
-import com.ada.simplewords.common.debugLog
-import com.ada.simplewords.data.Quiz
-import com.ada.simplewords.data.WordTranslation
-import com.ada.simplewords.data.toWordTranslationOrEmpty
-import com.ada.simplewords.domain.models.WordTranslationModel
-import com.ada.simplewords.ui.components.utility.PreviewContainer
+import com.ada.data.Quiz
+import com.ada.data.WordTranslation
 import com.ada.simplewords.ui.components.WordItem
 
-data class QuizDetailsState(val quiz: Quiz?, val words: List<Pair<Key, WordTranslation>>) {
+data class QuizDetailsState(val quiz: com.ada.data.Quiz?, val words: List<Pair<Key, com.ada.data.WordTranslation>>) {
     companion object {
-        fun empty() = QuizDetailsState(quiz = Quiz.empty(), words = emptyList())
+        fun empty() = QuizDetailsState(quiz = com.ada.data.Quiz.empty(), words = emptyList())
 //        fun mock() = empty().copy(words = WordTranslationModel.mockAnimals.let {
 //            val map = mutableMapOf<Key, WordTranslation>()
 //            it.forEachIndexed { index, wordTranslationModel ->

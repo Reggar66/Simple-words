@@ -1,8 +1,8 @@
 package com.ada.simplewords.domain.usecases
 
-import com.ada.simplewords.data.Quiz
-import com.ada.simplewords.data.WordTranslation
+import com.ada.data.Quiz
+import com.ada.data.WordTranslation
 
 interface CreateQuizUseCase {
-    operator fun invoke(quiz: Quiz,  words: List<WordTranslation>)
+    operator fun invoke(quiz: com.ada.data.Quiz, words: List<com.ada.data.WordTranslation>)
 }

@@ -13,15 +13,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ada.simplewords.common.OnClick
-import com.ada.simplewords.data.Quiz
-import com.ada.simplewords.data.mapper.toQuizOrNull
-import com.ada.simplewords.domain.models.QuizModel
+import com.ada.data.Quiz
+import com.ada.data.mapper.toQuizOrNull
+import com.example.domain.models.QuizModel
 import com.ada.simplewords.ui.components.utility.PreviewContainer
 import com.ada.simplewords.ui.theme.dimensions
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun QuizItem(modifier: Modifier = Modifier, quiz: Quiz, onClick: OnClick) {
+fun QuizItem(modifier: Modifier = Modifier, quiz: com.ada.data.Quiz, onClick: OnClick) {
     Card(
         modifier = modifier.fillMaxWidth(),
         onClick = onClick,
@@ -40,7 +40,7 @@ fun QuizItem(modifier: Modifier = Modifier, quiz: Quiz, onClick: OnClick) {
 @Composable
 private fun QuizItemPreview() {
     PreviewContainer(modifier = Modifier.padding(8.dp)) {
-        QuizItem(quiz = QuizModel.mockSeasons.toQuizOrNull() ?: Quiz.empty()) {
+        QuizItem(quiz = com.example.domain.models.QuizModel.mockSeasons.toQuizOrNull() ?: com.ada.data.Quiz.empty()) {
 
         }
     }
