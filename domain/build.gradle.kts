@@ -42,7 +42,6 @@ dependencies {
     implementation(project(":data"))
 
     implementation(com.ada.Dependencies.Hilt.android)
-    implementation(com.ada.Dependencies.Hilt.navigationCompose)
     kapt(com.ada.Dependencies.Hilt.compiler)
 
     implementation(platform(com.ada.Dependencies.Firebase.bom))
