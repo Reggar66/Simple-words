@@ -24,9 +24,9 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ada.common.OnClick
 import com.ada.common.OnClickTakes
-import com.ada.data.Quiz
 import com.ada.domain.mapper.toQuizOrEmpty
-import com.ada.domain.models.QuizModel
+import com.ada.domain.model.Quiz
+import com.ada.model.QuizModel
 import com.ada.simplewords.feature.quiz.details.QuizDetailsScreen
 import com.ada.simplewords.ui.components.QuizItem
 import com.ada.simplewords.ui.components.utility.PreviewContainer
@@ -35,7 +35,7 @@ import com.ada.simplewords.ui.navigation.SimpleNavigationTakes
 import kotlinx.coroutines.launch
 
 @Composable
-fun QuizListScreen(openExercise: SimpleNavigationTakes<com.ada.data.Quiz>, openCreate: SimpleNavigation) {
+fun QuizListScreen(openExercise: SimpleNavigationTakes<Quiz>, openCreate: SimpleNavigation) {
     val viewModel = hiltViewModel<QuizListViewModel>()
     val state = viewModel.quizListState
 
@@ -50,8 +50,8 @@ fun QuizListScreen(openExercise: SimpleNavigationTakes<com.ada.data.Quiz>, openC
 @Composable
 private fun QuizListImpl(
     quizListState: QuizListScreenState,
-    onLearnClick: OnClickTakes<com.ada.data.Quiz>,
-    onItemClick: OnClickTakes<com.ada.data.Quiz>,
+    onLearnClick: OnClickTakes<Quiz>,
+    onItemClick: OnClickTakes<Quiz>,
     onCreateClick: OnClick
 ) {
     val scaffoldState = rememberBottomSheetScaffoldState()
@@ -89,7 +89,7 @@ private fun QuizListImpl(
 
 @Composable
 private fun BottomSheetContent(
-    quiz: com.ada.data.Quiz?,
+    quiz: Quiz?,
     onLearnClick: OnClick,
     onCloseClick: OnClick,
 ) {
@@ -125,8 +125,8 @@ private fun BottomSheetContent(
 
 @Composable
 private fun Quizzes(
-    quiz: List<com.ada.data.Quiz>,
-    onItemCLick: OnClickTakes<com.ada.data.Quiz>,
+    quiz: List<Quiz>,
+    onItemCLick: OnClickTakes<Quiz>,
     onCreateClick: OnClick
 ) {
     Box(modifier = Modifier.fillMaxSize()) {

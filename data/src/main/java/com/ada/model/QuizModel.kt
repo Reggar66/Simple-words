@@ -1,4 +1,4 @@
-package com.ada.domain.models
+package com.ada.model
 
 import com.ada.common.Key
 

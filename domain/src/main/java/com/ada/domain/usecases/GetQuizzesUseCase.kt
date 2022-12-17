@@ -1,6 +1,6 @@
 package com.ada.domain.usecases
 
-import com.ada.data.Quiz
+import com.ada.domain.model.Quiz
 import kotlinx.coroutines.flow.Flow
 
 interface GetQuizzesUseCase {

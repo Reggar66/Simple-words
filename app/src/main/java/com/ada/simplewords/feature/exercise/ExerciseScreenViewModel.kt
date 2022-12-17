@@ -7,10 +7,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ada.common.Key
 import com.ada.common.debugLog
-import com.ada.data.Quiz
-import com.ada.data.WordTranslation
-import com.ada.domain.models.WordTranslationModel
-import com.ada.domain.models.toWordTranslationOrEmpty
+import com.ada.domain.mapper.toWordTranslationOrEmpty
+import com.ada.domain.model.Quiz
+import com.ada.domain.model.WordTranslation
+import com.ada.model.WordTranslationModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -87,7 +87,7 @@ class ExerciseScreenViewModel @Inject constructor(
             }
     }
 
-    private fun getTranslation(): com.ada.data.WordTranslation? {
+    private fun getTranslation(): WordTranslation? {
         return if (hasNotLearnedWords())
             words.toList().filter { !it.second.isLearned && it.second.repeat > 0 }.random().second
         else null
@@ -121,7 +121,7 @@ class ExerciseScreenViewModel @Inject constructor(
 }
 
 data class ExerciseScreenState(
-    val currentWordTranslation: com.ada.data.WordTranslation?,
+    val currentWordTranslation: WordTranslation?,
     val validationState: ValidationState,
     val completed: Boolean = false
 ) {

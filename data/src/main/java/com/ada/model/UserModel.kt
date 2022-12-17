@@ -1,4 +1,4 @@
-package com.ada.domain.models
+package com.ada.model
 
 data class UserModel(val id: String, val name: String? = null, val picture: String? = null) {
     companion object {

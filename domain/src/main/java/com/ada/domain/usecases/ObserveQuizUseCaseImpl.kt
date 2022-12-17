@@ -2,10 +2,10 @@ package com.ada.domain.usecases
 
 import com.ada.common.Key
 import com.ada.common.debugLog
-import com.ada.data.Quiz
+import com.ada.domain.model.Quiz
 import com.ada.domain.mapper.toQuizOrNull
-import com.ada.domain.models.QuizModel
-import com.ada.domain.repositories.FirebaseRepository
+import com.ada.model.QuizModel
+import com.ada.repositories.FirebaseRepository
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener

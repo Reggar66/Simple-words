@@ -1,9 +1,10 @@
 package com.ada.domain.usecases
 
 import com.ada.common.debugLog
-import com.ada.domain.models.WordTranslationModel
-import com.ada.domain.models.toWordTranslationOrNull
-import com.ada.domain.repositories.FirebaseRepository
+import com.ada.domain.mapper.toWordTranslationOrNull
+import com.ada.domain.model.WordTranslation
+import com.ada.model.WordTranslationModel
+import com.ada.repositories.FirebaseRepository
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -16,7 +17,7 @@ import javax.inject.Inject
 class GetWordsUseCaseImpl @Inject constructor(private val firebaseRepository: FirebaseRepository) :
     GetWordsUseCase {
 
-    override fun invoke(quizId: String): Flow<List<com.ada.data.WordTranslation>> = callbackFlow {
+    override fun invoke(quizId: String): Flow<List<WordTranslation>> = callbackFlow {
         val wordsRef = firebaseRepository.wordsRef(quizId)
 
         // TODO rewrite to ChildEventListener
@@ -25,7 +26,7 @@ class GetWordsUseCaseImpl @Inject constructor(private val firebaseRepository: Fi
                 debugLog { "GetWordsUseCase: onDataChanged: $snapshot" }
                 val wordTranslationModels =
                     snapshot.getValue<List<WordTranslationModel>>()
-                val wordTranslations = mutableListOf<com.ada.data.WordTranslation>()
+                val wordTranslations = mutableListOf<WordTranslation>()
 
                 debugLog { snapshot.value?.javaClass }
                 debugLog { snapshot.value }

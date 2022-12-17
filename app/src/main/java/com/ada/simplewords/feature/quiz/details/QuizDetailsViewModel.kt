@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ada.common.Key
 import com.ada.common.debugLog
-import com.ada.data.Quiz
-import com.ada.data.WordTranslation
+import com.ada.domain.model.Quiz
+import com.ada.domain.model.WordTranslation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -28,7 +28,7 @@ class QuizDetailsViewModel @Inject constructor(
     private var wordsJob: Job? = null
     private var quizJob: Job? = null
     private val _words = mutableMapOf<Key, WordTranslation>()
-    private var _quiz: com.ada.data.Quiz? = null
+    private var _quiz: Quiz? = null
     private val _quizDetailsState =
         MutableStateFlow(QuizDetailsState.empty().copy(words = _words.toList().sortedByWord()))
 
@@ -37,7 +37,7 @@ class QuizDetailsViewModel @Inject constructor(
     fun observeQuiz(quizId: Key) {
         quizJob?.cancel()
         quizJob = viewModelScope.launch(Dispatchers.IO) {
-            observeQuizUseCase.invoke(quizId = quizId).collect { quiz: com.ada.data.Quiz ->
+            observeQuizUseCase.invoke(quizId = quizId).collect { quiz: Quiz ->
                 debugLog { "ObserveQuiz: got: $quiz" }
                 _quizDetailsState.update {
                     _quiz = quiz

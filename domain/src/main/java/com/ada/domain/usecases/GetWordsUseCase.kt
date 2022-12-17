@@ -1,6 +1,6 @@
 package com.ada.domain.usecases
 
-import com.ada.data.WordTranslation
+import com.ada.domain.model.WordTranslation
 import kotlinx.coroutines.flow.Flow
 
 interface GetWordsUseCase {

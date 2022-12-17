@@ -1,10 +1,10 @@
-package com.ada.domain.repositories
+package com.ada.repositories
 
 import com.ada.common.Key
 import com.ada.common.debugLog
-import com.ada.domain.models.QuizModel
-import com.ada.domain.models.UserModel
-import com.ada.domain.models.WordTranslationModel
+import com.ada.model.QuizModel
+import com.ada.model.UserModel
+import com.ada.model.WordTranslationModel
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import dagger.Module

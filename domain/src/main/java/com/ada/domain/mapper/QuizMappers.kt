@@ -1,7 +1,7 @@
 package com.ada.domain.mapper
 
-import com.ada.data.Quiz
-import com.ada.domain.models.QuizModel
+import com.ada.domain.model.Quiz
+import com.ada.model.QuizModel
 
 /**
  * Converts [QuizModel] to [Quiz] or returns null if any field is null.

@@ -13,15 +13,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ada.common.OnClick
-import com.ada.data.Quiz
+import com.ada.domain.model.Quiz
 import com.ada.domain.mapper.toQuizOrNull
-import com.ada.domain.models.QuizModel
+import com.ada.model.QuizModel
 import com.ada.simplewords.ui.components.utility.PreviewContainer
 import com.ada.simplewords.ui.theme.dimensions
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun QuizItem(modifier: Modifier = Modifier, quiz: com.ada.data.Quiz, onClick: OnClick) {
+fun QuizItem(modifier: Modifier = Modifier, quiz: Quiz, onClick: OnClick) {
     Card(
         modifier = modifier.fillMaxWidth(),
         onClick = onClick,

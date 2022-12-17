@@ -9,10 +9,10 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.ada.data.WordTranslation
+import com.ada.domain.model.WordTranslation
 
 @Composable
-fun WordItem(wordTranslation: com.ada.data.WordTranslation) {
+fun WordItem(wordTranslation: WordTranslation) {
     Card {
         Row(
             modifier = Modifier

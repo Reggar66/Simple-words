@@ -6,8 +6,8 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ada.common.debugLog
-import com.ada.data.Quiz
-import com.ada.domain.repositories.FirebaseRepository
+import com.ada.domain.model.Quiz
+import com.ada.repositories.FirebaseRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

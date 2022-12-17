@@ -8,7 +8,7 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class FirebaseModule {
+abstract class DomainModule {
 
     @Binds
     abstract fun bindGetQuizzesUseCase(

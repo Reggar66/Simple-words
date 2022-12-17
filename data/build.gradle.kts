@@ -3,6 +3,8 @@ import com.ada.ProjectConfig
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    kotlin("kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -37,4 +39,10 @@ android {
 
 dependencies {
     implementation(project(":common"))
+
+    implementation(com.ada.Dependencies.Hilt.android)
+    kapt(com.ada.Dependencies.Hilt.compiler)
+
+    implementation(platform(com.ada.Dependencies.Firebase.bom))
+    implementation(com.ada.Dependencies.Firebase.realTimeDatabase)
 }

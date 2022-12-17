@@ -1,7 +1,6 @@
-package com.ada.domain.models
+package com.ada.model
 
 import com.ada.common.Key
-import com.ada.data.WordTranslation
 
 data class WordTranslationModel(
     val id: Key? = null,
@@ -169,27 +168,4 @@ data class WordTranslationModel(
             )
         }
     }
-}
-
-// TODO: Move to somewhere more sensible
-fun WordTranslationModel.toWordTranslationOrNull(): WordTranslation? {
-    return WordTranslation(
-        id = id ?: return null,
-        quizItemId = quizItemId ?: return null,
-        word = word ?: return null,
-        translation = translation ?: return null,
-        isLearned = learned ?: return null,
-        repeat = repeat ?: return null
-    )
-}
-
-fun WordTranslationModel.toWordTranslationOrEmpty(): WordTranslation {
-    return WordTranslation(
-        id = id ?: return com.ada.data.WordTranslation.empty(),
-        quizItemId = quizItemId ?: return com.ada.data.WordTranslation.empty(),
-        word = word ?: return com.ada.data.WordTranslation.empty(),
-        translation = translation ?: return com.ada.data.WordTranslation.empty(),
-        isLearned = learned ?: return com.ada.data.WordTranslation.empty(),
-        repeat = repeat ?: return com.ada.data.WordTranslation.empty()
-    )
 }

@@ -2,9 +2,8 @@ package com.ada.simplewords.feature.quiz.create
 
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
-import com.ada.data.Quiz
-import com.ada.data.WordTranslation
-import com.ada.domain.usecases.CreateQuizUseCase
+import com.ada.domain.model.Quiz
+import com.ada.domain.model.WordTranslation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -21,9 +20,9 @@ class CreateQuizViewModel @Inject constructor(private val createQuizUseCase: com
 
     fun createQuiz(name: String) {
         createQuizUseCase.invoke(
-            quiz = com.ada.data.Quiz.empty().copy(name = name, wordsNumber = wordsToCreate.size),
+            quiz = Quiz.empty().copy(name = name, wordsNumber = wordsToCreate.size),
             words = wordsToCreate.map {
-                com.ada.data.WordTranslation.empty().copy(word = it.word, translation = it.translation)
+                WordTranslation.empty().copy(word = it.word, translation = it.translation)
             }
         )
     }

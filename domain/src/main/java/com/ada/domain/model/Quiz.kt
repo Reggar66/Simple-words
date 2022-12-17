@@ -1,4 +1,4 @@
-package com.ada.data
+package com.ada.domain.model
 
 data class Quiz(
     val id: String,
