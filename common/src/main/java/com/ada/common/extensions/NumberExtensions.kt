@@ -1,4 +1,4 @@
-package com.ada.simplewords.common.extensions
+package com.ada.common.extensions
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalDensity

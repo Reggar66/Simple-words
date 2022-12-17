@@ -33,8 +33,16 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = com.ada.Dependencies.Compose.compilerVersion
+    }
 }
 
 dependencies {
-
+    implementation(com.ada.Dependencies.Compose.ui)
+//    implementation(com.ada.Dependencies.Compose.uiToolingPreview)
+//    implementation(com.ada.Dependencies.Compose.material)
 }
