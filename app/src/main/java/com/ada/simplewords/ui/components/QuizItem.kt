@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import com.ada.common.OnClick
 import com.ada.domain.model.Quiz
 import com.ada.domain.mapper.toQuizOrNull
-import com.ada.model.QuizModel
+import com.ada.data.model.QuizModel
 import com.ada.simplewords.ui.components.utility.PreviewContainer
 import com.ada.simplewords.ui.theme.dimensions
 

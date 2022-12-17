@@ -2,7 +2,7 @@ package com.ada.domain.usecases
 
 import com.ada.domain.model.Quiz
 import com.ada.domain.mapper.toQuizModel
-import com.ada.repositories.FirebaseRepository
+import com.ada.data.repositories.FirebaseRepository
 import javax.inject.Inject
 
 class UpdateQuizUseCaseImpl @Inject constructor(private val firebaseRepository: FirebaseRepository) :

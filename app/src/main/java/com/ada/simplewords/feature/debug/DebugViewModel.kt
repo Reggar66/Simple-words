@@ -1,8 +1,8 @@
 package com.ada.simplewords.feature.debug
 
 import androidx.lifecycle.ViewModel
-import com.ada.model.UserModel
-import com.ada.repositories.FirebaseRepository
+import com.ada.data.model.UserModel
+import com.ada.data.repositories.FirebaseRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

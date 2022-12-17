@@ -3,8 +3,8 @@ package com.ada.domain.usecases
 import com.ada.common.debugLog
 import com.ada.domain.mapper.toWordTranslationOrNull
 import com.ada.domain.model.WordTranslation
-import com.ada.model.WordTranslationModel
-import com.ada.repositories.FirebaseRepository
+import com.ada.data.model.WordTranslationModel
+import com.ada.data.repositories.FirebaseRepository
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener

@@ -26,7 +26,7 @@ import com.ada.common.OnClick
 import com.ada.common.OnClickTakes
 import com.ada.domain.mapper.toQuizOrEmpty
 import com.ada.domain.model.Quiz
-import com.ada.model.QuizModel
+import com.ada.data.model.QuizModel
 import com.ada.simplewords.feature.quiz.details.QuizDetailsScreen
 import com.ada.simplewords.ui.components.QuizItem
 import com.ada.simplewords.ui.components.utility.PreviewContainer

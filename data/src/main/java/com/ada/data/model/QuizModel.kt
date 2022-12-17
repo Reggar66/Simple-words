@@ -1,4 +1,4 @@
-package com.ada.model
+package com.ada.data.model
 
 import com.ada.common.Key
 

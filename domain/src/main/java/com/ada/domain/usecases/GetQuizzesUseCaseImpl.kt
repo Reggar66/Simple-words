@@ -3,8 +3,8 @@ package com.ada.domain.usecases
 import com.ada.common.debugLog
 import com.ada.domain.mapper.toQuizOrNull
 import com.ada.domain.model.Quiz
-import com.ada.model.QuizModel
-import com.ada.repositories.FirebaseRepository
+import com.ada.data.model.QuizModel
+import com.ada.data.repositories.FirebaseRepository
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener

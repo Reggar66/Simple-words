@@ -10,7 +10,7 @@ import com.ada.common.debugLog
 import com.ada.domain.mapper.toWordTranslationOrEmpty
 import com.ada.domain.model.Quiz
 import com.ada.domain.model.WordTranslation
-import com.ada.model.WordTranslationModel
+import com.ada.data.model.WordTranslationModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

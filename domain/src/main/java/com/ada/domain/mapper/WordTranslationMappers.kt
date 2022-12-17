@@ -1,7 +1,7 @@
 package com.ada.domain.mapper
 
 import com.ada.domain.model.WordTranslation
-import com.ada.model.WordTranslationModel
+import com.ada.data.model.WordTranslationModel
 
 fun WordTranslation.toWordTranslationModel() = WordTranslationModel(
     id = id,
