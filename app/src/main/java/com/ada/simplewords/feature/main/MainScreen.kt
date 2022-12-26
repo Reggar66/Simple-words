@@ -13,11 +13,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.ada.simplewords.BuildConfig
 import com.ada.simplewords.feature.debug.DebugViewModel
 import com.ada.simplewords.ui.navigation.NavigationHost
-import com.ada.simplewords.ui.theme.SimpleWordsTheme
+import com.ada.ui.theme.SimpleWordsTheme
 
 @Composable
 fun MainScreen() {
-    SimpleWordsTheme {
+    com.ada.ui.theme.SimpleWordsTheme {
         // A surface container using the 'background' color from the theme
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
             DebugOverlay {

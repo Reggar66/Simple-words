@@ -16,4 +16,7 @@ rootProject.name = "Simple words"
 include(":app")
 include(":domain")
 include(":data")
-include(":common")
+include(":feature:quizlist")
+include(":core:common")
+include(":core:ui")
+include(":feature:quizdetails")

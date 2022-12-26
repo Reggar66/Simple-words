@@ -57,8 +57,11 @@ android {
 
 dependencies {
     implementation(project(":data")) // TODO: probably remove dependency once everything is refactored
-    implementation(project(":common"))
+    implementation(project(":core:common"))
+    implementation(project(":core:ui"))
     implementation(project(":domain"))
+
+    implementation(project(":feature:quizlist"))
 
     implementation(Dependencies.core)
     implementation(Dependencies.lifecycleRuntime)

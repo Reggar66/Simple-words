@@ -21,10 +21,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ada.common.OnClick
 import com.ada.common.OnClickTakes
+import com.ada.common.SimpleNavigation
 import com.ada.common.debugLog
-import com.ada.simplewords.ui.components.SwipeMenu
-import com.ada.simplewords.ui.components.utility.PreviewContainer
-import com.ada.simplewords.ui.navigation.SimpleNavigation
+import com.ada.ui.PreviewContainer
+import com.ada.ui.components.SwipeMenu
 import kotlinx.coroutines.delay
 
 @Composable

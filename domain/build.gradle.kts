@@ -38,7 +38,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":common"))
+    implementation(project(":core:common"))
     implementation(project(":data"))
 
     implementation(com.ada.Dependencies.Hilt.android)

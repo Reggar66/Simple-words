@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ada.common.OnClick
 import com.ada.common.OnClickTakes
-import com.ada.simplewords.ui.components.utility.PreviewContainer
+import com.ada.ui.PreviewContainer
 
 
 /* TODO Show completed message */
