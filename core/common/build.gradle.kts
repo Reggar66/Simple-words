@@ -1,5 +1,3 @@
-import com.ada.ProjectConfig
-
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
@@ -7,11 +5,11 @@ plugins {
 
 android {
     namespace = "com.ada.common"
-    compileSdk = ProjectConfig.compileSdk
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = ProjectConfig.minSdk
-        targetSdk = ProjectConfig.targetSdk
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -37,16 +35,14 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = com.ada.Dependencies.Compose.compilerVersion
+        kotlinCompilerExtensionVersion = libs.versions.composeCompilerVersion.get()
     }
 }
 
 dependencies {
-    implementation(com.ada.Dependencies.Compose.ui)
-//    implementation(com.ada.Dependencies.Compose.uiToolingPreview)
-//    implementation(com.ada.Dependencies.Compose.material)
+    implementation(libs.androidx.compose.ui)
 
-    testImplementation(com.ada.Dependencies.jUnit)
-    androidTestImplementation(com.ada.Dependencies.androidx_junit)
-    androidTestImplementation(com.ada.Dependencies.androidx_espresso)
+    testImplementation(libs.junit4)
+    androidTestImplementation(libs.androidx.test.junit)
+    androidTestImplementation(libs.androidx.test.esspresso.core)
 }

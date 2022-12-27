@@ -7,11 +7,11 @@ plugins {
 
 android {
     namespace = "com.ada.quiz"
-    compileSdk = com.ada.ProjectConfig.compileSdk
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = com.ada.ProjectConfig.minSdk
-        targetSdk = com.ada.ProjectConfig.targetSdk
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -37,7 +37,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = com.ada.Dependencies.Compose.compilerVersion
+        kotlinCompilerExtensionVersion = libs.versions.composeCompilerVersion.get()
     }
 }
 
@@ -49,19 +49,21 @@ dependencies {
 
     implementation(project(":feature:quizdetails"))
 
-    implementation(com.ada.Dependencies.Compose.ui)
-    implementation(com.ada.Dependencies.Compose.uiToolingPreview)
-    implementation(com.ada.Dependencies.Compose.material)
+    implementation(libs.androidx.core.ktx)
 
-    implementation(com.ada.Dependencies.Hilt.android)
-    implementation(com.ada.Dependencies.Hilt.navigationCompose)
-    kapt(com.ada.Dependencies.Hilt.compiler)
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+    implementation(libs.androidx.compose.material)
 
-    testImplementation(com.ada.Dependencies.jUnit)
-    androidTestImplementation(com.ada.Dependencies.androidx_junit)
-    androidTestImplementation(com.ada.Dependencies.androidx_espresso)
+    implementation(libs.hilt.android)
+    implementation(libs.androidx.hilt.navigation.compose)
+    kapt(libs.hilt.android.compiler)
 
-    androidTestImplementation(com.ada.Dependencies.Compose.Test.uiTestJunit)
-    debugImplementation(com.ada.Dependencies.Compose.Debug.uiTooling)
-    debugImplementation(com.ada.Dependencies.Compose.Debug.uiTestManifest)
+    testImplementation(libs.junit4)
+    androidTestImplementation(libs.androidx.test.junit)
+    androidTestImplementation(libs.androidx.test.esspresso.core)
+
+    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
+    debugImplementation(libs.androidx.compose.ui.tooling)
+    debugImplementation(libs.androidx.compose.ui.test.manifest)
 }

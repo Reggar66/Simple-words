@@ -1,6 +1,3 @@
-import com.ada.Dependencies
-import com.ada.ProjectConfig
-
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -11,12 +8,12 @@ plugins {
 
 android {
     namespace = "com.ada.simplewords"
-    compileSdk = ProjectConfig.compileSdk
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
         applicationId = "com.ada.simplewords"
-        minSdk = ProjectConfig.minSdk
-        targetSdk = ProjectConfig.targetSdk
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
 
@@ -46,7 +43,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = Dependencies.Compose.compilerVersion
+        kotlinCompilerExtensionVersion = libs.versions.composeCompilerVersion.get()
     }
     packagingOptions {
         resources {
@@ -63,28 +60,28 @@ dependencies {
 
     implementation(project(":feature:quizlist"))
 
-    implementation(Dependencies.core)
-    implementation(Dependencies.lifecycleRuntime)
-    implementation(Dependencies.activityCompose)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.lifecycle.runtime)
+    implementation(libs.androidx.activity.compose)
 
-    implementation(Dependencies.Compose.ui)
-    implementation(Dependencies.Compose.uiToolingPreview)
-    implementation(Dependencies.Compose.material)
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+    implementation(libs.androidx.compose.material)
 
-    implementation(Dependencies.navigation)
+    implementation(libs.androidx.navigation.compose)
 
-    implementation(Dependencies.Hilt.android)
-    implementation(Dependencies.Hilt.navigationCompose)
-    kapt(Dependencies.Hilt.compiler)
+    implementation(libs.hilt.android)
+    implementation(libs.androidx.hilt.navigation.compose)
+    kapt(libs.hilt.android.compiler)
 
-    implementation(platform(Dependencies.Firebase.bom))
-    implementation(Dependencies.Firebase.realTimeDatabase)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.database.ktx)
 
-    testImplementation(Dependencies.jUnit)
-    androidTestImplementation(Dependencies.androidx_junit)
-    androidTestImplementation(Dependencies.androidx_espresso)
+    testImplementation(libs.junit4)
+    androidTestImplementation(libs.androidx.test.junit)
+    androidTestImplementation(libs.androidx.test.esspresso.core)
 
-    androidTestImplementation(Dependencies.Compose.Test.uiTestJunit)
-    debugImplementation(Dependencies.Compose.Debug.uiTooling)
-    debugImplementation(Dependencies.Compose.Debug.uiTestManifest)
+    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
+    debugImplementation(libs.androidx.compose.ui.tooling)
+    debugImplementation(libs.androidx.compose.ui.test.manifest)
 }

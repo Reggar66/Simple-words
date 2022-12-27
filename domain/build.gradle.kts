@@ -1,5 +1,3 @@
-import com.ada.ProjectConfig
-
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
@@ -9,11 +7,11 @@ plugins {
 
 android {
     namespace = "com.ada.domain"
-    compileSdk = ProjectConfig.compileSdk
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = ProjectConfig.minSdk
-        targetSdk = ProjectConfig.targetSdk
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -41,9 +39,9 @@ dependencies {
     implementation(project(":core:common"))
     implementation(project(":data"))
 
-    implementation(com.ada.Dependencies.Hilt.android)
-    kapt(com.ada.Dependencies.Hilt.compiler)
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
 
-    implementation(platform(com.ada.Dependencies.Firebase.bom))
-    implementation(com.ada.Dependencies.Firebase.realTimeDatabase)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.database.ktx)
 }

@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="11" />
+    <bytecodeTargetLevel target="11">
+      <module name="build-conventions" target="1.8" />
+      <module name="build-conventions.convention" target="1.8" />
+      <module name="build-conventions.convention.main" target="1.8" />
+      <module name="build-conventions.convention.test" target="1.8" />
+      <module name="build-conventions.main" target="1.8" />
+      <module name="build-conventions.test" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

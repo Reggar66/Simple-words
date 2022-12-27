@@ -12,6 +12,9 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
+
+includeBuild("build-logic")
+
 rootProject.name = "Simple words"
 include(":app")
 include(":domain")
