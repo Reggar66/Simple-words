@@ -9,8 +9,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
+import com.ada.exercise.ExerciseScreen
 import com.ada.quizlist.QuizListScreen
-import com.ada.simplewords.feature.exercise.ExerciseScreen
 
 @Composable
 fun NavigationHost(

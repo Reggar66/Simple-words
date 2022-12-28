@@ -53,13 +53,11 @@ android {
 }
 
 dependencies {
-    implementation(project(":data")) // TODO: probably remove dependency once everything is refactored
-    implementation(project(":core:common"))
-    implementation(project(":core:ui"))
-    implementation(project(":domain"))
+    implementation(project(":data"))
 
     implementation(project(":feature:quizlist"))
     implementation(project(":feature:quizcreate"))
+    implementation(project(":feature:exercise"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime)

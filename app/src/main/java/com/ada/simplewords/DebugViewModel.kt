@@ -1,4 +1,4 @@
-package com.ada.simplewords.feature.debug
+package com.ada.simplewords
 
 import androidx.lifecycle.ViewModel
 import com.ada.data.model.UserModel

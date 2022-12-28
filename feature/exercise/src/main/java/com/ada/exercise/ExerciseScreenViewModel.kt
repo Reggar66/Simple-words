@@ -1,4 +1,4 @@
-package com.ada.simplewords.feature.exercise
+package com.ada.exercise
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

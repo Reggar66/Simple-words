@@ -1,4 +1,4 @@
-package com.ada.simplewords.feature.main
+package com.ada.simplewords
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
@@ -10,10 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.ada.simplewords.BuildConfig
-import com.ada.simplewords.feature.debug.DebugViewModel
 import com.ada.simplewords.ui.navigation.NavigationHost
-import com.ada.ui.theme.SimpleWordsTheme
 
 @Composable
 fun MainScreen() {
