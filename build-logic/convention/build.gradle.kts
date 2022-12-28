@@ -19,6 +19,11 @@ gradlePlugin {
             implementationClass = "AndroidLibraryComposeConventionPlugin"
         }
 
+        register("androidLibrary") {
+            id = "com.simplewords.android.library"
+            implementationClass = "AndroidLibraryConventionPlugin"
+        }
+
         register("androidHilt") {
             id = "com.simplewords.hilt"
             implementationClass = "AndroidHiltConventionPlugin"
