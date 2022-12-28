@@ -59,6 +59,7 @@ dependencies {
     implementation(project(":domain"))
 
     implementation(project(":feature:quizlist"))
+    implementation(project(":feature:quizcreate"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime)

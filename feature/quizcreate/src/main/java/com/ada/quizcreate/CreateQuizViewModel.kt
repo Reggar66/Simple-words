@@ -1,4 +1,4 @@
-package com.ada.simplewords.feature.quiz.create
+package com.ada.quizcreate
 
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel

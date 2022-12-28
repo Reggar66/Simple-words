@@ -11,7 +11,6 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import com.ada.quizlist.QuizListScreen
 import com.ada.simplewords.feature.exercise.ExerciseScreen
-import com.ada.simplewords.feature.quiz.create.CreateQuizScreen
 
 @Composable
 fun NavigationHost(
@@ -47,7 +46,7 @@ fun NavGraphBuilder.quizListRoot(navController: NavController) {
         }
 
         composable(Screen.Create.route) {
-            CreateQuizScreen(closeScreen = { navController.popBackStack() })
+            com.ada.quizcreate.CreateQuizScreen(closeScreen = { navController.popBackStack() })
         }
     }
 }
