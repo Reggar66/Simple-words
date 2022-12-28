@@ -1,4 +1,4 @@
-package com.example.quizdetails
+package com.ada.quizdetails
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

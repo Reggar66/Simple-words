@@ -31,7 +31,7 @@ import com.ada.domain.mapper.toQuizOrEmpty
 import com.ada.domain.model.Quiz
 import com.ada.ui.PreviewContainer
 import com.ada.ui.components.QuizItem
-import com.example.quizdetails.QuizDetailsScreen
+import com.ada.quizdetails.QuizDetailsScreen
 import kotlinx.coroutines.launch
 
 @Composable

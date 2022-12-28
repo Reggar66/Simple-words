@@ -1,4 +1,4 @@
-package com.example.quizdetails
+package com.ada.quizdetails
 
 import org.junit.Test
 
