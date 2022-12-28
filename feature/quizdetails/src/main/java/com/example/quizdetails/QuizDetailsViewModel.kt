@@ -6,6 +6,10 @@ import com.ada.common.Key
 import com.ada.common.debugLog
 import com.ada.domain.model.Quiz
 import com.ada.domain.model.WordTranslation
+import com.ada.domain.usecases.ObserveQuizUseCase
+import com.ada.domain.usecases.ObserveWordsUseCase
+import com.ada.domain.usecases.UpdateQuizUseCase
+import com.ada.domain.usecases.UpdateWordUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -19,10 +23,10 @@ private const val PREFIX = "QuizDetailsViewModel:"
 
 @HiltViewModel
 class QuizDetailsViewModel @Inject constructor(
-    private val observeQuizUseCase: com.ada.domain.usecases.ObserveQuizUseCase,
-    private val observeWordsUseCase: com.ada.domain.usecases.ObserveWordsUseCase,
-    private val updateWordUseCase: com.ada.domain.usecases.UpdateWordUseCase,
-    private val updateQuizUseCase: com.ada.domain.usecases.UpdateQuizUseCase
+    private val observeQuizUseCase: ObserveQuizUseCase,
+    private val observeWordsUseCase: ObserveWordsUseCase,
+    private val updateWordUseCase: UpdateWordUseCase,
+    private val updateQuizUseCase: UpdateQuizUseCase
 ) : ViewModel() {
 
     private var wordsJob: Job? = null

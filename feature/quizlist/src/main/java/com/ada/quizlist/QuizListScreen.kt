@@ -29,8 +29,6 @@ import com.ada.common.SimpleNavigationTakes
 import com.ada.data.model.QuizModel
 import com.ada.domain.mapper.toQuizOrEmpty
 import com.ada.domain.model.Quiz
-import com.ada.simplewords.feature.quiz.list.QuizListScreenState
-import com.ada.simplewords.feature.quiz.list.QuizListViewModel
 import com.ada.ui.PreviewContainer
 import com.ada.ui.components.QuizItem
 import com.example.quizdetails.QuizDetailsScreen

@@ -10,6 +10,18 @@ java {
 dependencies {
     implementation(libs.android.gradlePlugin)
     implementation(libs.kotlin.gradlePlugin)
-    //implementation("com.android.tools.build:gradle:7.3.1")
-    //implementation("org.jetbrains.kotlin.android:org.jetbrains.kotlin.android.gradle.plugin:1.7.10")
+}
+
+gradlePlugin {
+    plugins {
+        register("androidLibraryCompose") {
+            id = "com.simplewords.android.library.compose"
+            implementationClass = "AndroidLibraryComposeConventionPlugin"
+        }
+
+        register("androidHilt") {
+            id = "com.simplewords.hilt"
+            implementationClass = "AndroidHiltConventionPlugin"
+        }
+    }
 }

@@ -1,4 +1,4 @@
-package com.ada.simplewords.feature.quiz.list
+package com.ada.quizlist
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -8,13 +8,15 @@ import androidx.lifecycle.viewModelScope
 import com.ada.common.debugLog
 import com.ada.domain.model.Quiz
 import com.ada.data.repositories.FirebaseRepository
+import com.ada.domain.usecases.GetQuizzesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class QuizListViewModel @Inject constructor(
-    val firebaseRepository: FirebaseRepository, private val getQuizzesUseCase: com.ada.domain.usecases.GetQuizzesUseCase
+    val firebaseRepository: FirebaseRepository,
+    private val getQuizzesUseCase: GetQuizzesUseCase
 ) : ViewModel() {
 
     var quizListState by mutableStateOf(QuizListScreenState())
