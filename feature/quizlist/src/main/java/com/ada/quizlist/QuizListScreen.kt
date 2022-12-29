@@ -98,8 +98,8 @@ private fun Quizzes(
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         LazyColumn(
-            contentPadding = PaddingValues(4.dp),
-            verticalArrangement = Arrangement.spacedBy(4.dp)
+            contentPadding = PaddingValues(8.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             items(items = quiz, key = { it.id }) { quizItem ->
                 QuizItem(
