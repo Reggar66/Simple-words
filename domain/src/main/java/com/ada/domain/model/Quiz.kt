@@ -1,5 +1,8 @@
 package com.ada.domain.model
 
+import com.ada.data.model.QuizModel
+import com.ada.domain.mapper.toQuizOrEmpty
+
 data class Quiz(
     val id: String,
     val name: String,
@@ -13,10 +16,10 @@ data class Quiz(
         fun empty() = Quiz(id = "", name = "", wordsNumber = 0, completedWords = 0)
 
         // TODO: fix mock. Have to move it i.e. to domain
-//        fun mockQuizzes() = listOf(
-//            QuizModel.mockAnimals.toQuizOrEmpty(),
-//            QuizModel.mockFood.toQuizOrEmpty(),
-//            QuizModel.mockSeasons.toQuizOrEmpty(),
-//        )
+        fun mockQuizzes() = listOf(
+            QuizModel.mockAnimals.toQuizOrEmpty(),
+            QuizModel.mockFood.toQuizOrEmpty(),
+            QuizModel.mockSeasons.toQuizOrEmpty(),
+        )
     }
 }

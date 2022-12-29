@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalFoundationApi::class)
-
 package com.ada.quizcreate
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES

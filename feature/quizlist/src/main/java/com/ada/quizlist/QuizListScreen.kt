@@ -4,6 +4,7 @@ package com.ada.quizlist
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,6 +18,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -59,14 +61,19 @@ private fun QuizListImpl(
 
     BottomSheetScaffold(
         sheetContent = {
-            BottomSheetContent(
-                quiz = quizListState.currentlySelectedQuiz,
-                onLearnClick = { quizListState.currentlySelectedQuiz?.let { onLearnClick(it) } },
+            BottomSheetContainer(
+                quizName = quizListState.currentlySelectedQuiz?.name,
                 onCloseClick = {
                     scope.launch {
                         scaffoldState.bottomSheetState.collapse()
                     }
                 },
+                content = {
+                    QuizDetailsScreen(
+                        quizId = quizListState.currentlySelectedQuiz?.id,
+                        onLearnClick = { quizListState.currentlySelectedQuiz?.let { onLearnClick(it) } }
+                    )
+                }
             )
         },
         scaffoldState = scaffoldState,
@@ -88,10 +95,10 @@ private fun QuizListImpl(
 }
 
 @Composable
-private fun BottomSheetContent(
-    quiz: Quiz?,
-    onLearnClick: OnClick,
+private fun BottomSheetContainer(
+    quizName: String?,
     onCloseClick: OnClick,
+    content: @Composable () -> Unit
 ) {
     Column(modifier = Modifier.fillMaxWidth(), verticalArrangement = Arrangement.Center) {
         Spacer(modifier = Modifier.height(8.dp))
@@ -110,7 +117,7 @@ private fun BottomSheetContent(
             )
 
             Text(
-                text = quiz?.name ?: "",
+                text = quizName ?: "",
                 modifier = Modifier.weight(1f),
                 textAlign = TextAlign.Center,
                 fontSize = 24.sp
@@ -119,7 +126,7 @@ private fun BottomSheetContent(
             Spacer(modifier = Modifier.width(40.dp))
         }
 
-        QuizDetailsScreen(quizId = quiz?.id, onLearnClick = onLearnClick)
+        content()
     }
 }
 
@@ -160,8 +167,7 @@ private fun Quizzes(
 @Composable
 private fun QuizListPreview() {
     PreviewContainer {
-        // TODO: Fix mock quizzes
-        //Quizzes(quiz = Quiz.mockQuizzes(), onItemCLick = {}, onCreateClick = {})
+        Quizzes(quiz = Quiz.mockQuizzes(), onItemCLick = {}, onCreateClick = {})
     }
 }
 
@@ -170,10 +176,21 @@ private fun QuizListPreview() {
 @Composable
 private fun BottomSheetPreview() {
     PreviewContainer {
-        BottomSheetContent(
-            quiz = QuizModel.mockAnimals.toQuizOrEmpty(),
-            onLearnClick = {},
-            onCloseClick = {}
+        BottomSheetContainer(
+            quizName = QuizModel.mockAnimals.toQuizOrEmpty().name,
+            onCloseClick = {},
+            content = {
+                Column(
+                    modifier = Modifier
+                        .background(Color.Gray)
+                        .fillMaxWidth()
+                        .height(200.dp),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(text = "Content")
+                }
+            }
         )
     }
 }

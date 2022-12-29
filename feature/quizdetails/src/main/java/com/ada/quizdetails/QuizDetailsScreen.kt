@@ -13,25 +13,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.ada.common.Key
 import com.ada.common.OnClick
-import com.ada.domain.model.Quiz
-import com.ada.domain.model.WordTranslation
+import com.ada.ui.PreviewContainer
 import com.ada.ui.components.WordItem
-
-data class QuizDetailsState(val quiz: Quiz?, val words: List<Pair<Key, WordTranslation>>) {
-    companion object {
-        fun empty() = QuizDetailsState(quiz = Quiz.empty(), words = emptyList())
-//        fun mock() = empty().copy(words = WordTranslationModel.mockAnimals.let {
-//            val map = mutableMapOf<Key, WordTranslation>()
-//            it.forEachIndexed { index, wordTranslationModel ->
-//                map[index.toString()] = wordTranslationModel.toWordTranslationOrEmpty()
-//            }
-//            return@let map
-//        }
-//        )
-    }
-}
 
 @Composable
 fun QuizDetailsScreen(quizId: String?, onLearnClick: OnClick) {
@@ -108,8 +92,8 @@ private fun QuizDetails(
 @Preview(uiMode = UI_MODE_NIGHT_YES)
 @Composable
 private fun QuizDetailsPreview() {
-//    PreviewContainer {
-//        QuizDetails(
-//            QuizDetailsState.mock(), {}) {}
-//    }
+    PreviewContainer {
+        QuizDetails(
+            QuizDetailsState.mock(), {}) {}
+    }
 }

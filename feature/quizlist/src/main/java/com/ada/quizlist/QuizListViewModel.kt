@@ -6,8 +6,8 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ada.common.debugLog
-import com.ada.domain.model.Quiz
 import com.ada.data.repositories.FirebaseRepository
+import com.ada.domain.model.Quiz
 import com.ada.domain.usecases.GetQuizzesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -60,7 +60,3 @@ class QuizListViewModel @Inject constructor(
     }
 }
 
-data class QuizListScreenState(
-    val quizzes: List<Quiz> = emptyList(),
-    val currentlySelectedQuiz: Quiz? = null
-)
