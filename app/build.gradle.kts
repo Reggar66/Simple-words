@@ -54,6 +54,8 @@ android {
 
 dependencies {
     implementation(project(":data"))
+    implementation(project(":domain"))
+    implementation(project(":core:ui"))
 
     implementation(project(":feature:quizlist"))
     implementation(project(":feature:quizcreate"))
