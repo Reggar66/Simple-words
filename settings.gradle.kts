@@ -12,5 +12,16 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
+
+includeBuild("build-logic")
+
 rootProject.name = "Simple words"
 include(":app")
+include(":domain")
+include(":data")
+include(":feature:quizlist")
+include(":core:common")
+include(":core:ui")
+include(":feature:quizdetails")
+include(":feature:quizcreate")
+include(":feature:exercise")

@@ -1,9 +1,5 @@
 package com.ada.simplewords.ui.navigation
 
-typealias SimpleNavigation = () -> Unit
-
-typealias SimpleNavigationTakes<T> = (T) -> Unit
-
 abstract class BaseScreen(val route: String)
 
 sealed class Root(route: String) : BaseScreen(route) {
