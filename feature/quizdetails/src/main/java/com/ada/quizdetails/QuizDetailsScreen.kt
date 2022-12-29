@@ -15,10 +15,11 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ada.common.OnClick
 import com.ada.ui.PreviewContainer
+import com.ada.ui.components.BottomSheetContainer
 import com.ada.ui.components.WordItem
 
 @Composable
-fun QuizDetailsScreen(quizId: String?, onLearnClick: OnClick) {
+fun QuizDetailsScreen(quizId: String?, onLearnClick: OnClick, onCloseClick: OnClick) {
     val viewModel = hiltViewModel<QuizDetailsViewModel>()
 
     LaunchedEffect(
@@ -41,7 +42,8 @@ fun QuizDetailsScreen(quizId: String?, onLearnClick: OnClick) {
             viewModel.restartQuiz().invokeOnCompletion {
                 onLearnClick()
             }
-        }
+        },
+        onCloseClick = onCloseClick
     )
 }
 
@@ -49,41 +51,49 @@ fun QuizDetailsScreen(quizId: String?, onLearnClick: OnClick) {
 private fun QuizDetails(
     quizDetailsState: QuizDetailsState,
     onLearnClick: OnClick,
-    onRedoClick: OnClick
+    onRedoClick: OnClick,
+    onCloseClick: OnClick
 ) {
     val isComplete = quizDetailsState.quiz?.isComplete
 
-    Box(modifier = Modifier.fillMaxSize()) {
-        LazyColumn(
-            contentPadding = PaddingValues(start = 8.dp, top = 8.dp, end = 8.dp, bottom = 54.dp),
-            verticalArrangement = Arrangement.spacedBy(4.dp)
-        ) {
-            items(items = quizDetailsState.words) { item ->
-                WordItem(wordTranslation = item.second)
+    BottomSheetContainer(title = quizDetailsState.quiz?.name, onCloseClick = onCloseClick) {
+        Box(modifier = Modifier.fillMaxSize()) {
+            LazyColumn(
+                contentPadding = PaddingValues(
+                    start = 8.dp,
+                    top = 8.dp,
+                    end = 8.dp,
+                    bottom = 54.dp
+                ),
+                verticalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                items(items = quizDetailsState.words) { item ->
+                    WordItem(wordTranslation = item.second)
+                }
             }
-        }
-        Button(
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .padding(4.dp),
-            onClick = {
-                when (isComplete) {
-                    true -> {
-                        onRedoClick()
+            Button(
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(4.dp),
+                onClick = {
+                    when (isComplete) {
+                        true -> {
+                            onRedoClick()
+                        }
+                        else -> {
+                            onLearnClick()
+                        }
                     }
-                    else -> {
-                        onLearnClick()
+                },
+                shape = CircleShape
+            ) {
+                Text(
+                    text = when (isComplete) {
+                        true -> "Redo" // TODO strings
+                        else -> "Learn"
                     }
-                }
-            },
-            shape = CircleShape
-        ) {
-            Text(
-                text = when (isComplete) {
-                    true -> "Redo" // TODO strings
-                    else -> "Learn"
-                }
-            )
+                )
+            }
         }
     }
 }
@@ -94,6 +104,6 @@ private fun QuizDetails(
 private fun QuizDetailsPreview() {
     PreviewContainer {
         QuizDetails(
-            QuizDetailsState.mock(), {}) {}
+            QuizDetailsState.mock(), {}, {}) {}
     }
 }

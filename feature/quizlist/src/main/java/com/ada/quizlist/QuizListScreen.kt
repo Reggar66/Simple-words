@@ -34,6 +34,7 @@ import com.ada.domain.model.Quiz
 import com.ada.ui.PreviewContainer
 import com.ada.ui.components.QuizItem
 import com.ada.quizdetails.QuizDetailsScreen
+import com.ada.ui.components.BottomSheetContainer
 import kotlinx.coroutines.launch
 
 @Composable
@@ -61,18 +62,13 @@ private fun QuizListImpl(
 
     BottomSheetScaffold(
         sheetContent = {
-            BottomSheetContainer(
-                quizName = quizListState.currentlySelectedQuiz?.name,
+            QuizDetailsScreen(
+                quizId = quizListState.currentlySelectedQuiz?.id,
+                onLearnClick = { quizListState.currentlySelectedQuiz?.let { onLearnClick(it) } },
                 onCloseClick = {
                     scope.launch {
                         scaffoldState.bottomSheetState.collapse()
                     }
-                },
-                content = {
-                    QuizDetailsScreen(
-                        quizId = quizListState.currentlySelectedQuiz?.id,
-                        onLearnClick = { quizListState.currentlySelectedQuiz?.let { onLearnClick(it) } }
-                    )
                 }
             )
         },
@@ -92,42 +88,6 @@ private fun QuizListImpl(
             )
         }
     )
-}
-
-@Composable
-private fun BottomSheetContainer(
-    quizName: String?,
-    onCloseClick: OnClick,
-    content: @Composable () -> Unit
-) {
-    Column(modifier = Modifier.fillMaxWidth(), verticalArrangement = Arrangement.Center) {
-        Spacer(modifier = Modifier.height(8.dp))
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(4.dp)
-        ) {
-            Icon(
-                modifier = Modifier
-                    .clickable { onCloseClick() }
-                    .size(40.dp)
-                    .clip(CircleShape),
-                imageVector = Icons.Rounded.KeyboardArrowDown,
-                contentDescription = null
-            )
-
-            Text(
-                text = quizName ?: "",
-                modifier = Modifier.weight(1f),
-                textAlign = TextAlign.Center,
-                fontSize = 24.sp
-            )
-
-            Spacer(modifier = Modifier.width(40.dp))
-        }
-
-        content()
-    }
 }
 
 @Composable
@@ -168,29 +128,5 @@ private fun Quizzes(
 private fun QuizListPreview() {
     PreviewContainer {
         Quizzes(quiz = Quiz.mockQuizzes(), onItemCLick = {}, onCreateClick = {})
-    }
-}
-
-@Preview
-@Preview(uiMode = UI_MODE_NIGHT_YES)
-@Composable
-private fun BottomSheetPreview() {
-    PreviewContainer {
-        BottomSheetContainer(
-            quizName = QuizModel.mockAnimals.toQuizOrEmpty().name,
-            onCloseClick = {},
-            content = {
-                Column(
-                    modifier = Modifier
-                        .background(Color.Gray)
-                        .fillMaxWidth()
-                        .height(200.dp),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(text = "Content")
-                }
-            }
-        )
     }
 }
