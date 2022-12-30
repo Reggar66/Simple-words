@@ -11,7 +11,8 @@ fun QuizModel.toQuizOrNull(): Quiz? {
         id = id ?: return null,
         name = name ?: return null,
         wordsNumber = wordsNumber ?: return null,
-        completedWords = completedWords ?: return null
+        completedWords = completedWords ?: return null,
+        mode = mode ?: return null
     )
 }
 
@@ -23,7 +24,8 @@ fun QuizModel.toQuizOrEmpty(): Quiz {
         id = id ?: return Quiz.empty(),
         name = name ?: return Quiz.empty(),
         wordsNumber = wordsNumber ?: return Quiz.empty(),
-        completedWords = completedWords ?: return Quiz.empty()
+        completedWords = completedWords ?: return Quiz.empty(),
+        mode = mode ?: return Quiz.empty()
     )
 }
 
@@ -31,5 +33,6 @@ fun Quiz.toQuizModel() = QuizModel(
     id = id,
     name = name,
     wordsNumber = wordsNumber,
-    completedWords = completedWords
+    completedWords = completedWords,
+    mode = mode
 )

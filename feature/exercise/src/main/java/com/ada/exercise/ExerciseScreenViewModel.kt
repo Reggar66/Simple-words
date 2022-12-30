@@ -34,6 +34,8 @@ class ExerciseScreenViewModel @Inject constructor(
     )
         private set
 
+    // TODO: Modern mode exercise
+
     fun observeQuiz(quizId: Key) = viewModelScope.launch {
         observeQuizUseCase.invoke(quizId).collect {
             quiz = it
@@ -84,12 +86,12 @@ class ExerciseScreenViewModel @Inject constructor(
         if (isAllLearned())
             exerciseState.update { it.copy(completed = true) }
         else
-        exerciseState.update {
-            it.copy(
-                currentWordTranslation = getTranslation(),
-                validationState = ValidationState.WAITING
-            )
-        }
+            exerciseState.update {
+                it.copy(
+                    currentWordTranslation = getTranslation(),
+                    validationState = ValidationState.WAITING
+                )
+            }
     }
 
     private fun updateQuiz() {

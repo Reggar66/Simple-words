@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ada.common.Key
 import com.ada.common.debugLog
+import com.ada.data.model.QuizMode
 import com.ada.domain.model.Quiz
 import com.ada.domain.model.WordTranslation
 import com.ada.domain.usecases.*
@@ -28,6 +29,7 @@ class QuizDetailsViewModel @Inject constructor(
 
     private var wordsJob: Job? = null
     private var quizJob: Job? = null
+
     private val _words = mutableMapOf<Key, WordTranslation>()
     private var _quiz: Quiz? = null
     private val _quizDetailsState =
@@ -81,10 +83,6 @@ class QuizDetailsViewModel @Inject constructor(
         }
     }
 
-    private fun List<Pair<Key, WordTranslation>>.sortedByWord() = this.sortedWith(
-        compareBy({ it.second.isLearned }, { it.second.word })
-    )
-
     fun restartQuiz() = viewModelScope.launch {
         _words.forEach {
             updateWordUseCase.invoke(it.value.copy(repeat = 3, isLearned = false))
@@ -98,4 +96,24 @@ class QuizDetailsViewModel @Inject constructor(
             )
         }
     }
+
+    fun changeMode() {
+        _quiz?.let {
+            updateQuizUseCase.invoke(
+                it.copy(
+                    mode = when (it.mode) {
+                        QuizMode.Classic -> QuizMode.Modern
+                        QuizMode.Modern -> QuizMode.Classic
+                    }
+                )
+            )
+        }
+    }
+
+    /**
+     * Sorts words by learned state and name.
+     */
+    private fun List<Pair<Key, WordTranslation>>.sortedByWord() = this.sortedWith(
+        compareBy({ it.second.isLearned }, { it.second.word })
+    )
 }

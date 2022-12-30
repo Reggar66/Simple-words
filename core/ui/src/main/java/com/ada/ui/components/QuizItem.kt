@@ -12,6 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ada.common.OnClick
+import com.ada.data.model.QuizMode
 import com.ada.domain.model.Quiz
 import com.ada.data.model.QuizModel
 import com.ada.domain.mapper.toQuizOrEmpty
@@ -52,8 +53,16 @@ fun QuizItem(modifier: Modifier = Modifier, quiz: Quiz, onClick: OnClick) {
                         modifier = Modifier
                             .weight(1f)
                             .padding(horizontal = 8.dp),
-                        label = "Words",
+                        label = "Words", // TODO: strings.xml
                         value = quiz.wordsNumber.toString()
+                    )
+
+                    TextLabel(
+                        label = "Mode", // TODO: strings.xml
+                        value = when (quiz.mode) {
+                            QuizMode.Classic -> "Classic" // TODO: strings.xml
+                            QuizMode.Modern -> "Modern" // TODO: strings.xml
+                        }
                     )
 
                     TextLabel(
@@ -61,7 +70,7 @@ fun QuizItem(modifier: Modifier = Modifier, quiz: Quiz, onClick: OnClick) {
                             .weight(1f)
                             .padding(horizontal = 8.dp),
                         horizontalAlignment = Alignment.End,
-                        label = "Progress",
+                        label = "Progress", // TODO: strings.xml
                         value = "${quiz.completedWords}/${quiz.wordsNumber}"
                     )
                 }
