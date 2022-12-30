@@ -10,7 +10,7 @@ import com.ada.ui.theme.SimpleWordsTheme
 @Composable
 fun PreviewContainer(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
     SimpleWordsTheme {
-        Surface(color = MaterialTheme.colors.background) {
+        Surface(color = MaterialTheme.colors.surface) {
             Column(modifier = modifier) {
                 content()
             }

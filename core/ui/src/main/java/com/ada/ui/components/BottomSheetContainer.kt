@@ -5,10 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.runtime.Composable
@@ -22,6 +19,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ada.common.OnClick
 import com.ada.ui.PreviewContainer
+import com.ada.ui.PreviewDuo
+import com.ada.ui.theme.bottomSheetSurface
 
 @Composable
 fun BottomSheetContainer(
@@ -29,7 +28,12 @@ fun BottomSheetContainer(
     onCloseClick: OnClick,
     content: @Composable () -> Unit
 ) {
-    Column(modifier = Modifier.fillMaxWidth(), verticalArrangement = Arrangement.Center) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(color = MaterialTheme.colors.bottomSheetSurface),
+        verticalArrangement = Arrangement.Center
+    ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -54,15 +58,15 @@ fun BottomSheetContainer(
 
             Spacer(modifier = Modifier.width(40.dp))
         }
+        Divider(modifier = Modifier.fillMaxWidth())
 
-        Box(modifier = Modifier.background(color = MaterialTheme.colors.surface)) {
+        Box(modifier = Modifier.background(color = MaterialTheme.colors.bottomSheetSurface)) {
             content()
         }
     }
 }
 
-@Preview
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@PreviewDuo
 @Composable
 private fun BottomSheetPreview() {
     PreviewContainer {
@@ -72,6 +76,7 @@ private fun BottomSheetPreview() {
             content = {
                 Column(
                     modifier = Modifier
+                        .padding(32.dp)
                         .background(Color.Gray)
                         .fillMaxWidth()
                         .height(200.dp),

@@ -13,20 +13,23 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ada.ui.PreviewContainer
 import com.ada.ui.PreviewDuo
+import com.ada.ui.theme.itemBackground
 
 @Composable
 fun WordItem(leftText: String, rightText: String) {
     Card(
         Modifier.height(IntrinsicSize.Min),
+        elevation = 0.dp,
         border = BorderStroke(
             width = 1.dp,
             color = MaterialTheme.colors.onSurface.copy(alpha = 0.12f)
-        )
+        ),
+        backgroundColor = MaterialTheme.colors.itemBackground
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp),
+                .padding(vertical = 8.dp, horizontal = 16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(modifier = Modifier.weight(1f), text = leftText)
