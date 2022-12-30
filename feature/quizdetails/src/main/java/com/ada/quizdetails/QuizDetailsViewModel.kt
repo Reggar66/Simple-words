@@ -6,10 +6,7 @@ import com.ada.common.Key
 import com.ada.common.debugLog
 import com.ada.domain.model.Quiz
 import com.ada.domain.model.WordTranslation
-import com.ada.domain.usecases.ObserveQuizUseCase
-import com.ada.domain.usecases.ObserveWordsUseCase
-import com.ada.domain.usecases.UpdateQuizUseCase
-import com.ada.domain.usecases.UpdateWordUseCase
+import com.ada.domain.usecases.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -59,28 +56,34 @@ class QuizDetailsViewModel @Inject constructor(
                 debugLog { "$PREFIX Received: $wordResult" }
 
                 when (wordResult.event) {
-                    com.ada.domain.usecases.Event.Added -> {
+                    Event.Added -> {
                         _words[wordResult.word.first] = wordResult.word.second
                         _quizDetailsState.update {
                             it.copy(words = _words.toList().sortedByWord())
                         }
                     }
-                    com.ada.domain.usecases.Event.Changed -> {/* TODO */
+                    Event.Changed -> {
+                        _words[wordResult.word.first] = wordResult.word.second
+                        _quizDetailsState.update {
+                            it.copy(words = _words.toList().sortedByWord())
+                        }
                     }
-                    com.ada.domain.usecases.Event.Removed -> {
+                    Event.Removed -> {
                         _words.remove(wordResult.word.first)
                         _quizDetailsState.update {
                             it.copy(words = _words.toList().sortedByWord())
                         }
                     }
-                    com.ada.domain.usecases.Event.Moved -> {/* TODO */
+                    Event.Moved -> {/* TODO */
                     }
                 }
             }
         }
     }
 
-    private fun List<Pair<Key, WordTranslation>>.sortedByWord() = this.sortedBy { it.second.word }
+    private fun List<Pair<Key, WordTranslation>>.sortedByWord() = this.sortedWith(
+        compareBy({ it.second.isLearned }, { it.second.word })
+    )
 
     fun restartQuiz() = viewModelScope.launch {
         _words.forEach {

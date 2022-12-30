@@ -40,3 +40,11 @@ val Typography.quizLabels
         fontWeight = FontWeight.SemiBold,
         fontSize = 16.sp
     )
+
+val Typography.exerciseWord
+    get() = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 26.sp
+
+    )

@@ -1,17 +1,17 @@
 package com.ada.exercise
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ada.common.Key
 import com.ada.common.debugLog
+import com.ada.data.model.WordTranslationModel
 import com.ada.domain.mapper.toWordTranslationOrEmpty
 import com.ada.domain.model.Quiz
 import com.ada.domain.model.WordTranslation
-import com.ada.data.model.WordTranslationModel
+import com.ada.domain.usecases.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,12 +23,16 @@ class ExerciseScreenViewModel @Inject constructor(
     private val updateQuizUseCase: com.ada.domain.usecases.UpdateQuizUseCase
 ) : ViewModel() {
 
-    // TODO: Rewrite to use MutableStateFlow.
     private var quiz: Quiz? = null
     private val words = mutableMapOf<Key, WordTranslation>()
 
-    var exerciseScreenState by
-    mutableStateOf(ExerciseScreenState(getTranslation(), ValidationState.WAITING))
+    var exerciseState = MutableStateFlow(
+        ExerciseScreenState(
+            currentWordTranslation = getTranslation(),
+            validationState = ValidationState.WAITING
+        )
+    )
+        private set
 
     fun observeQuiz(quizId: Key) = viewModelScope.launch {
         observeQuizUseCase.invoke(quizId).collect {
@@ -40,11 +44,14 @@ class ExerciseScreenViewModel @Inject constructor(
         debugLog { "observeTranslations: Start" }
         observeWordsUseCase.invoke(quizId = quizId).collect {
             when (it.event) {
-                com.ada.domain.usecases.Event.Added -> {
+                Event.Added -> {
                     words[it.word.first] = it.word.second
-                    next()
+
+                    // Loads new word translation once all words are loaded.
+                    if (words.size == quiz?.wordsNumber)
+                        next()
                 }
-                com.ada.domain.usecases.Event.Changed -> {
+                Event.Changed -> {
                     debugLog { "Before: ${words[it.word.first]} | ${it.word.second}" }
                     words[it.word.first] = it.word.second
                     debugLog { "After: ${words[it.word.first]} | ${it.word.second}" }
@@ -59,20 +66,26 @@ class ExerciseScreenViewModel @Inject constructor(
     }
 
     fun validate(answer: String) {
-        exerciseScreenState = when {
+        when {
             answer.isMatchingTranslation() -> {
                 alterRepeats()
-                exerciseScreenState.copy(validationState = ValidationState.CORRECT)
+                exerciseState.update {
+                    it.copy(validationState = ValidationState.CORRECT)
+                }
             }
-            else -> exerciseScreenState.copy(validationState = ValidationState.WRONG)
+            else -> exerciseState.update {
+                it.copy(validationState = ValidationState.WRONG)
+            }
+
         }
     }
 
     fun next() {
-        exerciseScreenState = if (isAllLearned())
-            exerciseScreenState.copy(completed = true)
-        else {
-            exerciseScreenState.copy(
+        if (isAllLearned())
+            exerciseState.update { it.copy(completed = true) }
+        else
+        exerciseState.update {
+            it.copy(
                 currentWordTranslation = getTranslation(),
                 validationState = ValidationState.WAITING
             )
@@ -102,9 +115,15 @@ class ExerciseScreenViewModel @Inject constructor(
     }
 
     private fun alterRepeats() {
-        val currentWord = exerciseScreenState.currentWordTranslation
+        val currentWord = exerciseState.value.currentWordTranslation
         currentWord?.let {
             val repeats = if (currentWord.repeat <= 0) 0 else currentWord.repeat - 1
+            exerciseState.update {
+                it.copy(
+                    currentWordTranslation = it.currentWordTranslation
+                        ?.copy(repeat = repeats)
+                )
+            }
             updateWordUseCase.invoke(currentWord.copy(repeat = repeats, isLearned = repeats == 0))
         }
     }
@@ -116,7 +135,7 @@ class ExerciseScreenViewModel @Inject constructor(
     private fun countCompletedWords() = words.toList().count { it.second.isLearned }
 
     private fun String.isMatchingTranslation() =
-        exerciseScreenState.currentWordTranslation?.translation?.lowercase() == this.lowercase()
+        exerciseState.value.currentWordTranslation?.translation?.lowercase() == this.lowercase()
             .trim()
 }
 

@@ -42,7 +42,7 @@ fun NavGraphBuilder.quizListRoot(navController: NavController) {
         composable(Screen.Exercise.route) { navBackStackEntry ->
             val quizId =
                 navBackStackEntry.arguments?.getString(Screen.Exercise.Key.QUIZ_ID)
-            ExerciseScreen(quizId = quizId)
+            ExerciseScreen(quizId = quizId, onReturnClick = { navController.popBackStack() })
         }
 
         composable(Screen.Create.route) {

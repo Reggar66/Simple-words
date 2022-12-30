@@ -69,7 +69,11 @@ private fun QuizDetails(
                 verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
                 items(items = quizDetailsState.words) { item ->
-                    WordItem(leftText = item.second.word, rightText = item.second.translation)
+                    WordItem(
+                        leftText = item.second.word,
+                        rightText = item.second.translation,
+                        isLearned = item.second.isLearned
+                    )
                 }
             }
             Button(

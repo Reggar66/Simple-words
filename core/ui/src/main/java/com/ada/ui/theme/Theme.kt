@@ -36,6 +36,7 @@ onSurface = Color.Black,
 
 val Colors.bottomSheetSurface get() = if (isLight) surface else Gray2
 val Colors.itemBackground get() = if (isLight) surface else Gray1
+val Colors.itemBackgroundLearned get() = if (isLight) surface else Gray3
 
 @Composable
 fun SimpleWordsTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
