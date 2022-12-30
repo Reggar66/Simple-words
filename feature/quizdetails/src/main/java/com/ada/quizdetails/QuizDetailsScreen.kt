@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ada.common.OnClick
 import com.ada.ui.PreviewContainer
+import com.ada.ui.PreviewDuo
 import com.ada.ui.components.BottomSheetContainer
 import com.ada.ui.components.WordItem
 
@@ -68,7 +69,7 @@ private fun QuizDetails(
                 verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
                 items(items = quizDetailsState.words) { item ->
-                    WordItem(wordTranslation = item.second)
+                    WordItem(leftText = item.second.word, rightText = item.second.translation)
                 }
             }
             Button(
@@ -98,8 +99,7 @@ private fun QuizDetails(
     }
 }
 
-@Preview
-@Preview(uiMode = UI_MODE_NIGHT_YES)
+@PreviewDuo
 @Composable
 private fun QuizDetailsPreview() {
     PreviewContainer {

@@ -1,27 +1,55 @@
 package com.ada.ui.components
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
+import androidx.compose.material.Divider
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.ada.domain.model.WordTranslation
+import com.ada.ui.PreviewContainer
+import com.ada.ui.PreviewDuo
 
 @Composable
-fun WordItem(wordTranslation: WordTranslation) {
-    Card {
+fun WordItem(leftText: String, rightText: String) {
+    Card(
+        Modifier.height(IntrinsicSize.Min),
+        border = BorderStroke(
+            width = 1.dp,
+            color = MaterialTheme.colors.onSurface.copy(alpha = 0.12f)
+        )
+    ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(4.dp),
-            horizontalArrangement = Arrangement.SpaceBetween
+                .padding(8.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = wordTranslation.word)
-            Text(text = wordTranslation.translation)
+            Text(modifier = Modifier.weight(1f), text = leftText)
+            Divider(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .width(1.dp)
+            )
+            Text(
+                modifier = Modifier.weight(1f),
+                text = rightText,
+                textAlign = TextAlign.End
+            )
         }
     }
 }
+
+@PreviewDuo
+@Composable
+private fun WordItemPreview() {
+    PreviewContainer {
+        WordItem(leftText = "Pies", rightText = "Dog")
+    }
+}
+
+

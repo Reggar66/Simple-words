@@ -6,6 +6,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
@@ -53,7 +55,9 @@ fun BottomSheetContainer(
             Spacer(modifier = Modifier.width(40.dp))
         }
 
-        content()
+        Box(modifier = Modifier.background(color = MaterialTheme.colors.surface)) {
+            content()
+        }
     }
 }
 

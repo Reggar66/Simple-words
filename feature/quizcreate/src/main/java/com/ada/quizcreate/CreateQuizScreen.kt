@@ -23,6 +23,7 @@ import com.ada.common.SimpleNavigation
 import com.ada.common.debugLog
 import com.ada.ui.PreviewContainer
 import com.ada.ui.components.SwipeMenu
+import com.ada.ui.components.WordItem
 import kotlinx.coroutines.delay
 
 @Composable
@@ -116,26 +117,7 @@ private fun CreateQuizScreenImpl(
 @Composable
 private fun Item(item: WordWithTranslation, onRemoveClick: OnClick, onEditClick: OnClick) {
     SwipeMenu(onRemoveClick = onRemoveClick, onEditClick = onEditClick) {
-        Card(Modifier.height(IntrinsicSize.Min)) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(modifier = Modifier.weight(1f), text = item.word)
-                Divider(
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .width(1.dp)
-                )
-                Text(
-                    modifier = Modifier.weight(1f),
-                    text = item.translation,
-                    textAlign = TextAlign.End
-                )
-            }
-        }
+        WordItem(leftText = item.word, rightText = item.translation)
     }
 }
 
