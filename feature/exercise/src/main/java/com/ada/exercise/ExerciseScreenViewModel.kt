@@ -4,8 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ada.common.Key
 import com.ada.common.debugLog
-import com.ada.data.model.WordTranslationModel
-import com.ada.domain.mapper.toWordTranslationOrEmpty
+import com.ada.data.model.QuizMode
 import com.ada.domain.model.Quiz
 import com.ada.domain.model.WordTranslation
 import com.ada.domain.usecases.Event
@@ -29,7 +28,8 @@ class ExerciseScreenViewModel @Inject constructor(
     var exerciseState = MutableStateFlow(
         ExerciseScreenState(
             currentWordTranslation = getTranslation(),
-            validationState = ValidationState.WAITING
+            validationState = ValidationState.WAITING,
+            answerOptions = emptyList()
         )
     )
         private set
@@ -37,8 +37,9 @@ class ExerciseScreenViewModel @Inject constructor(
     // TODO: Modern mode exercise
 
     fun observeQuiz(quizId: Key) = viewModelScope.launch {
-        observeQuizUseCase.invoke(quizId).collect {
-            quiz = it
+        observeQuizUseCase.invoke(quizId).collect { _quiz ->
+            quiz = _quiz
+            exerciseState.update { it.copy(mode = _quiz.mode) }
         }
     }
 
@@ -86,12 +87,52 @@ class ExerciseScreenViewModel @Inject constructor(
         if (isAllLearned())
             exerciseState.update { it.copy(completed = true) }
         else
-            exerciseState.update {
-                it.copy(
-                    currentWordTranslation = getTranslation(),
-                    validationState = ValidationState.WAITING
-                )
+            when (quiz?.mode) {
+                QuizMode.Classic -> nextWord()
+                QuizMode.Modern -> nextAnswerOptions()
+                null -> {
+                    debugLog { "ExerciseViewModel - next(): quiz is null." }
+                    return
+                }
             }
+    }
+
+    private fun nextWord() {
+        exerciseState.update {
+            it.copy(
+                currentWordTranslation = getTranslation(),
+                validationState = ValidationState.WAITING
+            )
+        }
+    }
+
+    private fun nextAnswerOptions() {
+        val nextTranslation = getTranslation() ?: return
+        exerciseState.update {
+            it.copy(
+                currentWordTranslation = nextTranslation,
+                answerOptions = getAnswerOptions(nextTranslation),
+                validationState = ValidationState.WAITING
+            )
+        }
+    }
+
+    private fun getAnswerOptions(nextTranslation: WordTranslation): List<WordTranslation> {
+        val answers = mutableListOf(nextTranslation)
+        var temp = words.toList().filter { it.second != nextTranslation }
+
+        for (idx in 1..5) {
+            if (temp.size < idx)
+                break
+
+            val nextWord = temp.random().second
+            answers.add(nextWord)
+            temp = words.toList().filter { it.second != nextWord }
+        }
+
+        answers.shuffle()
+
+        return answers
     }
 
     private fun updateQuiz() {
@@ -139,24 +180,4 @@ class ExerciseScreenViewModel @Inject constructor(
     private fun String.isMatchingTranslation() =
         exerciseState.value.currentWordTranslation?.translation?.lowercase() == this.lowercase()
             .trim()
-}
-
-data class ExerciseScreenState(
-    val currentWordTranslation: WordTranslation?,
-    val validationState: ValidationState,
-    val completed: Boolean = false
-) {
-    companion object {
-        fun mock() = ExerciseScreenState(
-            currentWordTranslation = WordTranslationModel.mockAnimals.first()
-                .toWordTranslationOrEmpty(),
-            validationState = ValidationState.WAITING
-        )
-    }
-}
-
-enum class ValidationState {
-    CORRECT,
-    WRONG,
-    WAITING
 }

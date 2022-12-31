@@ -40,7 +40,7 @@ class QuizListViewModel @Inject constructor(
     }
 
     private fun sortByName() {
-        quizListState = QuizListScreenState(
+        quizListState = quizListState.copy(
             quizzes = quizzes.sortedWith(
                 // Sorts by completion first then by name, so completed quizzes are at the bottom.
                 compareBy(
