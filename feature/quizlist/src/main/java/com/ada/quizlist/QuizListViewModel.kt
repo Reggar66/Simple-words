@@ -6,27 +6,35 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ada.common.debugLog
-import com.ada.data.repositories.FirebaseRepository
+import com.ada.data.repositories.RealTimeDatabaseRepository
 import com.ada.domain.model.Quiz
+import com.ada.domain.usecases.GetCurrentUserUseCase
 import com.ada.domain.usecases.GetQuizzesUseCase
+import com.ada.domain.usecases.SignOutUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class QuizListViewModel @Inject constructor(
-    val firebaseRepository: FirebaseRepository,
-    private val getQuizzesUseCase: GetQuizzesUseCase
+    val realTimeDatabaseRepository: RealTimeDatabaseRepository,
+    private val getQuizzesUseCase: GetQuizzesUseCase,
+    private val getCurrentUserUseCase: GetCurrentUserUseCase,
+    private val signOutUseCase: SignOutUseCase
 ) : ViewModel() {
 
     var quizListState by mutableStateOf(QuizListScreenState())
         private set
+
+    val user = getCurrentUserUseCase.invoke()
 
     private var quizzes: List<Quiz> = emptyList()
 
     init {
         fetchQuizzes()
     }
+
+    fun signOut() = signOutUseCase.invoke()
 
     private fun fetchQuizzes() = viewModelScope.launch {
         debugLog { "fetchQuizzes: launched." }

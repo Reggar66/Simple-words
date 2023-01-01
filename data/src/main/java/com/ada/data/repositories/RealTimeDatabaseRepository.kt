@@ -12,15 +12,17 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Inject
 
-private const val TAG = "FirebaseRepository"
+private const val TAG = "RealTimeDatabaseRepository"
 
 @Module
 @InstallIn(SingletonComponent::class)
-class FirebaseRepository @Inject constructor() {
+class RealTimeDatabaseRepository @Inject constructor(private val authenticationRepository: AuthenticationRepository) {
     private val database =
         Firebase.database("https://simple-words-a3e96-default-rtdb.europe-west1.firebasedatabase.app/")
 
-    private val userId = UserModel.mockUserId() // TODO change to actual.
+    private val userId
+        get() = (authenticationRepository.getCurrentUser()?.uid
+            ?: "").also { debugLog { "User Id DB: $it" } }
 
     private fun currentUserDatabaseRef() = database.getReference(userId)
     private fun userRef() = database.getReference("$userId/user")
@@ -31,10 +33,12 @@ class FirebaseRepository @Inject constructor() {
     private fun wordRef(quizId: Key, wordId: Key) =
         database.getReference("$userId/quizWords/$quizId/$wordId")
 
-    fun saveUser(userModel: UserModel) {
+    fun saveUser(userModel: UserModel, onSuccess: () -> Unit) {
         val key = currentUserDatabaseRef().push().key
         key?.let {
-            userRef().setValue(userModel)
+            userRef().setValue(userModel).addOnSuccessListener {
+                onSuccess()
+            }
         }
     }
 

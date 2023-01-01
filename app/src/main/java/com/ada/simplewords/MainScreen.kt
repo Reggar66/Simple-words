@@ -16,8 +16,7 @@ import com.ada.ui.theme.SimpleWordsTheme
 @Composable
 fun MainScreen() {
     SimpleWordsTheme {
-        // A surface container using the 'background' color from the theme
-        Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.surface) {
+        Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
             DebugOverlay {
                 NavigationHost()
             }
@@ -53,10 +52,6 @@ private fun DebugOverlay(content: @Composable () -> Unit) {
                 verticalArrangement = Arrangement.spacedBy(4.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Button(onClick = { viewModel.createMockUser() }) {
-                    Text(text = "Generate Mock User")
-                }
-
                 Button(onClick = { viewModel.createMockQuizAnimals() }) {
                     Text(text = "Generate Animals")
                 }

@@ -24,6 +24,7 @@ import com.ada.common.SimpleNavigationTakes
 import com.ada.domain.model.Quiz
 import com.ada.quizdetails.QuizDetailsScreen
 import com.ada.ui.PreviewContainer
+import com.ada.ui.PreviewDuo
 import com.ada.ui.components.QuizItem
 import kotlinx.coroutines.launch
 
@@ -36,7 +37,9 @@ fun QuizListScreen(openExercise: SimpleNavigationTakes<Quiz>, openCreate: Simple
         quizListState = state,
         onLearnClick = { quiz -> openExercise(quiz) },
         onItemClick = { viewModel.selectQuiz(it) },
-        onCreateClick = { openCreate() }
+        onCreateClick = { openCreate() },
+        userName = viewModel.user?.name,
+        onSignOutClick = { viewModel.signOut() }
     )
 }
 
@@ -45,7 +48,9 @@ private fun QuizListImpl(
     quizListState: QuizListScreenState,
     onLearnClick: OnClickTakes<Quiz>,
     onItemClick: OnClickTakes<Quiz>,
-    onCreateClick: OnClick
+    onCreateClick: OnClick,
+    userName: String?,
+    onSignOutClick: OnClick
 ) {
     val scaffoldState = rememberBottomSheetScaffoldState()
     val scope = rememberCoroutineScope()
@@ -74,7 +79,9 @@ private fun QuizListImpl(
                         scaffoldState.bottomSheetState.expand()
                     }
                 },
-                onCreateClick = onCreateClick
+                onCreateClick = onCreateClick,
+                userName = userName,
+                onSignOutClick = onSignOutClick
             )
         }
     )
@@ -84,39 +91,45 @@ private fun QuizListImpl(
 private fun Quizzes(
     quiz: List<Quiz>,
     onItemCLick: OnClickTakes<Quiz>,
-    onCreateClick: OnClick
+    onCreateClick: OnClick,
+    userName: String? = "",
+    onSignOutClick: OnClick
 ) {
-    Box(modifier = Modifier.fillMaxSize()) {
-        LazyColumn(
-            contentPadding = PaddingValues(8.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            items(items = quiz, key = { it.id }) { quizItem ->
-                QuizItem(
-                    modifier = Modifier
-                        .animateItemPlacement(),
-                    quiz = quizItem,
-                    onClick = { onItemCLick(quizItem) })
-            }
-        }
+    Column {
+        TopBar(name = userName ?: "", onPictureClick = { onSignOutClick() })
 
-        Button(
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .padding(16.dp),
-            onClick = onCreateClick,
-            shape = CircleShape
-        ) {
-            Text(text = "Create") // TODO: Strings
+        Box(modifier = Modifier.fillMaxSize()) {
+            LazyColumn(
+                contentPadding = PaddingValues(8.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                items(items = quiz, key = { it.id }) { quizItem ->
+                    QuizItem(
+                        modifier = Modifier
+                            .animateItemPlacement(),
+                        quiz = quizItem,
+                        onClick = { onItemCLick(quizItem) })
+                }
+            }
+
+            Button(
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(16.dp),
+                onClick = onCreateClick,
+                shape = CircleShape
+            ) {
+                Text(text = "Create") // TODO: Strings
+            }
         }
     }
 }
 
-@Preview
-@Preview(uiMode = UI_MODE_NIGHT_YES)
+@PreviewDuo
 @Composable
 private fun QuizListPreview() {
     PreviewContainer {
-        Quizzes(quiz = Quiz.mockQuizzes(), onItemCLick = {}, onCreateClick = {})
+        Quizzes(quiz = Quiz.mockQuizzes(), onItemCLick = {}, onCreateClick = {},
+            onSignOutClick = {})
     }
 }

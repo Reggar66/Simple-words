@@ -4,7 +4,7 @@ import com.ada.common.debugLog
 import com.ada.domain.mapper.toQuizOrNull
 import com.ada.domain.model.Quiz
 import com.ada.data.model.QuizModel
-import com.ada.data.repositories.FirebaseRepository
+import com.ada.data.repositories.RealTimeDatabaseRepository
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -14,10 +14,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import javax.inject.Inject
 
-class GetQuizzesUseCaseImpl @Inject constructor(firebaseRepository: FirebaseRepository) :
+class GetQuizzesUseCaseImpl @Inject constructor(realTimeDatabaseRepository: RealTimeDatabaseRepository) :
     GetQuizzesUseCase {
 
-    private val quizzesRef = firebaseRepository.quizzesRef()
+    private val quizzesRef = realTimeDatabaseRepository.quizzesRef()
 
     override fun invoke(): Flow<List<Quiz>> = callbackFlow {
 

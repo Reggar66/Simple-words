@@ -5,7 +5,7 @@ import com.ada.common.debugLog
 import com.ada.domain.mapper.toWordTranslationOrNull
 import com.ada.domain.model.WordTranslation
 import com.ada.data.model.WordTranslationModel
-import com.ada.data.repositories.FirebaseRepository
+import com.ada.data.repositories.RealTimeDatabaseRepository
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -17,10 +17,10 @@ import javax.inject.Inject
 
 private const val PREFIX = "ObserveWordsByOneUseCase:"
 
-class ObserveWordsUseCaseImpl @Inject constructor(private val firebaseRepository: FirebaseRepository) :
+class ObserveWordsUseCaseImpl @Inject constructor(private val realTimeDatabaseRepository: RealTimeDatabaseRepository) :
     ObserveWordsUseCase {
     override fun invoke(quizId: String): Flow<WordResult> = callbackFlow {
-        val wordsRef = firebaseRepository.wordsRef(quizId)
+        val wordsRef = realTimeDatabaseRepository.wordsRef(quizId)
 
         val listener = object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {

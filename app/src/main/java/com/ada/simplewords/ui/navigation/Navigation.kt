@@ -2,15 +2,14 @@ package com.ada.simplewords.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
+import androidx.navigation.*
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navigation
 import com.ada.exercise.ExerciseScreen
+import com.ada.quizcreate.CreateQuizScreen
 import com.ada.quizlist.QuizListScreen
+import com.ada.signin.SignInScreen
 
 @Composable
 fun NavigationHost(
@@ -18,10 +17,11 @@ fun NavigationHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Root.QuizListRoot.route,
+        startDestination = Root.SignInRoot.route,
         modifier = modifier
     ) {
         quizListRoot(navController)
+        signInRoot(navController)
     }
 }
 
@@ -46,11 +46,22 @@ fun NavGraphBuilder.quizListRoot(navController: NavController) {
         }
 
         composable(Screen.Create.route) {
-            com.ada.quizcreate.CreateQuizScreen(closeScreen = { navController.popBackStack() })
+            CreateQuizScreen(closeScreen = { navController.popBackStack() })
         }
     }
 }
 
-fun NavGraphBuilder.loginRoot(navController: NavController) {
-    // TODO: Login nav root
+fun NavGraphBuilder.signInRoot(navController: NavController) {
+    navigation(startDestination = Screen.SignIn.route, route = Root.SignInRoot.route) {
+        composable(route = Screen.SignIn.route) {
+            SignInScreen(openQuizList = {
+                navController.navigate(route = Screen.QuizList.route) {
+                    // TODO: Uncomment once there is a way to log out and go back to login screen.
+                    /*popUpTo(Screen.SignIn.route) {
+                        inclusive = true
+                    }*/
+                }
+            })
+        }
+    }
 }

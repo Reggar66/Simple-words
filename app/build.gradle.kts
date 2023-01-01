@@ -60,6 +60,7 @@ dependencies {
     implementation(project(":feature:quizlist"))
     implementation(project(":feature:quizcreate"))
     implementation(project(":feature:exercise"))
+    implementation(project(":feature:signin"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime)

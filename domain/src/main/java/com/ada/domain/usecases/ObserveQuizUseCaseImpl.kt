@@ -5,7 +5,7 @@ import com.ada.common.debugLog
 import com.ada.domain.model.Quiz
 import com.ada.domain.mapper.toQuizOrNull
 import com.ada.data.model.QuizModel
-import com.ada.data.repositories.FirebaseRepository
+import com.ada.data.repositories.RealTimeDatabaseRepository
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -17,10 +17,10 @@ import javax.inject.Inject
 
 private const val PREFIX = "ObserveQuizUseCase:"
 
-class ObserveQuizUseCaseImpl @Inject constructor(private val firebaseRepository: FirebaseRepository) :
+class ObserveQuizUseCaseImpl @Inject constructor(private val realTimeDatabaseRepository: RealTimeDatabaseRepository) :
     ObserveQuizUseCase {
     override fun invoke(quizId: Key): Flow<Quiz> = callbackFlow {
-        val quizRef = firebaseRepository.quizRef(quizId)
+        val quizRef = realTimeDatabaseRepository.quizRef(quizId)
 
         val listener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {

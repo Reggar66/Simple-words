@@ -41,7 +41,22 @@ abstract class DomainModule {
     ): UpdateQuizUseCase
 
     @Binds
-    abstract fun bindObserveQuizUse(
-        ObserveQuizUseImpl: ObserveQuizUseCaseImpl
+    abstract fun bindObserveQuizUseCase(
+        observeQuizUseImpl: ObserveQuizUseCaseImpl
     ): ObserveQuizUseCase
+
+    @Binds
+    abstract fun bindSignInAnonymousUserUseCase(
+        signInAnonymousUserUseCase: SignInAnonymousUserUseCaseImpl
+    ): SignInAnonymousUserUseCase
+
+    @Binds
+    abstract fun bindGetCurrentUserUseCase(
+        getCurrentUserUseCase: GetCurrentUserUseCaseImpl
+    ): GetCurrentUserUseCase
+
+    @Binds
+    abstract fun bindSignOutUseCase(
+        signOutUseCase: SignOutUseCaseImpl
+    ): SignOutUseCase
 }
