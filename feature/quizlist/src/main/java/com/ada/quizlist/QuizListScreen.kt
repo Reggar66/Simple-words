@@ -2,7 +2,6 @@
 
 package com.ada.quizlist
 
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -16,7 +15,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ada.common.OnClick
@@ -28,10 +26,15 @@ import com.ada.quizdetails.QuizDetailsScreen
 import com.ada.ui.PreviewContainer
 import com.ada.ui.PreviewDuo
 import com.ada.ui.components.QuizItem
+import com.ada.ui.components.AccountBar
 import kotlinx.coroutines.launch
 
 @Composable
-fun QuizListScreen(openExercise: SimpleNavigationTakes<Quiz>, openCreate: SimpleNavigation) {
+fun QuizListScreen(
+    openExercise: SimpleNavigationTakes<Quiz>,
+    openCreate: SimpleNavigation,
+    openAccount: SimpleNavigation
+) {
     val viewModel = hiltViewModel<QuizListViewModel>()
     val state = viewModel.quizListState
 
@@ -43,7 +46,7 @@ fun QuizListScreen(openExercise: SimpleNavigationTakes<Quiz>, openCreate: Simple
         onItemClick = { viewModel.selectQuiz(it) },
         onCreateClick = { openCreate() },
         userName = user?.name,
-        onSignOutClick = { viewModel.signOut() }
+        onAccountClick = { openAccount() }
     )
 }
 
@@ -54,7 +57,7 @@ private fun QuizListImpl(
     onItemClick: OnClickTakes<Quiz>,
     onCreateClick: OnClick,
     userName: String?,
-    onSignOutClick: OnClick
+    onAccountClick: OnClick
 ) {
     val scaffoldState = rememberBottomSheetScaffoldState()
     val scope = rememberCoroutineScope()
@@ -85,7 +88,7 @@ private fun QuizListImpl(
                 },
                 onCreateClick = onCreateClick,
                 userName = userName,
-                onSignOutClick = onSignOutClick
+                onAccountClick = onAccountClick
             )
         }
     )
@@ -97,10 +100,10 @@ private fun Quizzes(
     onItemCLick: OnClickTakes<Quiz>,
     onCreateClick: OnClick,
     userName: String? = "",
-    onSignOutClick: OnClick
+    onAccountClick: OnClick
 ) {
     Column {
-        TopBar(name = userName ?: "", onPictureClick = { onSignOutClick() })
+        AccountBar(name = userName ?: "", onPictureClick = { onAccountClick() })
 
         Box(modifier = Modifier.fillMaxSize()) {
             LazyColumn(
@@ -134,6 +137,6 @@ private fun Quizzes(
 private fun QuizListPreview() {
     PreviewContainer {
         Quizzes(quiz = Quiz.mockQuizzes(), onItemCLick = {}, onCreateClick = {},
-            onSignOutClick = {})
+            onAccountClick = {})
     }
 }

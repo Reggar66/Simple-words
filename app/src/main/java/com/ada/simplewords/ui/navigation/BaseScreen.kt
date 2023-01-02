@@ -21,4 +21,6 @@ sealed class Screen(route: String) : BaseScreen(route) {
     object Create : Screen(route = "create")
 
     object SignIn : Screen(route = "signIn")
+
+    object Account : Screen(route = "account")
 }

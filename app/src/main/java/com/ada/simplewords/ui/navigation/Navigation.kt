@@ -6,6 +6,7 @@ import androidx.navigation.*
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.ada.account.AccountScreen
 import com.ada.exercise.ExerciseScreen
 import com.ada.quizcreate.CreateQuizScreen
 import com.ada.quizlist.QuizListScreen
@@ -35,6 +36,9 @@ fun NavGraphBuilder.quizListRoot(navController: NavController) {
                 },
                 openCreate = {
                     navController.navigate(route = Screen.Create.route)
+                },
+                openAccount = {
+                    navController.navigate(route = Screen.Account.route)
                 }
             )
         }
@@ -48,6 +52,18 @@ fun NavGraphBuilder.quizListRoot(navController: NavController) {
         composable(Screen.Create.route) {
             CreateQuizScreen(closeScreen = { navController.popBackStack() })
         }
+
+        composable(Screen.Account.route) {
+            AccountScreen(
+                onBackClick = { navController.popBackStack() },
+                openSignInScreen = {
+                    navController.navigate(Screen.SignIn.route) {
+                        popUpTo(route = Screen.QuizList.route) {
+                            inclusive = true
+                        }
+                    }
+                })
+        }
     }
 }
 
@@ -57,9 +73,9 @@ fun NavGraphBuilder.signInRoot(navController: NavController) {
             SignInScreen(openQuizList = {
                 navController.navigate(route = Screen.QuizList.route) {
                     // TODO: Uncomment once there is a way to log out and go back to login screen.
-                    /*popUpTo(Screen.SignIn.route) {
+                    popUpTo(Screen.SignIn.route) {
                         inclusive = true
-                    }*/
+                    }
                 }
             })
         }

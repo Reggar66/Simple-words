@@ -30,7 +30,7 @@ class ObserveCurrentUserUseCaseImpl @Inject constructor(
                 val user = userModel?.toUserOrNull()
 
                 trySend(user)
-                    .also { useCaseDebugLog { "tried send: $userModel" } }
+                    .also { useCaseDebugLog { "tried send: $user" } }
             }
 
             override fun onCancelled(error: DatabaseError) {

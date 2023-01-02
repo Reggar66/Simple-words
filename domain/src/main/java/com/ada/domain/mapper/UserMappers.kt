@@ -7,6 +7,7 @@ fun UserModel.toUserOrNull(): User? {
     return User(
         id = id ?: return null,
         name = name,
-        picture = picture
+        picture = picture,
+        accountType = accountType ?: return null
     )
 }
