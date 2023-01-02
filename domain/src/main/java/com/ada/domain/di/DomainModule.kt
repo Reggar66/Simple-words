@@ -51,9 +51,9 @@ abstract class DomainModule {
     ): SignInAnonymousUserUseCase
 
     @Binds
-    abstract fun bindGetCurrentUserUseCase(
-        getCurrentUserUseCase: GetCurrentUserUseCaseImpl
-    ): GetCurrentUserUseCase
+    abstract fun bindObserveCurrentUserUseCase(
+        getCurrentUserUseCase: ObserveCurrentUserUseCaseImpl
+    ): ObserveCurrentUserUseCase
 
     @Binds
     abstract fun bindSignOutUseCase(

@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.ada.common.debugLog
 import com.ada.data.repositories.RealTimeDatabaseRepository
 import com.ada.domain.model.Quiz
-import com.ada.domain.usecases.GetCurrentUserUseCase
+import com.ada.domain.usecases.ObserveCurrentUserUseCase
 import com.ada.domain.usecases.GetQuizzesUseCase
 import com.ada.domain.usecases.SignOutUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,14 +19,14 @@ import javax.inject.Inject
 class QuizListViewModel @Inject constructor(
     val realTimeDatabaseRepository: RealTimeDatabaseRepository,
     private val getQuizzesUseCase: GetQuizzesUseCase,
-    private val getCurrentUserUseCase: GetCurrentUserUseCase,
+    private val observeCurrentUserUseCase: ObserveCurrentUserUseCase,
     private val signOutUseCase: SignOutUseCase
 ) : ViewModel() {
 
     var quizListState by mutableStateOf(QuizListScreenState())
         private set
 
-    val user = getCurrentUserUseCase.invoke()
+    val user = observeCurrentUserUseCase.invoke()
 
     private var quizzes: List<Quiz> = emptyList()
 

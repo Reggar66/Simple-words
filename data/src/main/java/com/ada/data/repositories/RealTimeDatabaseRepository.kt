@@ -25,7 +25,7 @@ class RealTimeDatabaseRepository @Inject constructor(private val authenticationR
             ?: "").also { debugLog { "User Id DB: $it" } }
 
     private fun currentUserDatabaseRef() = database.getReference(userId)
-    private fun userRef() = database.getReference("$userId/user")
+    fun userRef() = database.getReference("$userId/user")
     fun quizzesRef() = database.getReference("$userId/quizzes")
     fun quizRef(quizId: Key) = database.getReference("$userId/quizzes/$quizId")
     private fun quizWordsRef() = database.getReference("$userId/quizWords")

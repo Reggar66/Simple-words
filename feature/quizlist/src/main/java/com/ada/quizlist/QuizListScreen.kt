@@ -11,6 +11,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,12 +35,14 @@ fun QuizListScreen(openExercise: SimpleNavigationTakes<Quiz>, openCreate: Simple
     val viewModel = hiltViewModel<QuizListViewModel>()
     val state = viewModel.quizListState
 
+    val user by viewModel.user.collectAsState(initial = null)
+
     QuizListImpl(
         quizListState = state,
         onLearnClick = { quiz -> openExercise(quiz) },
         onItemClick = { viewModel.selectQuiz(it) },
         onCreateClick = { openCreate() },
-        userName = viewModel.user?.name,
+        userName = user?.name,
         onSignOutClick = { viewModel.signOut() }
     )
 }

@@ -1,5 +1,6 @@
 package com.ada.domain.usecases
 
+import com.ada.common.UserNameGenerator
 import com.ada.data.model.UserModel
 import com.ada.data.repositories.AuthenticationRepository
 import com.ada.data.repositories.RealTimeDatabaseRepository
@@ -16,7 +17,7 @@ class SignInAnonymousUserUseCaseImpl @Inject constructor(
                     realTimeDatabaseRepository.saveUser(
                         UserModel(
                             id = it.uid,
-                            name = it.email,
+                            name = UserNameGenerator.randomName(),
                             picture = null // TODO: picture?
                         ),
                         onSuccess = onSuccess

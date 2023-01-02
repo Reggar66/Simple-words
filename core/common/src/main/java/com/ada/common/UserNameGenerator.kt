@@ -48,5 +48,8 @@ object UserNameGenerator {
         "bat"
     )
 
-    fun randomName() = adjectives.random() + " " + animals.random()
+    fun randomName(): String {
+        return (adjectives.shuffled().random() + " " + animals.shuffled().random())
+            .also { debugLog { "generated name: $it" } }
+    }
 }

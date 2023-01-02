@@ -1,11 +1,9 @@
 package com.ada.data.repositories
 
-import com.ada.common.UserNameGenerator
 import com.ada.common.debugLog
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.ktx.Firebase
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -45,10 +43,6 @@ class AuthenticationRepository @Inject constructor() {
             when {
                 task.isSuccessful -> {
                     authDebugLog { "createUserWithEmail: Success." }
-                    val user = auth.currentUser
-                    if (user?.displayName.isNullOrEmpty())
-                        updateUserName(user, UserNameGenerator.randomName())
-
                     onComplete(auth.currentUser)
                 }
                 else -> {
@@ -92,33 +86,11 @@ class AuthenticationRepository @Inject constructor() {
             when {
                 task.isSuccessful -> {
                     authDebugLog { "signInAnonymously: Success." }
-
-                    val user = auth.currentUser
-                    if (user?.displayName.isNullOrEmpty())
-                        updateUserName(user = user, name = UserNameGenerator.randomName())
-
-                    onComplete(user)
+                    onComplete(auth.currentUser)
                 }
                 else -> {
                     authDebugLog { "signInAnonymously: Failure." }
                     onComplete(null)
-                }
-            }
-        }
-    }
-
-    fun updateUserName(user: FirebaseUser?, name: String) {
-        val profileUpdates = userProfileChangeRequest {
-            displayName = name
-        }
-
-        user?.updateProfile(profileUpdates)?.addOnCompleteListener { task ->
-            when {
-                task.isSuccessful -> {
-                    authDebugLog { "updateUserName: Success." }
-                }
-                else -> {
-                    authDebugLog { "updateUserName: Failure" }
                 }
             }
         }
