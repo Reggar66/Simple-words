@@ -10,22 +10,27 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.ada.simplewords.ui.navigation.NavigationHost
+import com.ada.simplewords.ui.navigation.Screen
 import com.ada.ui.theme.SimpleWordsTheme
 
 @Composable
 fun MainScreen() {
+    val navController: NavHostController = rememberNavController()
     SimpleWordsTheme {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
-            DebugOverlay {
-                NavigationHost()
+            DebugOverlay(navController = navController) {
+                NavigationHost(navController = navController)
             }
         }
     }
 }
 
 @Composable
-private fun DebugOverlay(content: @Composable () -> Unit) {
+private fun DebugOverlay(navController: NavController, content: @Composable () -> Unit) {
 
     val viewModel = hiltViewModel<DebugViewModel>()
     var showDebug by remember {
@@ -53,7 +58,7 @@ private fun DebugOverlay(content: @Composable () -> Unit) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Button(onClick = { viewModel.createMockQuizAnimals() }) {
-                    Text(text = "Generate Animals")
+                    Text(text = "Generate Animals \uD83E\uDD8A")
                 }
 
                 Button(onClick = { viewModel.createMockQuizAnimalsCompleted() }) {
@@ -66,6 +71,13 @@ private fun DebugOverlay(content: @Composable () -> Unit) {
 
                 Button(onClick = { viewModel.createMockQuizSeasons() }) {
                     Text(text = "Generate Seasons")
+                }
+
+                Button(onClick = {
+                    viewModel.signOut()
+                    navController.navigate(route = Screen.SignIn.route)
+                }) {
+                    Text(text = "Sign out")
                 }
             }
     }

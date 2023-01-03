@@ -72,7 +72,7 @@ fun NavGraphBuilder.signInRoot(navController: NavController) {
         composable(route = Screen.SignIn.route) {
             SignInScreen(openQuizList = {
                 navController.navigate(route = Screen.QuizList.route) {
-                    // TODO: Uncomment once there is a way to log out and go back to login screen.
+                    launchSingleTop = true
                     popUpTo(Screen.SignIn.route) {
                         inclusive = true
                     }

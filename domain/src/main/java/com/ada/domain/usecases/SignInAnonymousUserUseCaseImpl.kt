@@ -15,12 +15,14 @@ class SignInAnonymousUserUseCaseImpl @Inject constructor(
         if (!authenticationRepository.isSignedIn())
             authenticationRepository.signInAnonymously {
                 it?.let {
+                    val generatedName = UserNameGenerator.randomNameWithIcon()
                     realTimeDatabaseRepository.saveUser(
                         UserModel(
                             id = it.uid,
-                            name = UserNameGenerator.randomName(),
-                            picture = null, // TODO: picture?
-                            accountType = UserAccountType.Anonymous
+                            name = generatedName.name(),
+                            picture = null,
+                            accountType = UserAccountType.Anonymous,
+                            emojiIcon = generatedName.emoji
                         ),
                         onSuccess = onSuccess
                     )

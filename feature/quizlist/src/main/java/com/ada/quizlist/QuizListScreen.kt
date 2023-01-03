@@ -21,7 +21,10 @@ import com.ada.common.OnClick
 import com.ada.common.OnClickTakes
 import com.ada.common.SimpleNavigation
 import com.ada.common.SimpleNavigationTakes
+import com.ada.data.model.UserModel
+import com.ada.domain.mapper.toUserOrNull
 import com.ada.domain.model.Quiz
+import com.ada.domain.model.User
 import com.ada.quizdetails.QuizDetailsScreen
 import com.ada.ui.PreviewContainer
 import com.ada.ui.PreviewDuo
@@ -45,7 +48,7 @@ fun QuizListScreen(
         onLearnClick = { quiz -> openExercise(quiz) },
         onItemClick = { viewModel.selectQuiz(it) },
         onCreateClick = { openCreate() },
-        userName = user?.name,
+        user = user,
         onAccountClick = { openAccount() }
     )
 }
@@ -56,7 +59,7 @@ private fun QuizListImpl(
     onLearnClick: OnClickTakes<Quiz>,
     onItemClick: OnClickTakes<Quiz>,
     onCreateClick: OnClick,
-    userName: String?,
+    user: User?,
     onAccountClick: OnClick
 ) {
     val scaffoldState = rememberBottomSheetScaffoldState()
@@ -87,7 +90,7 @@ private fun QuizListImpl(
                     }
                 },
                 onCreateClick = onCreateClick,
-                userName = userName,
+                user = user,
                 onAccountClick = onAccountClick
             )
         }
@@ -99,11 +102,11 @@ private fun Quizzes(
     quiz: List<Quiz>,
     onItemCLick: OnClickTakes<Quiz>,
     onCreateClick: OnClick,
-    userName: String? = "",
+    user: User?,
     onAccountClick: OnClick
 ) {
     Column {
-        AccountBar(name = userName ?: "", onPictureClick = { onAccountClick() })
+        AccountBar(user = user, onPictureClick = { onAccountClick() })
 
         Box(modifier = Modifier.fillMaxSize()) {
             LazyColumn(
@@ -136,7 +139,12 @@ private fun Quizzes(
 @Composable
 private fun QuizListPreview() {
     PreviewContainer {
-        Quizzes(quiz = Quiz.mockQuizzes(), onItemCLick = {}, onCreateClick = {},
-            onAccountClick = {})
+        Quizzes(
+            quiz = Quiz.mockQuizzes(),
+            onItemCLick = {},
+            onCreateClick = {},
+            onAccountClick = {},
+            user = UserModel.mock().toUserOrNull()
+        )
     }
 }

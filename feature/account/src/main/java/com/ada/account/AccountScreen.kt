@@ -1,7 +1,5 @@
 package com.ada.account
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
@@ -11,12 +9,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ada.common.OnClick
-import com.ada.common.R
 import com.ada.common.SimpleNavigation
 import com.ada.data.model.UserAccountType
 import com.ada.data.model.UserModel
@@ -24,6 +19,7 @@ import com.ada.domain.mapper.toUserOrNull
 import com.ada.domain.model.User
 import com.ada.ui.PreviewContainer
 import com.ada.ui.PreviewDuo
+import com.ada.ui.components.AccountImage
 import com.ada.ui.components.SimpleButton
 import com.ada.ui.components.TopBar
 
@@ -77,18 +73,11 @@ private fun Top(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Image(
-            modifier = Modifier
-                .border(
-                    width = 2.dp,
-                    color = MaterialTheme.colors.onBackground,
-                    shape = CircleShape
-                )
-                .clip(CircleShape)
-                .size(130.dp),
-            painter = painterResource(id = R.drawable.ic_launcher_background),
-            contentDescription = "User picture.", // TODO: strings.xml
-        )
+
+        AccountImage(modifier = Modifier.size(130.dp),
+            picture = user?.picture,
+            emoji = user?.emojiIcon,
+            onPictureClick = { /*TODO: way of choosing icon.*/ })
 
         Spacer(modifier = Modifier.height(8.dp))
 

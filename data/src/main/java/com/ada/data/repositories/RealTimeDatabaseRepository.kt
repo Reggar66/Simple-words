@@ -34,11 +34,11 @@ class RealTimeDatabaseRepository @Inject constructor(private val authenticationR
         database.getReference("$userId/quizWords/$quizId/$wordId")
 
     fun saveUser(userModel: UserModel, onSuccess: () -> Unit) {
-        val key = currentUserDatabaseRef().push().key
-        key?.let {
+       // val key = currentUserDatabaseRef().push().key
+        //key?.let {
             userRef().setValue(userModel).addOnSuccessListener {
                 onSuccess()
-            }
+           // }
         }
     }
 

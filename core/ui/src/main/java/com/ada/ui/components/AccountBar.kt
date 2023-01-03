@@ -19,12 +19,15 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.ada.common.OnClick
 import com.ada.common.R
+import com.ada.data.model.UserModel
+import com.ada.domain.mapper.toUserOrNull
+import com.ada.domain.model.User
 import com.ada.ui.PreviewContainer
 import com.ada.ui.PreviewDuo
 import com.ada.ui.theme.itemBackground
 
 @Composable
-fun AccountBar(name: String, onPictureClick: OnClick) {
+fun AccountBar(user: User?, onPictureClick: OnClick) {
     Surface(
         color = Color.Transparent,
         elevation = 2.dp
@@ -37,25 +40,18 @@ fun AccountBar(name: String, onPictureClick: OnClick) {
                 .padding(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Image(
-                modifier = Modifier
-                    .border(
-                        width = 1.dp,
-                        color = MaterialTheme.colors.onBackground,
-                        shape = CircleShape
-                    )
-                    .height(IntrinsicSize.Max)
-                    .aspectRatio(1f)
-                    .clip(CircleShape)
-                    .clickable { onPictureClick() },
-                painter = painterResource(id = R.drawable.ic_launcher_background),
-                contentDescription = null
+            AccountImage(
+                modifier = Modifier.height(IntrinsicSize.Max),
+                picture = user?.picture,
+                emoji = user?.emojiIcon,
+                borderWidth = 1.dp,
+                onPictureClick = onPictureClick
             )
 
             Spacer(modifier = Modifier.width(16.dp))
 
             Text(
-                text = name,
+                text = user?.name ?: "",
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 style = MaterialTheme.typography.h6
@@ -68,6 +64,6 @@ fun AccountBar(name: String, onPictureClick: OnClick) {
 @Composable
 private fun TopBarPreview() {
     PreviewContainer {
-        AccountBar(name = "CoolMailButVeryLooooooooooooooong@mail.com", onPictureClick = {})
+        AccountBar(user = UserModel.mock().toUserOrNull(), onPictureClick = {})
     }
 }

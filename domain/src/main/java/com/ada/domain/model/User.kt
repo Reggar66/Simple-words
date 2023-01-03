@@ -6,5 +6,6 @@ data class User(
     val id: String,
     val name: String? = null,
     val picture: String? = null,
-    val accountType: UserAccountType
+    val accountType: UserAccountType,
+    val emojiIcon: String? = null
 )

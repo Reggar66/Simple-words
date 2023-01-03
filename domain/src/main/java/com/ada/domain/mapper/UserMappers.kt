@@ -8,6 +8,7 @@ fun UserModel.toUserOrNull(): User? {
         id = id ?: return null,
         name = name,
         picture = picture,
-        accountType = accountType ?: return null
+        accountType = accountType ?: return null,
+        emojiIcon = emojiIcon
     )
 }
