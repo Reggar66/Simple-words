@@ -61,6 +61,7 @@ dependencies {
     implementation(project(":feature:quizcreate"))
     implementation(project(":feature:exercise"))
     implementation(project(":feature:signin"))
+    implementation(project(":feature:signup"))
     implementation(project(":feature:account"))
 
     implementation(libs.androidx.core.ktx)

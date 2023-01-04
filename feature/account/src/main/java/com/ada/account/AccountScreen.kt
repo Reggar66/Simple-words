@@ -24,7 +24,11 @@ import com.ada.ui.components.SimpleButton
 import com.ada.ui.components.TopBar
 
 @Composable
-fun AccountScreen(onBackClick: OnClick, openSignInScreen: SimpleNavigation) {
+fun AccountScreen(
+    onBackClick: OnClick,
+    openSignInScreen: SimpleNavigation,
+    openSignUpScreen: SimpleNavigation
+) {
 
     val viewModel = hiltViewModel<AccountViewModel>()
     val user by viewModel.user.collectAsState(initial = null)
@@ -36,7 +40,7 @@ fun AccountScreen(onBackClick: OnClick, openSignInScreen: SimpleNavigation) {
             viewModel.signOut()
             openSignInScreen()
         },
-        onRegisterClick = {/*TODO*/ })
+        onSignUpClick = openSignUpScreen)
 }
 
 @Composable
@@ -44,7 +48,7 @@ private fun Account(
     user: User?,
     onBackArrowClick: OnClick = {},
     onSignOutClick: OnClick = {},
-    onRegisterClick: OnClick = {}
+    onSignUpClick: OnClick = {}
 ) {
     Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
 
@@ -57,7 +61,7 @@ private fun Account(
         Bottom(
             modifier = Modifier.weight(1f),
             onSignOutClick = onSignOutClick,
-            onRegisterClick = onRegisterClick,
+            onSignUpClick = onSignUpClick,
             user = user
         )
     }
@@ -90,12 +94,12 @@ private fun Bottom(
     modifier: Modifier = Modifier,
     user: User?,
     onSignOutClick: OnClick,
-    onRegisterClick: OnClick
+    onSignUpClick: OnClick
 ) {
     Column(modifier = modifier) {
         if (user?.accountType == UserAccountType.Anonymous)
-            SimpleButton(onClick = onRegisterClick) {
-                Text(text = "Register") // TODO: strings.xml
+            SimpleButton(onClick = onSignUpClick) {
+                Text(text = "Sign up") // TODO: strings.xml
             }
 
         if (user?.accountType == UserAccountType.Permanent)
@@ -110,5 +114,15 @@ private fun Bottom(
 private fun AccountPreview() {
     PreviewContainer {
         Account(user = UserModel.mock().toUserOrNull())
+    }
+}
+
+@PreviewDuo
+@Composable
+private fun AccountPreview2() {
+    PreviewContainer {
+        Account(
+            user = UserModel.mock().copy(accountType = UserAccountType.Permanent).toUserOrNull()
+        )
     }
 }

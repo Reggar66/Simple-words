@@ -11,6 +11,7 @@ import com.ada.exercise.ExerciseScreen
 import com.ada.quizcreate.CreateQuizScreen
 import com.ada.quizlist.QuizListScreen
 import com.ada.signin.SignInScreen
+import com.ada.signup.SignUpScreen
 
 @Composable
 fun NavigationHost(
@@ -62,7 +63,9 @@ fun NavGraphBuilder.quizListRoot(navController: NavController) {
                             inclusive = true
                         }
                     }
-                })
+                },
+                openSignUpScreen = { navController.navigate(Screen.SignUp.route) }
+            )
         }
     }
 }
@@ -78,6 +81,10 @@ fun NavGraphBuilder.signInRoot(navController: NavController) {
                     }
                 }
             })
+        }
+
+        composable(route = Screen.SignUp.route) {
+            SignUpScreen()
         }
     }
 }

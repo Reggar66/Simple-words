@@ -3,6 +3,7 @@ package com.ada.signin
 import androidx.lifecycle.ViewModel
 import com.ada.common.debugLog
 import com.ada.data.repositories.AuthenticationRepository
+import com.ada.domain.model.Credentials
 import com.ada.domain.usecases.SignInAnonymousUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
