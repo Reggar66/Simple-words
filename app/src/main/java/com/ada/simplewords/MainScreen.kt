@@ -43,7 +43,7 @@ private fun DebugOverlay(navController: NavController, content: @Composable () -
         if (BuildConfig.DEBUG)
             Button(
                 modifier = Modifier
-                    .align(Alignment.BottomStart)
+                    .align(Alignment.TopEnd)
                     .padding(4.dp),
                 onClick = { showDebug = !showDebug }) {
                 Text(text = "Debug")
@@ -52,8 +52,8 @@ private fun DebugOverlay(navController: NavController, content: @Composable () -
         if (showDebug)
             Column(
                 modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .fillMaxWidth(),
+                    .align(Alignment.TopCenter)
+                    .fillMaxWidth().padding(top = 60.dp),
                 verticalArrangement = Arrangement.spacedBy(4.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
