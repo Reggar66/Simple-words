@@ -1,10 +1,11 @@
 package com.ada.signin
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -15,7 +16,6 @@ import com.ada.domain.model.Credentials
 import com.ada.ui.PreviewContainer
 import com.ada.ui.PreviewDuo
 import com.ada.ui.components.LoginFields
-import com.ada.ui.components.SimpleButton
 import com.ada.ui.components.TopBar
 import com.ada.ui.theme.topBarTitle
 

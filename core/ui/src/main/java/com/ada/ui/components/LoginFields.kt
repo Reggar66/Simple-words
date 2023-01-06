@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ada.common.OnClickTakes
@@ -55,7 +56,8 @@ fun LoginFields(
             ),
             keyboardActions = KeyboardActions(onDone = {
                 focusManager.clearFocus()
-            })
+            }),
+            visualTransformation = PasswordVisualTransformation()
         )
         if (registration)
             Text(
@@ -75,7 +77,8 @@ fun LoginFields(
                 ),
                 keyboardActions = KeyboardActions(onDone = {
                     focusManager.clearFocus()
-                })
+                }),
+                visualTransformation = PasswordVisualTransformation()
             )
 
 
