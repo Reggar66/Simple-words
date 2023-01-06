@@ -53,7 +53,8 @@ private fun DebugOverlay(navController: NavController, content: @Composable () -
             Column(
                 modifier = Modifier
                     .align(Alignment.TopCenter)
-                    .fillMaxWidth().padding(top = 60.dp),
+                    .fillMaxWidth()
+                    .padding(top = 60.dp),
                 verticalArrangement = Arrangement.spacedBy(4.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -75,7 +76,12 @@ private fun DebugOverlay(navController: NavController, content: @Composable () -
 
                 Button(onClick = {
                     viewModel.signOut()
-                    navController.navigate(route = Screen.SignIn.route)
+                    navController.navigate(Screen.Welcome.route) {
+                        launchSingleTop = true
+                        popUpTo(route = Screen.QuizList.route) {
+                            inclusive = true
+                        }
+                    }
                 }) {
                     Text(text = "Sign out")
                 }

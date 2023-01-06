@@ -2,6 +2,7 @@ package com.ada.domain.usecases
 
 import com.ada.common.UserNameGenerator
 import com.ada.data.model.UserAccountType
+import com.ada.data.model.UserIdModel
 import com.ada.data.model.UserModel
 import com.ada.data.repositories.AuthenticationRepository
 import com.ada.data.repositories.RealTimeDatabaseRepository

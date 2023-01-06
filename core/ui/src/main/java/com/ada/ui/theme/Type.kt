@@ -48,3 +48,10 @@ val Typography.exerciseWord
         fontSize = 26.sp
 
     )
+
+val Typography.topBarTitle
+    get() = TextStyle(
+        fontWeight = FontWeight.Medium,
+        fontSize = 20.sp,
+        letterSpacing = 0.15.sp
+    )

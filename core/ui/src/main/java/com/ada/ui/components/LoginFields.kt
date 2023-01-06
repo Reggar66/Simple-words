@@ -21,8 +21,8 @@ import com.ada.ui.PreviewDuo
 @Composable
 fun LoginFields(
     registration: Boolean = false,
-    onRegisterClick: OnClickTakes<Credentials>,
-    onLogInClick: OnClickTakes<Credentials>
+    onSignUpClick: OnClickTakes<Credentials> = {},
+    onLogInClick: OnClickTakes<Credentials> = {}
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -46,8 +46,8 @@ fun LoginFields(
 
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
-            value = confirmation,
-            onValueChange = { confirmation = it },
+            value = password,
+            onValueChange = { password = it },
             label = { Text(text = "Password") }, // TODO strings
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Password,
@@ -66,8 +66,8 @@ fun LoginFields(
         if (registration)
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
-                value = password,
-                onValueChange = { password = it },
+                value = confirmation,
+                onValueChange = { confirmation = it },
                 label = { Text(text = "Confirm password") }, // TODO strings
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Password,
@@ -79,19 +79,19 @@ fun LoginFields(
             )
 
 
-
+        Spacer(modifier = Modifier.height(16.dp))
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
             if (!registration)
                 SimpleButton(
                     onClick = { onLogInClick(Credentials(email = email, password = password)) },
                     enabled = email.isNotEmpty() && email.isValidEmail() && password.isNotEmpty()
                 ) {
-                    Text(text = "Log In")
+                    Text(text = "Sign in")
                 }
             else
                 SimpleButton(
                     onClick = {
-                        onRegisterClick(
+                        onSignUpClick(
                             Credentials(
                                 email = email,
                                 password = password
@@ -100,7 +100,7 @@ fun LoginFields(
                     },
                     enabled = email.isNotEmpty() && email.isValidEmail() && password.isNotEmpty() && password.length >= 6 && password == confirmation
                 ) {
-                    Text(text = "Register") // TODO: strings.xml
+                    Text(text = "Sign up") // TODO: strings.xml
                 }
 
         }
@@ -111,7 +111,7 @@ fun LoginFields(
 @Composable
 private fun LoginFieldsPreview() {
     PreviewContainer {
-        LoginFields(onRegisterClick = {}, onLogInClick = {})
+        LoginFields(onSignUpClick = {}, onLogInClick = {})
     }
 }
 
@@ -119,6 +119,6 @@ private fun LoginFieldsPreview() {
 @Composable
 private fun LoginFieldsPreview2() {
     PreviewContainer {
-        LoginFields(registration = true, onRegisterClick = {}, onLogInClick = {})
+        LoginFields(registration = true, onSignUpClick = {}, onLogInClick = {})
     }
 }

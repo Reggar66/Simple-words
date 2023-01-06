@@ -4,7 +4,7 @@ abstract class BaseScreen(val route: String)
 
 sealed class Root(route: String) : BaseScreen(route) {
     object QuizListRoot : Root("quizListRoot")
-    object SignInRoot : Root("signInRoot")
+    object WelcomeRoot : Root("welcomeRoot")
 }
 
 sealed class Screen(route: String) : BaseScreen(route) {
@@ -25,4 +25,6 @@ sealed class Screen(route: String) : BaseScreen(route) {
     object SignUp : Screen(route = "signUp")
 
     object Account : Screen(route = "account")
+
+    object Welcome : Screen(route = "welcome")
 }

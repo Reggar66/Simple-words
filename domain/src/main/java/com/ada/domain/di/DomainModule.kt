@@ -59,4 +59,14 @@ abstract class DomainModule {
     abstract fun bindSignOutUseCase(
         signOutUseCase: SignOutUseCaseImpl
     ): SignOutUseCase
+
+    @Binds
+    abstract fun bindSignUpEmailAndPasswordUseCase(
+        signUpEmailAndPasswordUseCase: SignUpEmailAndPasswordUseCaseImpl
+    ): SignUpEmailAndPasswordUseCase
+
+    @Binds
+    abstract fun bindConvertToPermanentUseCase(
+        convertToPermanentUseCase: ConvertToPermanentUseCaseImpl
+    ): ConvertToPermanentUseCase
 }

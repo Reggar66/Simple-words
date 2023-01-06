@@ -38,6 +38,7 @@
             <option value="$PROJECT_DIR$/feature/quizlist" />
             <option value="$PROJECT_DIR$/feature/signin" />
             <option value="$PROJECT_DIR$/feature/signup" />
+            <option value="$PROJECT_DIR$/feature/welcome" />
           </set>
         </option>
       </GradleProjectSettings>

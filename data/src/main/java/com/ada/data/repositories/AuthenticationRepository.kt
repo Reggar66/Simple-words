@@ -43,6 +43,7 @@ class AuthenticationRepository @Inject constructor() {
             when {
                 task.isSuccessful -> {
                     authDebugLog { "createUserWithEmail: Success." }
+                    authDebugLog { "createUserWithEmail: is anonymous: ${auth.currentUser?.isAnonymous}" }
                     onComplete(auth.currentUser)
                 }
                 else -> {
@@ -99,16 +100,33 @@ class AuthenticationRepository @Inject constructor() {
     /**
      * Converts anonymous account to permanent account.
      * You should create new account to get credentials but do not sign in before converting.
-     * @param credential credentails of newly created account
+     * @param credential credentials of newly created account
      */
-    fun convertAnonymousToPermanentAccount(credential: AuthCredential) {
+    fun convertAnonymousToPermanentAccount(
+        credential: AuthCredential,
+        onComplete: (user: FirebaseUser?) -> Unit
+    ) {
+
         auth.currentUser.let { anonUser ->
             when (anonUser) {
                 null -> {
                     authDebugLog { "convertAnonymousToPermanentAccount: current user is null. Did you forget to log in as anonymous?" }
                 }
                 else -> {
-                    anonUser.linkWithCredential(credential)
+                    anonUser.linkWithCredential(credential).addOnCompleteListener { task ->
+                        when {
+                            task.isSuccessful -> {
+                                authDebugLog { "convertAnonymousToPermanentAccount: Success." }
+                                val user = task.result?.user
+                                onComplete(user)
+                            }
+
+                            else -> {
+                                authDebugLog { "convertAnonymousToPermanentAccount: Failure." }
+                                onComplete(null)
+                            }
+                        }
+                    }
                 }
             }
         }

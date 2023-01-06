@@ -22,11 +22,12 @@ import com.ada.ui.PreviewDuo
 import com.ada.ui.components.AccountImage
 import com.ada.ui.components.SimpleButton
 import com.ada.ui.components.TopBar
+import com.ada.ui.theme.topBarTitle
 
 @Composable
 fun AccountScreen(
     onBackClick: OnClick,
-    openSignInScreen: SimpleNavigation,
+    openWelcomeScreen: SimpleNavigation,
     openSignUpScreen: SimpleNavigation
 ) {
 
@@ -38,9 +39,10 @@ fun AccountScreen(
         onBackArrowClick = onBackClick,
         onSignOutClick = {
             viewModel.signOut()
-            openSignInScreen()
+            openWelcomeScreen()
         },
-        onSignUpClick = openSignUpScreen)
+        onSignUpClick = openSignUpScreen
+    )
 }
 
 @Composable
@@ -53,7 +55,10 @@ private fun Account(
     Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
 
         TopBar(onBackArrowClick = { onBackArrowClick() }) {
-            Text(text = "Account", style = MaterialTheme.typography.h6) // TODO: strings.xml
+            Text(
+                text = "Account",
+                style = MaterialTheme.typography.topBarTitle
+            ) // TODO: strings.xml
         }
 
         Top(modifier = Modifier.weight(1f), user = user)
@@ -97,12 +102,12 @@ private fun Bottom(
     onSignUpClick: OnClick
 ) {
     Column(modifier = modifier) {
-        if (user?.accountType == UserAccountType.Anonymous)
+        if (user?.id?.userAccountType == UserAccountType.Anonymous)
             SimpleButton(onClick = onSignUpClick) {
                 Text(text = "Sign up") // TODO: strings.xml
             }
 
-        if (user?.accountType == UserAccountType.Permanent)
+        if (user?.id?.userAccountType == UserAccountType.Permanent)
             SimpleButton(onClick = onSignOutClick, shape = CircleShape) {
                 Text(text = "Sign out") // TODO: strings.xml
             }

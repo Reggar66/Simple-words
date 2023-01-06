@@ -1,14 +1,22 @@
 package com.ada.domain.mapper
 
+import com.ada.data.model.UserIdModel
 import com.ada.data.model.UserModel
 import com.ada.domain.model.User
+import com.ada.domain.model.UserId
 
 fun UserModel.toUserOrNull(): User? {
     return User(
-        id = id ?: return null,
+        id = UserId(uid = id ?: return null, userAccountType = accountType ?: return null),
         name = name,
         picture = picture,
-        accountType = accountType ?: return null,
         emojiIcon = emojiIcon
+    )
+}
+
+fun UserIdModel.toUserIdOrNull(): UserId? {
+    return UserId(
+        uid = uid ?: return null,
+        userAccountType = userAccountType ?: return null
     )
 }

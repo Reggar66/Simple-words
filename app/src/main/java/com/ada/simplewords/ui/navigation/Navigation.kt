@@ -12,6 +12,7 @@ import com.ada.quizcreate.CreateQuizScreen
 import com.ada.quizlist.QuizListScreen
 import com.ada.signin.SignInScreen
 import com.ada.signup.SignUpScreen
+import com.ada.welcome.WelcomeScreen
 
 @Composable
 fun NavigationHost(
@@ -19,11 +20,11 @@ fun NavigationHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Root.SignInRoot.route,
+        startDestination = Root.WelcomeRoot.route,
         modifier = modifier
     ) {
         quizListRoot(navController)
-        signInRoot(navController)
+        welcomeRoot(navController)
     }
 }
 
@@ -57,8 +58,9 @@ fun NavGraphBuilder.quizListRoot(navController: NavController) {
         composable(Screen.Account.route) {
             AccountScreen(
                 onBackClick = { navController.popBackStack() },
-                openSignInScreen = {
-                    navController.navigate(Screen.SignIn.route) {
+                openWelcomeScreen = {
+                    navController.navigate(Screen.Welcome.route) {
+                        launchSingleTop = true
                         popUpTo(route = Screen.QuizList.route) {
                             inclusive = true
                         }
@@ -70,21 +72,49 @@ fun NavGraphBuilder.quizListRoot(navController: NavController) {
     }
 }
 
-fun NavGraphBuilder.signInRoot(navController: NavController) {
-    navigation(startDestination = Screen.SignIn.route, route = Root.SignInRoot.route) {
-        composable(route = Screen.SignIn.route) {
-            SignInScreen(openQuizList = {
-                navController.navigate(route = Screen.QuizList.route) {
-                    launchSingleTop = true
-                    popUpTo(Screen.SignIn.route) {
-                        inclusive = true
+fun NavGraphBuilder.welcomeRoot(navController: NavController) {
+    navigation(startDestination = Screen.Welcome.route, route = Root.WelcomeRoot.route) {
+        composable(route = Screen.Welcome.route) {
+            WelcomeScreen(
+                openSignIn = { navController.navigate(Screen.SignIn.route) },
+                openSignUp = { navController.navigate(Screen.SignUp.route) },
+                openQuizList = {
+                    navController.navigate(Screen.QuizList.route) {
+                        launchSingleTop = true
+                        popUpTo(Screen.Welcome.route) {
+                            inclusive = true
+                        }
                     }
                 }
-            })
+            )
+        }
+
+        composable(route = Screen.SignIn.route) {
+            SignInScreen(
+                closeScreen = { navController.popBackStack() },
+                openQuizList = {
+                    navController.navigate(route = Screen.QuizList.route) {
+                        launchSingleTop = true
+                        popUpTo(Screen.Welcome.route) {
+                            inclusive = true
+                        }
+                    }
+                }
+            )
         }
 
         composable(route = Screen.SignUp.route) {
-            SignUpScreen()
+            SignUpScreen(
+                closeScreen = { navController.popBackStack() },
+                openQuizList = {
+                    navController.navigate(Screen.QuizList.route) {
+                        launchSingleTop = true
+                        popUpTo(Screen.Welcome.route) {
+                            inclusive = true
+                        }
+                    }
+                }
+            )
         }
     }
 }

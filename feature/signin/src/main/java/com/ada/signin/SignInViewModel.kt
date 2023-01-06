@@ -42,6 +42,4 @@ class SignInViewModel @Inject constructor(
             }
         )
     }
-
-    fun isSignedIn() = authenticationRepository.isSignedIn()
-}
+    }
