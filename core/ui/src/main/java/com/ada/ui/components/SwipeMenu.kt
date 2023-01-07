@@ -24,13 +24,14 @@ import kotlin.math.roundToInt
 
 @Composable
 fun SwipeMenu(
+    state: SwipeableState<SwipeValue> = rememberSwipeableState(initialValue = SwipeValue.Default),
     onRemoveClick: OnClick,
     onEditClick: OnClick,
     content: @Composable RowScope.() -> Unit
 ) {
     val scope = rememberCoroutineScope()
 
-    val state = rememberSwipeableState(initialValue = SwipeValue.Default)
+    //val state = rememberSwipeableState(initialValue = SwipeValue.Default)
     val isRtl = LocalLayoutDirection.current == LayoutDirection.Rtl
 
     val buttonSize = 50.dp
@@ -91,7 +92,7 @@ fun SwipeMenu(
 }
 
 
-private enum class SwipeValue {
+enum class SwipeValue {
     Default,
     ToRight,
     ToLeft

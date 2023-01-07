@@ -15,7 +15,7 @@ class CreateQuizViewModel @Inject constructor(private val createQuizUseCase: com
     val wordsToCreate get() = _wordsToCreate.toList()
 
     init {
-        _wordsToCreate.addAll(WordWithTranslation.mock())
+        _wordsToCreate.addAll(WordWithTranslation.mock()) // TODO: delete
     }
 
     fun createQuiz(name: String) {
@@ -33,5 +33,9 @@ class CreateQuizViewModel @Inject constructor(private val createQuizUseCase: com
 
     fun removeTranslation(index: Int) {
         _wordsToCreate.removeAt(index)
+    }
+
+    fun update(idx: Int, word: WordWithTranslation) {
+        _wordsToCreate.set(index = idx, element = word)
     }
 }

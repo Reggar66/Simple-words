@@ -2,6 +2,8 @@ package com.ada.quizcreate
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -23,8 +25,11 @@ import com.ada.common.SimpleNavigation
 import com.ada.common.debugLog
 import com.ada.ui.PreviewContainer
 import com.ada.ui.components.SwipeMenu
+import com.ada.ui.components.SwipeValue
 import com.ada.ui.components.WordItem
+import com.ada.ui.theme.itemBackground
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
 fun CreateQuizScreen(closeScreen: SimpleNavigation) {
@@ -37,7 +42,10 @@ fun CreateQuizScreen(closeScreen: SimpleNavigation) {
             closeScreen()
         },
         onAddClick = { viewModel.addWordWithTranslation(it) },
-        onRemoveClick = { viewModel.removeTranslation(it) }
+        onRemoveClick = { viewModel.removeTranslation(it) },
+        onApplyItemEdit = { idx, word ->
+            viewModel.update(idx = idx, word = word)
+        }
     )
 }
 
@@ -46,7 +54,8 @@ private fun CreateQuizScreenImpl(
     currentWords: List<WordWithTranslation>,
     onCreateQuizClick: OnClickTakes<String>,
     onAddClick: OnClickTakes<WordWithTranslation>,
-    onRemoveClick: OnClickTakes<Int>
+    onRemoveClick: OnClickTakes<Int>,
+    onApplyItemEdit: (ids: Int, word: WordWithTranslation) -> Unit
 ) {
 
     var name by remember {
@@ -74,10 +83,17 @@ private fun CreateQuizScreenImpl(
 
             /* List of already added */
             itemsIndexed(currentWords) { idx, item ->
+                val isInEdit = remember { mutableStateOf(false) }
                 Item(
+                    editMode = isInEdit.value,
                     item = item,
                     onRemoveClick = { onRemoveClick(idx) },
-                    onEditClick = {/*TODO*/ })
+                    onEditClick = { isInEdit.value = !isInEdit.value },
+                    onApplyChanges = {
+                        onApplyItemEdit(idx, it)
+                        isInEdit.value = false
+                    }
+                )
             }
 
             item {
@@ -114,10 +130,64 @@ private fun CreateQuizScreenImpl(
     })
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
-private fun Item(item: WordWithTranslation, onRemoveClick: OnClick, onEditClick: OnClick) {
-    SwipeMenu(onRemoveClick = onRemoveClick, onEditClick = onEditClick) {
-        WordItem(leftText = item.word, rightText = item.translation)
+private fun Item(
+    editMode: Boolean = false,
+    item: WordWithTranslation,
+    onRemoveClick: OnClick,
+    onEditClick: OnClick,
+    onApplyChanges: OnClickTakes<WordWithTranslation>
+) {
+    val state = rememberSwipeableState(initialValue = SwipeValue.Default)
+    val scope = rememberCoroutineScope()
+    SwipeMenu(state = state, onRemoveClick = onRemoveClick, onEditClick = {
+        scope.launch {
+            state.animateTo(SwipeValue.Default)
+        }
+        onEditClick()
+    }) {
+        if (!editMode)
+            WordItem(leftText = item.word, rightText = item.translation)
+        else
+            EditWordItem(item = item, onApplyChanges = onApplyChanges)
+    }
+}
+
+@Composable
+private fun EditWordItem(
+    item: WordWithTranslation,
+    onApplyChanges: OnClickTakes<WordWithTranslation>
+) {
+    var word by remember { mutableStateOf(item.word) }
+    var translation by remember { mutableStateOf(item.translation) }
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(color = MaterialTheme.colors.itemBackground)
+            .padding(8.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        OutlinedTextField(
+            modifier = Modifier.weight(1f),
+            value = word,
+            onValueChange = { word = it },
+            label = { Text(text = "Word") } // TODO strings
+        )
+        Icon(modifier = Modifier.clickable {
+            onApplyChanges(
+                WordWithTranslation(
+                    word = word,
+                    translation = translation
+                )
+            )
+        }, imageVector = Icons.Rounded.Check, contentDescription = null)
+        OutlinedTextField(
+            modifier = Modifier.weight(1f),
+            value = translation,
+            onValueChange = { translation = it },
+            label = { Text(text = "Translation") } // TODO strings
+        )
     }
 }
 
@@ -184,7 +254,8 @@ private fun CreateQuizPreview() {
             currentWords = WordWithTranslation.mock(),
             onCreateQuizClick = {},
             onAddClick = {},
-            onRemoveClick = {}
+            onRemoveClick = {},
+            onApplyItemEdit = { i: Int, wordWithTranslation: WordWithTranslation -> }
         )
     }
 }
