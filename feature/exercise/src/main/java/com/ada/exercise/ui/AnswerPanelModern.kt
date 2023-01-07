@@ -8,7 +8,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -21,7 +21,10 @@ import com.ada.domain.model.WordTranslation
 import com.ada.exercise.ValidationState
 import com.ada.ui.PreviewContainer
 import com.ada.ui.PreviewDuo
+import com.ada.ui.theme.correctAnswer
 import com.ada.ui.theme.itemBackground
+import com.ada.ui.theme.waitingAnswer
+import com.ada.ui.theme.wrongAnswer
 
 @Composable
 internal fun AnswerPanelModern(
@@ -31,6 +34,16 @@ internal fun AnswerPanelModern(
     onItemClick: OnClickTakes<WordTranslation>,
     onNextClick: OnClick
 ) {
+    var chosen by remember {
+        mutableStateOf<WordTranslation?>(null)
+    }
+
+    val borderColor = when (validationState) {
+        ValidationState.CORRECT -> MaterialTheme.colors.correctAnswer
+        ValidationState.WRONG -> MaterialTheme.colors.wrongAnswer
+        ValidationState.WAITING -> MaterialTheme.colors.waitingAnswer.copy(alpha = 0.12f)
+    }
+
     Column(modifier = Modifier.padding(8.dp), horizontalAlignment = Alignment.CenterHorizontally) {
         LazyVerticalGrid(
             modifier = modifier,
@@ -50,7 +63,15 @@ internal fun AnswerPanelModern(
                     modifier = Modifier
                         .fillMaxWidth(),
                     text = item.translation,
-                    onClick = { if (validationState == ValidationState.WAITING) onItemClick(item) }
+                    borderColor = if (chosen == item) borderColor else MaterialTheme.colors.waitingAnswer.copy(
+                        alpha = 0.12f
+                    ),
+                    onClick = {
+                        if (validationState == ValidationState.WAITING) {
+                            chosen = item
+                            onItemClick(item)
+                        }
+                    }
                 )
             }
         }
@@ -69,12 +90,13 @@ internal fun AnswerPanelModern(
 private fun Item(
     modifier: Modifier = Modifier,
     text: String,
+    borderColor: Color = MaterialTheme.colors.onSurface.copy(alpha = 0.12f),
     onClick: OnClick
 ) {
     Card(
         border = BorderStroke(
             width = 1.dp,
-            color = MaterialTheme.colors.onSurface.copy(alpha = 0.12f)
+            color = borderColor
         ),
         backgroundColor = Color.Transparent,
         onClick = onClick

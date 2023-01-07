@@ -7,7 +7,7 @@ import com.ada.common.debugLog
 import com.ada.data.model.QuizMode
 import com.ada.domain.model.Quiz
 import com.ada.domain.model.WordTranslation
-import com.ada.domain.usecases.Event
+import com.ada.domain.usecases.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
@@ -16,10 +16,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ExerciseScreenViewModel @Inject constructor(
-    private val observeWordsUseCase: com.ada.domain.usecases.ObserveWordsUseCase,
-    private val updateWordUseCase: com.ada.domain.usecases.UpdateWordUseCase,
-    private val observeQuizUseCase: com.ada.domain.usecases.ObserveQuizUseCase,
-    private val updateQuizUseCase: com.ada.domain.usecases.UpdateQuizUseCase
+    private val observeWordsUseCase: ObserveWordsUseCase,
+    private val updateWordUseCase: UpdateWordUseCase,
+    private val observeQuizUseCase: ObserveQuizUseCase,
+    private val updateQuizUseCase: UpdateQuizUseCase
 ) : ViewModel() {
 
     private var quiz: Quiz? = null
@@ -119,15 +119,19 @@ class ExerciseScreenViewModel @Inject constructor(
 
     private fun getAnswerOptions(nextTranslation: WordTranslation): List<WordTranslation> {
         val answers = mutableListOf(nextTranslation)
-        var temp = words.toList().filter { it.second != nextTranslation }
+        var temp =
+            words.toList().filter { it.second != nextTranslation }
+        val tempSize = temp.size
 
         for (idx in 1..5) {
-            if (temp.size < idx)
+            if (tempSize < idx) {
+                debugLog { "getAnswerOptions: no more words." }
                 break
+            }
 
             val nextWord = temp.random().second
             answers.add(nextWord)
-            temp = words.toList().filter { it.second != nextWord }
+            temp = temp.toList().filter { it.second != nextWord }
         }
 
         answers.shuffle()
