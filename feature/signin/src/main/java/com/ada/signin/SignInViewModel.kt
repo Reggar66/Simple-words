@@ -32,4 +32,12 @@ class SignInViewModel @Inject constructor(
             onFailure = onFailure
         )
     }
+
+    fun resetPassword(email: String, onSuccess: () -> Unit, onFailure: () -> Unit = {}) {
+        authenticationRepository.sendResetPasswordEmail(
+            email = email,
+            onSuccess = onSuccess,
+            onFailure = onFailure
+        )
+    }
 }

@@ -38,10 +38,10 @@ fun SignUpScreen(closeScreen: SimpleNavigation, openQuizList: SimpleNavigation) 
                 UserAccountType.Anonymous -> viewModel.convertToPermanent(it) {
                     closeScreen()
                 }
-                UserAccountType.Permanent -> viewModel.signUp(it) {
+                null -> viewModel.signUp(it) {
                     openQuizList()
                 }
-                null -> Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show()
+                else -> Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show()
             }
         }
     )

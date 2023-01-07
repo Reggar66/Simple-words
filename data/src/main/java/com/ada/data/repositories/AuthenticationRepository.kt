@@ -167,4 +167,21 @@ class AuthenticationRepository @Inject constructor() {
             }
         }
     }
+
+    fun sendResetPasswordEmail(email: String, onSuccess: () -> Unit, onFailure: () -> Unit) {
+        auth.sendPasswordResetEmail(email)
+            .addOnCompleteListener { task ->
+                when {
+                    task.isSuccessful -> {
+                        debugLog { "sendResetPasswordEmail: Success." }
+                        onSuccess()
+                    }
+
+                    else -> {
+                        debugLog { "sendResetPasswordEmail: Failure." }
+                        onFailure()
+                    }
+                }
+            }
+    }
 }
