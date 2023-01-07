@@ -30,6 +30,7 @@ import com.ada.ui.PreviewContainer
 import com.ada.ui.PreviewDuo
 import com.ada.ui.components.QuizItem
 import com.ada.ui.components.AccountBar
+import com.ada.ui.theme.bottomSheetShape
 import kotlinx.coroutines.launch
 
 @Composable
@@ -78,7 +79,7 @@ private fun QuizListImpl(
             )
         },
         scaffoldState = scaffoldState,
-        sheetShape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp),
+        sheetShape = MaterialTheme.shapes.bottomSheetShape,
         sheetPeekHeight = 0.dp,
         content = {
             Quizzes(

@@ -20,3 +20,13 @@ fun UserIdModel.toUserIdOrNull(): UserId? {
         userAccountType = userAccountType ?: return null
     )
 }
+
+fun User.toUserModel(): UserModel {
+    return UserModel(
+        id = id.uid,
+        name = name,
+        picture = picture,
+        accountType = id.userAccountType,
+        emojiIcon = emojiIcon
+    )
+}

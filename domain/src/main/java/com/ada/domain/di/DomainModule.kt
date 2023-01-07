@@ -69,4 +69,9 @@ abstract class DomainModule {
     abstract fun bindConvertToPermanentUseCase(
         convertToPermanentUseCase: ConvertToPermanentUseCaseImpl
     ): ConvertToPermanentUseCase
+
+    @Binds
+    abstract fun bindUpdateUserUseCase(
+        updateUserUseCase: UpdateUserUseCaseImpl
+    ): UpdateUserUseCase
 }

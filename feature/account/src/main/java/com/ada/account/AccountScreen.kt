@@ -2,11 +2,11 @@ package com.ada.account
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -22,26 +22,57 @@ import com.ada.ui.PreviewDuo
 import com.ada.ui.components.AccountImage
 import com.ada.ui.components.SimpleButton
 import com.ada.ui.components.TopBar
+import com.ada.ui.theme.bottomSheetShape
 import com.ada.ui.theme.topBarTitle
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun AccountScreen(
     onBackClick: OnClick,
     openWelcomeScreen: SimpleNavigation,
     openSignUpScreen: SimpleNavigation
 ) {
+    val scope = rememberCoroutineScope()
 
     val viewModel = hiltViewModel<AccountViewModel>()
-    val user by viewModel.user.collectAsState(initial = null)
+    val user by viewModel.user.collectAsState()
+    val scaffoldState = rememberBottomSheetScaffoldState()
 
-    Account(
-        user = user,
-        onBackArrowClick = onBackClick,
-        onSignOutClick = {
-            viewModel.signOut()
-            openWelcomeScreen()
+
+    BottomSheetScaffold(
+        sheetContent = {
+            IconsBottomSheet(
+                onIconClick = {
+                    viewModel.updateIcon(it)
+                },
+                onCloseClick = {
+                    scope.launch {
+                        scaffoldState.bottomSheetState.collapse()
+                    }
+                }
+            )
         },
-        onSignUpClick = openSignUpScreen
+        scaffoldState = scaffoldState,
+        sheetShape = MaterialTheme.shapes.bottomSheetShape,
+        sheetPeekHeight = 0.dp,
+        content = {
+            Account(
+                user = user,
+                onBackArrowClick = onBackClick,
+                onSignOutClick = {
+                    viewModel.signOut()
+                    openWelcomeScreen()
+                },
+                onSignUpClick = openSignUpScreen,
+                onPictureClick = {
+                    scope.launch {
+                        scaffoldState.bottomSheetState.expand()
+                    }
+                }
+            )
+        }
     )
 }
 
@@ -50,7 +81,8 @@ private fun Account(
     user: User?,
     onBackArrowClick: OnClick = {},
     onSignOutClick: OnClick = {},
-    onSignUpClick: OnClick = {}
+    onSignUpClick: OnClick = {},
+    onPictureClick: OnClick = {}
 ) {
     Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
 
@@ -61,7 +93,7 @@ private fun Account(
             ) // TODO: strings.xml
         }
 
-        Top(modifier = Modifier.weight(1f), user = user)
+        Top(modifier = Modifier.weight(1f), user = user, onPictureClick = onPictureClick)
 
         Bottom(
             modifier = Modifier.weight(1f),
@@ -75,7 +107,8 @@ private fun Account(
 @Composable
 private fun Top(
     modifier: Modifier = Modifier,
-    user: User?
+    user: User?,
+    onPictureClick: OnClick
 ) {
     Column(
         modifier = modifier,
@@ -83,10 +116,12 @@ private fun Top(
         verticalArrangement = Arrangement.Center
     ) {
 
-        AccountImage(modifier = Modifier.size(130.dp),
+        AccountImage(
+            modifier = Modifier.size(130.dp),
             picture = user?.picture,
             emoji = user?.emojiIcon,
-            onPictureClick = { /*TODO: way of choosing icon.*/ })
+            onPictureClick = onPictureClick
+        )
 
         Spacer(modifier = Modifier.height(8.dp))
 

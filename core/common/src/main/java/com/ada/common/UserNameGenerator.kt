@@ -28,7 +28,7 @@ object UserNameGenerator {
         "energetic"
     )
 
-    private val animals = listOf(
+    val animals = listOf(
         "mustang" to "\uD83D\uDC34",
         "owl" to "\uD83E\uDD89",
         "bunny" to "\uD83D\uDC07",
