@@ -18,6 +18,8 @@ import com.ada.exercise.ExerciseScreenState
 import com.ada.exercise.ValidationState
 import com.ada.ui.PreviewContainer
 import com.ada.ui.PreviewDuo
+import com.ada.ui.theme.correctAnswer
+import com.ada.ui.theme.wrongAnswer
 
 @Composable
 internal fun Exercise(
@@ -52,8 +54,8 @@ internal fun Exercise(
                     ValidationState.WAITING -> "What's the answer?"
                 },
                 color = when (exerciseScreenState.validationState) {
-                    ValidationState.CORRECT -> Color.Green // TODO material theme
-                    ValidationState.WRONG -> Color.Red // TODO material theme
+                    ValidationState.CORRECT -> MaterialTheme.colors.correctAnswer
+                    ValidationState.WRONG -> MaterialTheme.colors.wrongAnswer
                     ValidationState.WAITING -> MaterialTheme.colors.onSurface
                 }
             )
