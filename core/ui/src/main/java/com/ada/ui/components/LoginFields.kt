@@ -23,7 +23,7 @@ import com.ada.ui.PreviewDuo
 fun LoginFields(
     registration: Boolean = false,
     onSignUpClick: OnClickTakes<Credentials> = {},
-    onLogInClick: OnClickTakes<Credentials> = {}
+    onSignInClick: OnClickTakes<Credentials> = {}
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -86,7 +86,7 @@ fun LoginFields(
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
             if (!registration)
                 SimpleButton(
-                    onClick = { onLogInClick(Credentials(email = email, password = password)) },
+                    onClick = { onSignInClick(Credentials(email = email, password = password)) },
                     enabled = email.isNotEmpty() && email.isValidEmail() && password.isNotEmpty()
                 ) {
                     Text(text = "Sign in")
@@ -114,7 +114,7 @@ fun LoginFields(
 @Composable
 private fun LoginFieldsPreview() {
     PreviewContainer {
-        LoginFields(onSignUpClick = {}, onLogInClick = {})
+        LoginFields(onSignUpClick = {}, onSignInClick = {})
     }
 }
 
@@ -122,6 +122,6 @@ private fun LoginFieldsPreview() {
 @Composable
 private fun LoginFieldsPreview2() {
     PreviewContainer {
-        LoginFields(registration = true, onSignUpClick = {}, onLogInClick = {})
+        LoginFields(registration = true, onSignUpClick = {}, onSignInClick = {})
     }
 }

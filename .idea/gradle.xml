@@ -32,6 +32,7 @@
             <option value="$PROJECT_DIR$/domain" />
             <option value="$PROJECT_DIR$/feature" />
             <option value="$PROJECT_DIR$/feature/account" />
+            <option value="$PROJECT_DIR$/feature/changepassword" />
             <option value="$PROJECT_DIR$/feature/exercise" />
             <option value="$PROJECT_DIR$/feature/quizcreate" />
             <option value="$PROJECT_DIR$/feature/quizdetails" />

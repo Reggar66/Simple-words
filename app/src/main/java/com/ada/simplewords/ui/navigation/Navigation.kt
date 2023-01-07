@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.ada.account.AccountScreen
+import com.ada.changepassword.ChangePasswordScreen
 import com.ada.exercise.ExerciseScreen
 import com.ada.quizcreate.CreateQuizScreen
 import com.ada.quizlist.QuizListScreen
@@ -66,8 +67,13 @@ fun NavGraphBuilder.quizListRoot(navController: NavController) {
                         }
                     }
                 },
-                openSignUpScreen = { navController.navigate(Screen.SignUp.route) }
+                openSignUpScreen = { navController.navigate(Screen.SignUp.route) },
+                openChangePasswordScreen = { navController.navigate(Screen.ChangePassword.route) },
             )
+        }
+
+        composable(Screen.ChangePassword.route) {
+            ChangePasswordScreen(closeScreen = { navController.popBackStack() })
         }
     }
 }

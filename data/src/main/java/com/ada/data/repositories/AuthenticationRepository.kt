@@ -56,22 +56,23 @@ class AuthenticationRepository @Inject constructor() {
 
     /**
      * Signs in user with email and password.
-     * [onComplete] block returns [FirebaseUser] on success or null on failure.
+     * [onSuccess] block returns [FirebaseUser] on success or null on failure.
      */
     fun signInWithEmail(
         email: String,
         password: String,
-        onComplete: (user: FirebaseUser?) -> Unit
+        onSuccess: (user: FirebaseUser?) -> Unit,
+        onFailure: () -> Unit
     ) {
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
             when {
                 task.isSuccessful -> {
                     authDebugLog { "signInWithEmail: Success." }
-                    onComplete(auth.currentUser)
+                    onSuccess(auth.currentUser)
                 }
                 else -> {
                     authDebugLog { "signInWithEmail: Failure." }
-                    onComplete(null)
+                    onFailure()
                 }
             }
         }
@@ -137,5 +138,33 @@ class AuthenticationRepository @Inject constructor() {
      */
     fun signOut() {
         auth.signOut()
+    }
+
+    /**
+     * Re-Authenticates user.
+     */
+    fun reAuthenticate(credentials: AuthCredential, onSuccess: () -> Unit, onFailure: () -> Unit) {
+        auth.currentUser?.reauthenticate(credentials)
+            ?.addOnCompleteListener { task ->
+                when {
+                    task.isSuccessful -> onSuccess()
+                    else -> {
+                        authDebugLog { "reAuthenticate: Failure." }
+                        onFailure()
+                    }
+                }
+            }
+    }
+
+    fun updatePassword(password: String, onSuccess: () -> Unit, onFailure: () -> Unit) {
+        auth.currentUser?.updatePassword(password)?.addOnCompleteListener { task ->
+            when {
+                task.isSuccessful -> onSuccess()
+                else -> {
+                    authDebugLog { "updatePassword: Failure." }
+                    onFailure()
+                }
+            }
+        }
     }
 }

@@ -7,6 +7,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ada.common.OnClick
@@ -23,6 +24,7 @@ import com.ada.ui.components.AccountImage
 import com.ada.ui.components.SimpleButton
 import com.ada.ui.components.TopBar
 import com.ada.ui.theme.bottomSheetShape
+import com.ada.ui.theme.dangerButton
 import com.ada.ui.theme.topBarTitle
 import kotlinx.coroutines.launch
 
@@ -31,7 +33,8 @@ import kotlinx.coroutines.launch
 fun AccountScreen(
     onBackClick: OnClick,
     openWelcomeScreen: SimpleNavigation,
-    openSignUpScreen: SimpleNavigation
+    openSignUpScreen: SimpleNavigation,
+    openChangePasswordScreen: SimpleNavigation
 ) {
     val scope = rememberCoroutineScope()
 
@@ -82,7 +85,8 @@ fun AccountScreen(
                     scope.launch {
                         scaffoldState.bottomSheetState.expand()
                     }
-                }
+                },
+                onChangePasswordClick = openChangePasswordScreen
             )
         }
     )
@@ -95,7 +99,8 @@ private fun Account(
     onSignOutClick: OnClick = {},
     onSignUpClick: OnClick = {},
     onPictureClick: OnClick = {},
-    onNameClick: OnClick = {}
+    onNameClick: OnClick = {},
+    onChangePasswordClick: OnClick = {}
 ) {
     Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
 
@@ -117,7 +122,8 @@ private fun Account(
             modifier = Modifier.weight(1f),
             onSignOutClick = onSignOutClick,
             onSignUpClick = onSignUpClick,
-            user = user
+            user = user,
+            onChangePasswordClick = onChangePasswordClick
         )
     }
 }
@@ -187,18 +193,36 @@ private fun Bottom(
     modifier: Modifier = Modifier,
     user: User?,
     onSignOutClick: OnClick,
-    onSignUpClick: OnClick
+    onSignUpClick: OnClick,
+    onChangePasswordClick: OnClick
 ) {
-    Column(modifier = modifier) {
+    Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         if (user?.id?.userAccountType == UserAccountType.Anonymous)
             SimpleButton(onClick = onSignUpClick) {
                 Text(text = "Sign up") // TODO: strings.xml
             }
 
-        if (user?.id?.userAccountType == UserAccountType.Permanent)
+        if (user?.id?.userAccountType == UserAccountType.Permanent) {
+            SimpleButton(onClick = onChangePasswordClick, shape = CircleShape) {
+                Text(text = "Change password") // TODO: strings.xml
+            }
+
             SimpleButton(onClick = onSignOutClick, shape = CircleShape) {
                 Text(text = "Sign out") // TODO: strings.xml
             }
+
+            Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.BottomCenter) {
+                Column {
+                    SimpleButton(
+                        onClick = {/*TODO*/ },
+                        shape = CircleShape,
+                        colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.dangerButton)
+                    ) {
+                        Text(text = "Delete account") // TODO: strings.xml
+                    }
+                }
+            }
+        }
     }
 }
 

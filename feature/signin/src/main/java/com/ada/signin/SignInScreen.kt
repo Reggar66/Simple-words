@@ -1,5 +1,6 @@
 package com.ada.signin
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,6 +9,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ada.common.OnClick
 import com.ada.common.OnClickTakes
@@ -25,6 +27,7 @@ fun SignInScreen(
     openQuizList: SimpleNavigation
 ) {
     val viewModel = hiltViewModel<SignInViewModel>()
+    val context = LocalContext.current
 
     SignIn(
         onBackClick = closeScreen,
@@ -32,9 +35,15 @@ fun SignInScreen(
             viewModel.register(it)
         },
         onLogInClick = {
-            viewModel.login(it) {
-                openQuizList()
-            }
+            viewModel.login(
+                credentials = it,
+                onSuccess = {
+                    openQuizList()
+                },
+                onFailure = {
+                    Toast.makeText(context, "Invalid login or password.", Toast.LENGTH_SHORT).show()
+                }
+            )
         }
     )
 }
@@ -58,7 +67,7 @@ private fun SignIn(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            LoginFields(onSignUpClick = onRegisterClick, onLogInClick = onLogInClick)
+            LoginFields(onSignUpClick = onRegisterClick, onSignInClick = onLogInClick)
         }
     }
 }

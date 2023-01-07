@@ -1,28 +1,17 @@
 package com.ada.signin
 
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import com.ada.common.debugLog
 import com.ada.data.repositories.AuthenticationRepository
 import com.ada.domain.model.Credentials
-import com.ada.domain.usecases.SignInAnonymousUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
     private val authenticationRepository: AuthenticationRepository,
-    private val signInAnonymousUserUseCase: SignInAnonymousUserUseCase
-) :
-    ViewModel() {
-
-
-    fun signInAnon(onComplete: () -> Unit) {
-        signInAnonymousUserUseCase.invoke(onSuccess = {
-            onComplete()
-        })
-    }
-
-    fun signOut() = authenticationRepository.signOut()
+) : ViewModel() {
 
     fun register(credentials: Credentials) {
         debugLog { credentials }
@@ -32,14 +21,15 @@ class SignInViewModel @Inject constructor(
             onComplete = {})
     }
 
-    fun login(credentials: Credentials, onComplete: () -> Unit) {
+    fun login(credentials: Credentials, onSuccess: () -> Unit, onFailure: () -> Unit) {
         debugLog { credentials }
         authenticationRepository.signInWithEmail(
             email = credentials.email,
             password = credentials.password,
-            onComplete = {
-                onComplete()
-            }
+            onSuccess = {
+                onSuccess()
+            },
+            onFailure = onFailure
         )
     }
-    }
+}

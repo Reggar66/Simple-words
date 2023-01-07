@@ -74,4 +74,14 @@ abstract class DomainModule {
     abstract fun bindUpdateUserUseCase(
         updateUserUseCase: UpdateUserUseCaseImpl
     ): UpdateUserUseCase
+
+    @Binds
+    abstract fun bindReAuthenticateUserUseCase(
+        reAuthenticateUserUseCase: ReAuthenticateUserUseCaseImpl
+    ): ReAuthenticateUserUseCase
+
+    @Binds
+    abstract fun bindUpdatePasswordUseCase(
+        updatePasswordUseCase: UpdatePasswordUseCaseImpl
+    ): UpdatePasswordUseCase
 }
