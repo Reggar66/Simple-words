@@ -10,7 +10,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -41,9 +40,16 @@ class AccountViewModel @Inject constructor(
     }
 
     fun updateIcon(emoji: String) {
-        val user = user.value
-        user?.let {
-            updateUserUseCase.invoke(user = user.copy(emojiIcon = emoji))
+        val currentUser = user.value
+        currentUser?.let {
+            updateUserUseCase.invoke(user = it.copy(emojiIcon = emoji))
+        }
+    }
+
+    fun updateName(newName: String) {
+        val currentUser = user.value
+        currentUser?.let {
+            updateUserUseCase.invoke(user = it.copy(name = newName))
         }
     }
 }

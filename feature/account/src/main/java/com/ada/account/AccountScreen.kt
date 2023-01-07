@@ -1,18 +1,18 @@
 package com.ada.account
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ada.common.OnClick
+import com.ada.common.OnClickTakes
 import com.ada.common.SimpleNavigation
+import com.ada.common.debugLog
 import com.ada.data.model.UserAccountType
 import com.ada.data.model.UserModel
 import com.ada.domain.mapper.toUserOrNull
@@ -24,7 +24,6 @@ import com.ada.ui.components.SimpleButton
 import com.ada.ui.components.TopBar
 import com.ada.ui.theme.bottomSheetShape
 import com.ada.ui.theme.topBarTitle
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -40,17 +39,23 @@ fun AccountScreen(
     val user by viewModel.user.collectAsState()
     val scaffoldState = rememberBottomSheetScaffoldState()
 
+    var bottomSheetContentType by remember { mutableStateOf(BottomSheetContentType.NameChange) }
 
     BottomSheetScaffold(
         sheetContent = {
-            IconsBottomSheet(
-                onIconClick = {
-                    viewModel.updateIcon(it)
-                },
+            BottomSheetContent(
+                user = user,
+                contentType = bottomSheetContentType,
                 onCloseClick = {
                     scope.launch {
                         scaffoldState.bottomSheetState.collapse()
                     }
+                },
+                onIconClick = {
+                    viewModel.updateIcon(it)
+                },
+                onConfirmNameClick = {
+                    viewModel.updateName(it)
                 }
             )
         },
@@ -67,6 +72,13 @@ fun AccountScreen(
                 },
                 onSignUpClick = openSignUpScreen,
                 onPictureClick = {
+                    bottomSheetContentType = BottomSheetContentType.Icons
+                    scope.launch {
+                        scaffoldState.bottomSheetState.expand()
+                    }
+                },
+                onNameClick = {
+                    bottomSheetContentType = BottomSheetContentType.NameChange
                     scope.launch {
                         scaffoldState.bottomSheetState.expand()
                     }
@@ -82,18 +94,24 @@ private fun Account(
     onBackArrowClick: OnClick = {},
     onSignOutClick: OnClick = {},
     onSignUpClick: OnClick = {},
-    onPictureClick: OnClick = {}
+    onPictureClick: OnClick = {},
+    onNameClick: OnClick = {}
 ) {
     Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
 
         TopBar(onBackArrowClick = { onBackArrowClick() }) {
             Text(
-                text = "Account",
+                text = "Account", // TODO: strings.xml
                 style = MaterialTheme.typography.topBarTitle
-            ) // TODO: strings.xml
+            )
         }
 
-        Top(modifier = Modifier.weight(1f), user = user, onPictureClick = onPictureClick)
+        Top(
+            modifier = Modifier.weight(1f),
+            user = user,
+            onPictureClick = onPictureClick,
+            onNameClick = onNameClick
+        )
 
         Bottom(
             modifier = Modifier.weight(1f),
@@ -104,11 +122,42 @@ private fun Account(
     }
 }
 
+private enum class BottomSheetContentType {
+    Icons,
+    NameChange
+}
+
+@Composable
+private fun BottomSheetContent(
+    user: User?,
+    contentType: BottomSheetContentType,
+    onCloseClick: OnClick,
+    onIconClick: OnClickTakes<String>,
+    onConfirmNameClick: OnClickTakes<String>
+) {
+    when (contentType) {
+        BottomSheetContentType.Icons -> {
+            IconsBottomSheet(
+                onIconClick = onIconClick,
+                onCloseClick = onCloseClick
+            )
+        }
+        BottomSheetContentType.NameChange -> {
+            NameBottomSheet(
+                user = user,
+                onCloseClick = onCloseClick,
+                onConfirmNameClick = onConfirmNameClick
+            )
+        }
+    }
+}
+
 @Composable
 private fun Top(
     modifier: Modifier = Modifier,
     user: User?,
-    onPictureClick: OnClick
+    onPictureClick: OnClick,
+    onNameClick: OnClick
 ) {
     Column(
         modifier = modifier,
@@ -125,7 +174,11 @@ private fun Top(
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        Text(text = user?.name ?: "", style = MaterialTheme.typography.h4)
+        Text(
+            modifier = Modifier.clickable { onNameClick() },
+            text = user?.name ?: "",
+            style = MaterialTheme.typography.h4
+        )
     }
 }
 
