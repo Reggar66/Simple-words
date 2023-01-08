@@ -9,10 +9,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -30,6 +27,8 @@ import com.ada.ui.PreviewContainer
 import com.ada.ui.PreviewDuo
 import com.ada.ui.components.QuizItem
 import com.ada.ui.components.AccountBar
+import com.ada.ui.components.SimpleModalBottomSheetLayout
+import com.ada.ui.components.SwipeMenu
 import com.ada.ui.theme.bottomSheetShape
 import kotlinx.coroutines.launch
 
@@ -43,15 +42,47 @@ fun QuizListScreen(
     val state = viewModel.quizListState
 
     val user by viewModel.user.collectAsState(initial = null)
+    val modalSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
+    val scope = rememberCoroutineScope()
+    var quizToRemoveName by remember {
+        mutableStateOf("")
+    }
 
-    QuizListImpl(
-        quizListState = state,
-        onLearnClick = { quiz -> openExercise(quiz) },
-        onItemClick = { viewModel.selectQuiz(it) },
-        onCreateClick = { openCreate() },
-        user = user,
-        onAccountClick = { openAccount() }
-    )
+    SimpleModalBottomSheetLayout(
+        sheetContent = {
+            DeleteBottomSheet(
+                message = "Remove $quizToRemoveName?", // TODO: string
+                onYesClick = {
+                    viewModel.removeQuiz()
+                    scope.launch {
+                        modalSheetState.hide()
+                    }
+                },
+                onNoClick = {
+                    scope.launch {
+                        modalSheetState.hide()
+                    }
+                }
+            )
+        },
+        sheetState = modalSheetState
+    ) {
+        QuizListImpl(
+            quizListState = state,
+            onLearnClick = { quiz -> openExercise(quiz) },
+            onItemClick = { viewModel.selectQuiz(it) },
+            onCreateClick = { openCreate() },
+            user = user,
+            onAccountClick = { openAccount() },
+            onRemoveClick = {
+                quizToRemoveName = it.name
+                viewModel.setQuizForRemove(quiz = it)
+                scope.launch {
+                    modalSheetState.show()
+                }
+            }
+        )
+    }
 }
 
 @Composable
@@ -61,7 +92,8 @@ private fun QuizListImpl(
     onItemClick: OnClickTakes<Quiz>,
     onCreateClick: OnClick,
     user: User?,
-    onAccountClick: OnClick
+    onAccountClick: OnClick,
+    onRemoveClick: OnClickTakes<Quiz>
 ) {
     val scaffoldState = rememberBottomSheetScaffoldState()
     val scope = rememberCoroutineScope()
@@ -92,7 +124,8 @@ private fun QuizListImpl(
                 },
                 onCreateClick = onCreateClick,
                 user = user,
-                onAccountClick = onAccountClick
+                onAccountClick = onAccountClick,
+                onRemoveClick = onRemoveClick
             )
         }
     )
@@ -104,7 +137,8 @@ private fun Quizzes(
     onItemCLick: OnClickTakes<Quiz>,
     onCreateClick: OnClick,
     user: User?,
-    onAccountClick: OnClick
+    onAccountClick: OnClick,
+    onRemoveClick: OnClickTakes<Quiz>
 ) {
     Column {
         AccountBar(user = user, onPictureClick = { onAccountClick() })
@@ -115,11 +149,16 @@ private fun Quizzes(
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 items(items = quiz, key = { it.id }) { quizItem ->
-                    QuizItem(
-                        modifier = Modifier
-                            .animateItemPlacement(),
-                        quiz = quizItem,
-                        onClick = { onItemCLick(quizItem) })
+                    SwipeMenu(
+                        buttonSize = 80.dp,
+                        onRemoveClick = { onRemoveClick(quizItem) },
+                        onEditClick = { /*TODO*/ }) {
+                        QuizItem(
+                            modifier = Modifier
+                                .animateItemPlacement(),
+                            quiz = quizItem,
+                            onClick = { onItemCLick(quizItem) })
+                    }
                 }
             }
 
@@ -145,7 +184,8 @@ private fun QuizListPreview() {
             onItemCLick = {},
             onCreateClick = {},
             onAccountClick = {},
-            user = UserModel.mock().toUserOrNull()
+            user = UserModel.mock().toUserOrNull(),
+            onRemoveClick = {}
         )
     }
 }

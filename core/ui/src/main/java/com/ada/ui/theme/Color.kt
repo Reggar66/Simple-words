@@ -13,3 +13,5 @@ val Gray0 = Color(0xFF3e3e42)
 val Gray1 = Color(0xFF2d2d30)
 val Gray2 = Color(0xFF252526)
 val Gray3 = Color(0xFF1e1e1e)
+
+val danger = Color(0xFF871618)

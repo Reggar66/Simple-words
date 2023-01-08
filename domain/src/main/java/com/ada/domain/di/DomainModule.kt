@@ -84,4 +84,9 @@ abstract class DomainModule {
     abstract fun bindUpdatePasswordUseCase(
         updatePasswordUseCase: UpdatePasswordUseCaseImpl
     ): UpdatePasswordUseCase
+
+    @Binds
+    abstract fun bindRemoveQuizWithWordsUseCase(
+        removeQuizWithWordsUseCase: RemoveQuizWithWordsUseCaseImpl
+    ): RemoveQuizWithWordsUseCase
 }

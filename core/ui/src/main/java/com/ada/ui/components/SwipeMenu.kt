@@ -4,16 +4,20 @@ package com.ada.ui.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Edit
+import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
@@ -25,16 +29,15 @@ import kotlin.math.roundToInt
 @Composable
 fun SwipeMenu(
     state: SwipeableState<SwipeValue> = rememberSwipeableState(initialValue = SwipeValue.Default),
+    buttonSize: Dp = 50.dp,
     onRemoveClick: OnClick,
     onEditClick: OnClick,
     content: @Composable RowScope.() -> Unit
 ) {
     val scope = rememberCoroutineScope()
 
-    //val state = rememberSwipeableState(initialValue = SwipeValue.Default)
     val isRtl = LocalLayoutDirection.current == LayoutDirection.Rtl
 
-    val buttonSize = 50.dp
     val buttonSizePx = buttonSize.toPx()
 
     val anchors = mapOf(
@@ -60,13 +63,18 @@ fun SwipeMenu(
             content = {
                 Box(
                     modifier = Modifier
-                        .size(buttonSize)
-                        .clickable {
-                            onRemoveClick()
-                            scope.launch {
-                                state.snapTo(SwipeValue.Default)
-                            }
-                        }
+                        //.size(buttonSize)
+                        .fillMaxHeight()
+                        .width(buttonSize)
+                        .clickable(
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = rememberRipple(bounded = false, radius = buttonSize / 2),
+                            onClick = {
+                                onRemoveClick()
+                                scope.launch {
+                                    state.snapTo(SwipeValue.Default)
+                                }
+                            })
                         .padding(4.dp),
                     contentAlignment = Alignment.Center
                 ) {
@@ -75,10 +83,16 @@ fun SwipeMenu(
                 Spacer(modifier = Modifier.weight(1f))
                 Box(
                     modifier = Modifier
-                        .size(buttonSize)
-                        .clickable { onEditClick() }
+                        //.size(buttonSize)
+                        .fillMaxHeight()
+                        .width(buttonSize)
+                        .clickable(
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = rememberRipple(bounded = false, radius = buttonSize / 2),
+                            onClick = { onEditClick() })
                         .padding(4.dp),
-                    contentAlignment = Alignment.Center) {
+                    contentAlignment = Alignment.Center
+                ) {
                     Icon(imageVector = Icons.Rounded.Edit, contentDescription = null)
                 }
             }

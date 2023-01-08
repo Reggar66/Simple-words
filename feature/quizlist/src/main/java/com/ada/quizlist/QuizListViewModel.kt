@@ -10,6 +10,7 @@ import com.ada.data.repositories.RealTimeDatabaseRepository
 import com.ada.domain.model.Quiz
 import com.ada.domain.usecases.ObserveCurrentUserUseCase
 import com.ada.domain.usecases.GetQuizzesUseCase
+import com.ada.domain.usecases.RemoveQuizWithWordsUseCase
 import com.ada.domain.usecases.SignOutUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -20,15 +21,18 @@ class QuizListViewModel @Inject constructor(
     val realTimeDatabaseRepository: RealTimeDatabaseRepository,
     private val getQuizzesUseCase: GetQuizzesUseCase,
     private val observeCurrentUserUseCase: ObserveCurrentUserUseCase,
-    private val signOutUseCase: SignOutUseCase
+    private val signOutUseCase: SignOutUseCase,
+    private val removeQuizWithWordsUseCase: RemoveQuizWithWordsUseCase
 ) : ViewModel() {
+
+    private var quizzes: List<Quiz> = emptyList()
+    private var quizToRemove: Quiz? = null
 
     var quizListState by mutableStateOf(QuizListScreenState())
         private set
 
     val user = observeCurrentUserUseCase.invoke()
 
-    private var quizzes: List<Quiz> = emptyList()
 
     init {
         fetchQuizzes()
@@ -65,6 +69,16 @@ class QuizListViewModel @Inject constructor(
 
     fun shuffle() {
         quizListState = quizListState.copy(quizzes = quizzes.shuffled())
+    }
+
+    fun setQuizForRemove(quiz: Quiz) {
+        quizToRemove = quiz
+    }
+
+    fun removeQuiz() {
+        quizToRemove?.let {
+            removeQuizWithWordsUseCase.invoke(it)
+        }
     }
 }
 

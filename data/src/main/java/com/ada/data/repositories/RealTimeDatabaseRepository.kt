@@ -13,6 +13,7 @@ import dagger.hilt.components.SingletonComponent
 import javax.inject.Inject
 
 private const val TAG = "RealTimeDatabaseRepository"
+private fun dbDebugLog(msg: () -> Any?) = debugLog(TAG = TAG, msg = msg)
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -62,6 +63,15 @@ class RealTimeDatabaseRepository @Inject constructor(private val authenticationR
         key?.let {
             quizzesRef().child(key).setValue(quiz.copy(id = key))
             saveQuizWords(key, words)
+        }
+    }
+
+    fun removeQuizWithWords(quizId: Key) {
+        quizzesRef().child(quizId).removeValue().addOnSuccessListener {
+            dbDebugLog { "removeQuizWithWords: removed quiz with id $quizId" }
+        }
+        quizWordsRef().child(quizId).removeValue().addOnSuccessListener {
+            dbDebugLog { "removeQuizWithWords: removed quiz words with id $quizId" }
         }
     }
 

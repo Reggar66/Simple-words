@@ -40,7 +40,8 @@ val Colors.itemBackgroundLearned get() = if (isLight) surface else Gray3
 val Colors.correctAnswer get() = Color.Green
 val Colors.wrongAnswer get() = Color.Red
 val Colors.waitingAnswer get() = onSurface
-val Colors.dangerButton get() = Color.Red.copy(alpha = 0.22f)
+val Colors.dangerButton get() = danger
+val Colors.border get() = onSurface.copy(alpha = 0.12f)
 
 @Composable
 fun SimpleWordsTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
