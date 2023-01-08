@@ -184,4 +184,20 @@ class AuthenticationRepository @Inject constructor() {
                 }
             }
     }
+
+    fun removeUser(onSuccess: () -> Unit, onFailure: () -> Unit) {
+        auth.currentUser?.delete()?.addOnCompleteListener { task ->
+            when {
+                task.isSuccessful -> {
+                    debugLog { "removeUser: Success." }
+                    onSuccess()
+                }
+
+                else -> {
+                    debugLog { "removeUser: Failure." }
+                    onFailure()
+                }
+            }
+        }
+    }
 }

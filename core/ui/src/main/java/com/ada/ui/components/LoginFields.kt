@@ -3,6 +3,8 @@ package com.ada.ui.components
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.ButtonColors
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -23,6 +25,8 @@ import com.ada.ui.PreviewDuo
 fun LoginFields(
     registration: Boolean = false,
     onSignUpClick: OnClickTakes<Credentials> = {},
+    signInButtonColors: ButtonColors = ButtonDefaults.buttonColors(),
+    signInButtonText: String = "Sign in", //TODO strings
     onSignInClick: OnClickTakes<Credentials> = {}
 ) {
     var email by remember { mutableStateOf("") }
@@ -87,9 +91,10 @@ fun LoginFields(
             if (!registration)
                 SimpleButton(
                     onClick = { onSignInClick(Credentials(email = email, password = password)) },
-                    enabled = email.isNotEmpty() && email.isValidEmail() && password.isNotEmpty()
+                    enabled = email.isNotEmpty() && email.isValidEmail() && password.isNotEmpty(),
+                    colors = signInButtonColors
                 ) {
-                    Text(text = "Sign in")
+                    Text(text = signInButtonText)
                 }
             else
                 SimpleButton(

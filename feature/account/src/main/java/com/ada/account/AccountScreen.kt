@@ -18,10 +18,12 @@ import com.ada.data.model.UserAccountType
 import com.ada.data.model.UserModel
 import com.ada.domain.mapper.toUserOrNull
 import com.ada.domain.model.User
+import com.ada.quizlist.DeleteBottomSheet
 import com.ada.ui.PreviewContainer
 import com.ada.ui.PreviewDuo
 import com.ada.ui.components.AccountImage
 import com.ada.ui.components.SimpleButton
+import com.ada.ui.components.SimpleModalBottomSheetLayout
 import com.ada.ui.components.TopBar
 import com.ada.ui.theme.bottomSheetShape
 import com.ada.ui.theme.dangerButton
@@ -34,7 +36,8 @@ fun AccountScreen(
     onBackClick: OnClick,
     openWelcomeScreen: SimpleNavigation,
     openSignUpScreen: SimpleNavigation,
-    openChangePasswordScreen: SimpleNavigation
+    openChangePasswordScreen: SimpleNavigation,
+    openDeleteAccountScreen: SimpleNavigation
 ) {
     val scope = rememberCoroutineScope()
 
@@ -44,52 +47,79 @@ fun AccountScreen(
 
     var bottomSheetContentType by remember { mutableStateOf(BottomSheetContentType.NameChange) }
 
-    BottomSheetScaffold(
+    val modalSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
+
+    SimpleModalBottomSheetLayout(
         sheetContent = {
-            BottomSheetContent(
-                user = user,
-                contentType = bottomSheetContentType,
-                onCloseClick = {
+            DeleteBottomSheet(
+                message = "Are you sure you want to delete your account? This process can not be reversed.",
+                onYesClick = {
                     scope.launch {
-                        scaffoldState.bottomSheetState.collapse()
+                        modalSheetState.hide()
+                        openDeleteAccountScreen()
                     }
                 },
-                onIconClick = {
-                    viewModel.updateIcon(it)
-                },
-                onConfirmNameClick = {
-                    viewModel.updateName(it)
+                onNoClick = {
+                    scope.launch {
+                        modalSheetState.hide()
+                    }
                 }
             )
         },
-        scaffoldState = scaffoldState,
-        sheetShape = MaterialTheme.shapes.bottomSheetShape,
-        sheetPeekHeight = 0.dp,
-        content = {
-            Account(
-                user = user,
-                onBackArrowClick = onBackClick,
-                onSignOutClick = {
-                    viewModel.signOut()
-                    openWelcomeScreen()
-                },
-                onSignUpClick = openSignUpScreen,
-                onPictureClick = {
-                    bottomSheetContentType = BottomSheetContentType.Icons
-                    scope.launch {
-                        scaffoldState.bottomSheetState.expand()
+        sheetState = modalSheetState
+    ) {
+        BottomSheetScaffold(
+            sheetContent = {
+                BottomSheetContent(
+                    user = user,
+                    contentType = bottomSheetContentType,
+                    onCloseClick = {
+                        scope.launch {
+                            scaffoldState.bottomSheetState.collapse()
+                        }
+                    },
+                    onIconClick = {
+                        viewModel.updateIcon(it)
+                    },
+                    onConfirmNameClick = {
+                        viewModel.updateName(it)
                     }
-                },
-                onNameClick = {
-                    bottomSheetContentType = BottomSheetContentType.NameChange
-                    scope.launch {
-                        scaffoldState.bottomSheetState.expand()
+                )
+            },
+            scaffoldState = scaffoldState,
+            sheetShape = MaterialTheme.shapes.bottomSheetShape,
+            sheetPeekHeight = 0.dp,
+            content = {
+                Account(
+                    user = user,
+                    onBackArrowClick = onBackClick,
+                    onSignOutClick = {
+                        viewModel.signOut()
+                        openWelcomeScreen()
+                    },
+                    onSignUpClick = openSignUpScreen,
+                    onPictureClick = {
+                        bottomSheetContentType = BottomSheetContentType.Icons
+                        scope.launch {
+                            scaffoldState.bottomSheetState.expand()
+                        }
+                    },
+                    onNameClick = {
+                        bottomSheetContentType = BottomSheetContentType.NameChange
+                        scope.launch {
+                            scaffoldState.bottomSheetState.expand()
+                        }
+                    },
+                    onChangePasswordClick = openChangePasswordScreen,
+                    onDeleteAccountClick = {
+                        scope.launch {
+                            modalSheetState.show()
+                        }
                     }
-                },
-                onChangePasswordClick = openChangePasswordScreen
-            )
-        }
-    )
+                )
+            }
+        )
+    }
 }
 
 @Composable
@@ -100,7 +130,8 @@ private fun Account(
     onSignUpClick: OnClick = {},
     onPictureClick: OnClick = {},
     onNameClick: OnClick = {},
-    onChangePasswordClick: OnClick = {}
+    onChangePasswordClick: OnClick = {},
+    onDeleteAccountClick: OnClick = {}
 ) {
     Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
 
@@ -123,7 +154,8 @@ private fun Account(
             onSignOutClick = onSignOutClick,
             onSignUpClick = onSignUpClick,
             user = user,
-            onChangePasswordClick = onChangePasswordClick
+            onChangePasswordClick = onChangePasswordClick,
+            onDeleteAccountClick = onDeleteAccountClick
         )
     }
 }
@@ -194,7 +226,8 @@ private fun Bottom(
     user: User?,
     onSignOutClick: OnClick,
     onSignUpClick: OnClick,
-    onChangePasswordClick: OnClick
+    onChangePasswordClick: OnClick,
+    onDeleteAccountClick: OnClick
 ) {
     Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         if (user?.id?.userAccountType == UserAccountType.Anonymous)
@@ -214,7 +247,7 @@ private fun Bottom(
             Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.BottomCenter) {
                 Column {
                     SimpleButton(
-                        onClick = {/*TODO*/ },
+                        onClick = onDeleteAccountClick,
                         shape = CircleShape,
                         colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.dangerButton)
                     ) {

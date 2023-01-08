@@ -118,6 +118,24 @@ class RealTimeDatabaseRepository @Inject constructor(private val authenticationR
         }
     }
 
+    /**
+     * Removes all user data from DB.
+     */
+    fun removeAllData(onSuccess: () -> Unit, onFailure: () -> Unit) {
+        currentUserDatabaseRef().removeValue().addOnCompleteListener { task ->
+            when {
+                task.isSuccessful -> {
+                    dbDebugLog { "removeAllData: Success." }
+                    onSuccess()
+                }
+                else -> {
+                    dbDebugLog { "removeAllData: Failure." }
+                    onFailure()
+                }
+            }
+        }
+    }
+
     inner class Debug {
         fun mockAnimals() {
             val quizKey = saveQuiz(QuizModel.mockAnimals)

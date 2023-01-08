@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.ada.account.AccountScreen
+import com.ada.accountdelete.DeleteAccountScreen
 import com.ada.changepassword.ChangePasswordScreen
 import com.ada.exercise.ExerciseScreen
 import com.ada.quizcreate.CreateQuizScreen
@@ -26,6 +27,7 @@ fun NavigationHost(
     ) {
         quizListRoot(navController)
         welcomeRoot(navController)
+        accountRoot(navController)
     }
 }
 
@@ -55,7 +57,11 @@ fun NavGraphBuilder.quizListRoot(navController: NavController) {
         composable(Screen.Create.route) {
             CreateQuizScreen(closeScreen = { navController.popBackStack() })
         }
+    }
+}
 
+fun NavGraphBuilder.accountRoot(navController: NavController) {
+    navigation(startDestination = Screen.Account.route, route = Root.AccountRoot.route) {
         composable(Screen.Account.route) {
             AccountScreen(
                 onBackClick = { navController.popBackStack() },
@@ -69,11 +75,26 @@ fun NavGraphBuilder.quizListRoot(navController: NavController) {
                 },
                 openSignUpScreen = { navController.navigate(Screen.SignUp.route) },
                 openChangePasswordScreen = { navController.navigate(Screen.ChangePassword.route) },
+                openDeleteAccountScreen = { navController.navigate(Screen.DeleteAccount.route) }
             )
         }
 
         composable(Screen.ChangePassword.route) {
             ChangePasswordScreen(closeScreen = { navController.popBackStack() })
+        }
+
+        composable(Screen.DeleteAccount.route) {
+            DeleteAccountScreen(
+                closeScreen = { navController.popBackStack() },
+                openWelcomeScreen = {
+                    navController.navigate(Screen.Welcome.route) {
+                        launchSingleTop = true
+                        popUpTo(Screen.QuizList.route) {
+                            inclusive = true
+                        }
+                    }
+                }
+            )
         }
     }
 }
