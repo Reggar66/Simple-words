@@ -23,7 +23,6 @@ data class Quiz(
             mode = QuizMode.Classic
         )
 
-        // TODO: fix mock. Have to move it i.e. to domain
         fun mockQuizzes() = listOf(
             QuizModel.mockAnimals.toQuizOrEmpty(),
             QuizModel.mockFood.toQuizOrEmpty(),

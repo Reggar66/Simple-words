@@ -91,7 +91,12 @@ abstract class DomainModule {
     ): RemoveQuizWithWordsUseCase
 
     @Binds
-    abstract fun bindRemoveUserWithAllData(
-        removeUserWithAllData: RemoveUserWithAllDataImpl
-    ): RemoveUserWithAllData
+    abstract fun bindRemoveUserWithAllDataUseCase(
+        removeUserWithAllData: RemoveUserWithAllDataUseCaseImpl
+    ): RemoveUserWithAllDataUseCase
+
+    @Binds
+    abstract fun bindRemoveWordUseCase(
+        removeWordUseCase: RemoveWordUseCaseImpl
+    ): RemoveWordUseCase
 }

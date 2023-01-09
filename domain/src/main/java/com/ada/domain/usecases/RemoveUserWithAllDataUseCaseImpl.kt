@@ -6,10 +6,10 @@ import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-class RemoveUserWithAllDataImpl @Inject constructor(
+class RemoveUserWithAllDataUseCaseImpl @Inject constructor(
     private val realTimeDatabaseRepository: RealTimeDatabaseRepository,
     private val authenticationRepository: AuthenticationRepository
-) : RemoveUserWithAllData {
+) : RemoveUserWithAllDataUseCase {
     override suspend fun invoke(): Boolean = suspendCoroutine { continuation ->
         realTimeDatabaseRepository.removeAllData(
             onSuccess = {

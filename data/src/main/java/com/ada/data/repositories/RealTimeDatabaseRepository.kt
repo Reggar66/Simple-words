@@ -118,6 +118,21 @@ class RealTimeDatabaseRepository @Inject constructor(private val authenticationR
         }
     }
 
+    fun removeWord(quizId: Key, wordId: Key, onSuccess: () -> Unit, onFailure: () -> Unit) {
+        wordRef(quizId = quizId, wordId = wordId).removeValue().addOnCompleteListener { task ->
+            when {
+                task.isSuccessful -> {
+                    dbDebugLog { "removeWord: Success." }
+                    onSuccess()
+                }
+                else -> {
+                    dbDebugLog { "removeWord: Failure." }
+                    onFailure()
+                }
+            }
+        }
+    }
+
     /**
      * Removes all user data from DB.
      */

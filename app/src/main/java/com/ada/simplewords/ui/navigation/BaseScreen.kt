@@ -32,4 +32,8 @@ sealed class Screen(route: String) : BaseScreen(route) {
     object ChangePassword : Screen(route = "changePassword")
 
     object DeleteAccount : Screen(route = "deleteAccount")
+
+    object QuizEdit : Screen(route = "quizEdit/{${Exercise.Key.QUIZ_ID}}") {
+        fun createRoute(quizId: String) = "quizEdit/$quizId"
+    }
 }

@@ -36,7 +36,8 @@ import kotlinx.coroutines.launch
 fun QuizListScreen(
     openExercise: SimpleNavigationTakes<Quiz>,
     openCreate: SimpleNavigation,
-    openAccount: SimpleNavigation
+    openAccount: SimpleNavigation,
+    openQuizEdit: SimpleNavigationTakes<Quiz>
 ) {
     val viewModel = hiltViewModel<QuizListViewModel>()
     val state = viewModel.quizListState
@@ -80,7 +81,8 @@ fun QuizListScreen(
                 scope.launch {
                     modalSheetState.show()
                 }
-            }
+            },
+            onEditClick = openQuizEdit
         )
     }
 }
@@ -93,7 +95,8 @@ private fun QuizListImpl(
     onCreateClick: OnClick,
     user: User?,
     onAccountClick: OnClick,
-    onRemoveClick: OnClickTakes<Quiz>
+    onRemoveClick: OnClickTakes<Quiz>,
+    onEditClick: OnClickTakes<Quiz>
 ) {
     val scaffoldState = rememberBottomSheetScaffoldState()
     val scope = rememberCoroutineScope()
@@ -125,7 +128,8 @@ private fun QuizListImpl(
                 onCreateClick = onCreateClick,
                 user = user,
                 onAccountClick = onAccountClick,
-                onRemoveClick = onRemoveClick
+                onRemoveClick = onRemoveClick,
+                onEditClick = onEditClick
             )
         }
     )
@@ -138,7 +142,8 @@ private fun Quizzes(
     onCreateClick: OnClick,
     user: User?,
     onAccountClick: OnClick,
-    onRemoveClick: OnClickTakes<Quiz>
+    onRemoveClick: OnClickTakes<Quiz>,
+    onEditClick: OnClickTakes<Quiz>
 ) {
     Column {
         AccountBar(user = user, onPictureClick = { onAccountClick() })
@@ -152,7 +157,7 @@ private fun Quizzes(
                     SwipeMenu(
                         buttonSize = 80.dp,
                         onRemoveClick = { onRemoveClick(quizItem) },
-                        onEditClick = { /*TODO*/ }) {
+                        onEditClick = { onEditClick(quizItem) }) {
                         QuizItem(
                             modifier = Modifier
                                 .animateItemPlacement(),
@@ -185,7 +190,8 @@ private fun QuizListPreview() {
             onCreateClick = {},
             onAccountClick = {},
             user = UserModel.mock().toUserOrNull(),
-            onRemoveClick = {}
+            onRemoveClick = {},
+            onEditClick = {}
         )
     }
 }

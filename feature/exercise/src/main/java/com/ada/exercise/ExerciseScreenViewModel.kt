@@ -34,8 +34,6 @@ class ExerciseScreenViewModel @Inject constructor(
     )
         private set
 
-    // TODO: Modern mode exercise
-
     fun observeQuiz(quizId: Key) = viewModelScope.launch {
         observeQuizUseCase.invoke(quizId).collect { _quiz ->
             quiz = _quiz

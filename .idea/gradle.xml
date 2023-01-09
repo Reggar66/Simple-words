@@ -37,6 +37,7 @@
             <option value="$PROJECT_DIR$/feature/exercise" />
             <option value="$PROJECT_DIR$/feature/quizcreate" />
             <option value="$PROJECT_DIR$/feature/quizdetails" />
+            <option value="$PROJECT_DIR$/feature/quizedit" />
             <option value="$PROJECT_DIR$/feature/quizlist" />
             <option value="$PROJECT_DIR$/feature/signin" />
             <option value="$PROJECT_DIR$/feature/signup" />

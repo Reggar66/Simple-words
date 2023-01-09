@@ -66,6 +66,7 @@ dependencies {
     implementation(project(":feature:welcome"))
     implementation(project(":feature:changepassword"))
     implementation(project(":feature:deleteaccount"))
+    implementation(project(":feature:quizedit"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime)

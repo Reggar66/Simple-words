@@ -11,6 +11,7 @@ import com.ada.accountdelete.DeleteAccountScreen
 import com.ada.changepassword.ChangePasswordScreen
 import com.ada.exercise.ExerciseScreen
 import com.ada.quizcreate.CreateQuizScreen
+import com.ada.quizedit.QuizEditScreen
 import com.ada.quizlist.QuizListScreen
 import com.ada.signin.SignInScreen
 import com.ada.signup.SignUpScreen
@@ -44,6 +45,9 @@ fun NavGraphBuilder.quizListRoot(navController: NavController) {
                 },
                 openAccount = {
                     navController.navigate(route = Screen.Account.route)
+                },
+                openQuizEdit = { quiz ->
+                    navController.navigate(Screen.QuizEdit.createRoute(quiz.id))
                 }
             )
         }
@@ -56,6 +60,14 @@ fun NavGraphBuilder.quizListRoot(navController: NavController) {
 
         composable(Screen.Create.route) {
             CreateQuizScreen(closeScreen = { navController.popBackStack() })
+        }
+
+        composable(route = Screen.QuizEdit.route) { navBackStackEntry ->
+            val quizId = navBackStackEntry.arguments?.getString(Screen.Exercise.Key.QUIZ_ID)
+            QuizEditScreen(
+                quizId = quizId,
+                closeScreen = { navController.popBackStack() }
+            )
         }
     }
 }

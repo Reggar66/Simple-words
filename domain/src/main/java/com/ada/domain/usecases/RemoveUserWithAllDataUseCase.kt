@@ -1,5 +1,5 @@
 package com.ada.domain.usecases
 
-interface RemoveUserWithAllData {
+interface RemoveUserWithAllDataUseCase {
     suspend operator fun invoke(): Boolean
 }
