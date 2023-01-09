@@ -103,12 +103,35 @@ class QuizEditViewModel @Inject constructor(
             }
         }
     }
+
+    fun setWordToEdit(word: WordTranslation) {
+        _quizEditState.update {
+            it.copy(wordToEdit = word)
+        }
+    }
+
+    fun updateWordTranslation(newWordTranslation: WordTranslation) {
+        updateWordUseCase.invoke(wordTranslation = newWordTranslation)
+    }
+
+    fun updateQuiz(newQuiz: Quiz) {
+        updateQuizUseCase.invoke(quiz = newQuiz)
+    }
+
+    fun changeEditMode(editMode: EditMode) {
+        _quizEditState.update { it.copy(editMode = editMode) }
+    }
 }
 
 
 private fun MutableMap<Key, WordTranslation>.toWordList() = map { it.value }
 
-data class QuizEditState(val quiz: Quiz, val words: List<WordTranslation>) {
+data class QuizEditState(
+    val quiz: Quiz,
+    val words: List<WordTranslation>,
+    val wordToEdit: WordTranslation? = null,
+    val editMode: EditMode = EditMode.Quiz
+) {
     companion object {
         fun empty() = QuizEditState(
             quiz = Quiz.empty(),
@@ -122,4 +145,9 @@ data class QuizEditState(val quiz: Quiz, val words: List<WordTranslation>) {
             }
         )
     }
+}
+
+enum class EditMode {
+    Quiz,
+    Word
 }
