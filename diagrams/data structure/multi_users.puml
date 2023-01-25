@@ -14,11 +14,6 @@
     "quizWords": "user-3 quiz words",
     "quizzes": "user-3 quizzes",
     "user": "user-3 data"
-  },
-  "user-4": {
-    "quizWords": "user-4 quiz words",
-    "quizzes": "user-4 quizzes",
-    "user": "user-4 data"
   }
 }
 @endjson
