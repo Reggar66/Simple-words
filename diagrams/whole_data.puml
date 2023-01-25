@@ -1,0 +1,57 @@
+@startjson
+{
+  "U0Ejbwpbw6bZnmW9duGex2l7oLt1": {
+    "quizWords": {
+      "-NLXDY6XUoi5Pchvs5ZZ": {
+        "-NLXDY6XUoi5Pchvs5Z_": {
+          "id": "-NLXDY6XUoi5Pchvs5Z_",
+          "learned": true,
+          "quizItemId": "-NLXDY6XUoi5Pchvs5ZZ",
+          "repeat": 3,
+          "translation": "dog",
+          "word": "pies"
+        },
+        "-NLXDY6XUoi5Pchvs5Za": {
+          "id": "-NLXDY6XUoi5Pchvs5Za",
+          "learned": false,
+          "quizItemId": "-NLXDY6XUoi5Pchvs5ZZ",
+          "repeat": 3,
+          "translation": "cat",
+          "word": "kot"
+        },
+        "-NLXDY6YYa0Y5r_165CD": {
+          "id": "-NLXDY6YYa0Y5r_165CD",
+          "learned": false,
+          "quizItemId": "-NLXDY6XUoi5Pchvs5ZZ",
+          "repeat": 3,
+          "translation": "duck",
+          "word": "kaczka"
+        },
+        "-NLXDY6YYa0Y5r_165CE": {
+          "id": "-NLXDY6YYa0Y5r_165CE",
+          "learned": false,
+          "quizItemId": "-NLXDY6XUoi5Pchvs5ZZ",
+          "repeat": 3,
+          "translation": "cow",
+          "word": "krowa"
+        }
+      }
+    },
+    "quizzes": {
+      "-NLXDY6XUoi5Pchvs5ZZ": {
+        "completedWords": 1,
+        "id": "-NLXDY6XUoi5Pchvs5ZZ",
+        "mode": "Classic",
+        "name": "Animals",
+        "wordsNumber": 4
+      }
+    },
+    "user": {
+      "accountType": "Permanent",
+      "emojiIcon": "🐂",
+      "id": "U0Ejbwpbw6bZnmW9duGex2l7oLt1",
+      "name": "Nifty Ox"
+    }
+  }
+}
+@endjson

@@ -1,0 +1,29 @@
+@startuml
+'https://plantuml.com/object-diagram
+
+object "**User**" as User {
+    User specific data
+}
+object "**Quiz Words**" as QuizWords {
+    Words for quiz 1
+    Words for quiz 2
+    Words for quiz 3
+}
+object "**Quizzes**" as Quizzes {
+    Quiz 1
+    Quiz 2
+    Quiz 3
+}
+
+map "**User Data**" as UserData {
+    1 => Quiz Words
+    2 => Quizzes
+    3 => User
+}
+
+
+UserData::1 -down-> QuizWords
+UserData::2 -down-> Quizzes
+UserData::3 -down-> User
+
+@enduml

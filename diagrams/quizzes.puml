@@ -1,0 +1,15 @@
+@startjson
+{
+"quizzes": {
+      "-NLXDY6XUoi5Pchvs5ZZ": {
+        "completedWords": 1,
+        "id": "-NLXDY6XUoi5Pchvs5ZZ",
+        "mode": "Classic",
+        "name": "Animals",
+        "wordsNumber": 4
+      },
+      "-NLXDY6XUoi5Pchvs5ZZ2":"quiz data",
+      "-NLXDY6XUoi5Pchvs5ZZ3":"quiz data"
+    }
+}
+@endjson
