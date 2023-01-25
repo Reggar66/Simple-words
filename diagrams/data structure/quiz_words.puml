@@ -1,21 +1,20 @@
 @startjson
 {
 "quizWords": {
-      "-NLXDY6XUoi5Pchvs5ZZ": {
-        "-NLXDY6XUoi5Pchvs5Z_": {
+      "zxcasd": {
+        "qweasd": {
           "id": "-NLXDY6XUoi5Pchvs5Z_",
           "learned": true,
-          "quizItemId": "-NLXDY6XUoi5Pchvs5ZZ",
+          "quizItemId": "zxcasd",
           "repeat": 3,
           "translation": "dog",
           "word": "pies"
         },
-        "-NLXDY6XUoi5Pchvs5Za": "word data",
-        "-NLXDY6YYa0Y5r_165CD": "word data",
-        "-NLXDY6YYa0Y5r_165CE": "word data"
+        "qweasd2": "word data",
+        "qweasd3": "word data"
       },
-      "-NLXDY6XUoi5Pchvs5ZZ2": "quiz words",
-      "-NLXDY6XUoi5Pchvs5ZZ3": "quiz words"
+      "zxcasd2": "quiz words",
+      "zxcasd3": "quiz words"
     }
 }
 @endjson
