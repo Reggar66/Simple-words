@@ -1,0 +1,24 @@
+@startjson
+{
+  "user-1": {
+    "quizWords": "user-1 quiz words",
+    "quizzes": "user-1 quizzes",
+    "user": "user-1 data"
+  },
+  "user-2": {
+    "quizWords": "user-2 quiz words",
+    "quizzes": "user-2 quizzes",
+    "user": "user-2 data"
+  },
+  "user-3": {
+    "quizWords": "user-3 quiz words",
+    "quizzes": "user-3 quizzes",
+    "user": "user-3 data"
+  },
+  "user-4": {
+    "quizWords": "user-4 quiz words",
+    "quizzes": "user-4 quizzes",
+    "user": "user-4 data"
+  }
+}
+@endjson
