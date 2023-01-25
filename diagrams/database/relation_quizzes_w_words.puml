@@ -1,0 +1,53 @@
+@startuml
+'https://plantuml.com/object-diagram
+
+object "**User**" as User {
+    User specific data
+}
+
+object "**Quiz Words**" as QuizWords {
+    zxcasd
+    zxcasd2
+    zxcasd3
+}
+
+object "**Quizzes**" as Quizzes {
+    zxcasd
+    zxcasd2
+    zxcasd3
+}
+
+map "**User Data**" as UserData {
+    1 => Quiz Words
+    2 => Quizzes
+    3 => User
+}
+
+
+map "**Quiz**" as Quiz {
+    completedWords => 1
+    id => zxcasd2
+    mode => Classic
+    name => Animals
+    wordsNumber => 4
+}
+
+map "**Word**" as Word {
+    id => "qweasd",
+    learned => false,
+    quizItemId => zxcasd2
+    repeat => 3
+    translation => cow
+    word => krowa
+}
+
+UserData::1 -down-> QuizWords
+UserData::2 -down-> Quizzes
+UserData::3 -down> User
+
+Quizzes::zxcasd2 -left-> Quiz::id
+QuizWords::zxcasd2 -right-> Word::quizItemId
+
+QuizWords::zxcasd2 <.left.> Quizzes::zxcasd2
+
+@enduml
