@@ -1,0 +1,18 @@
+@startuml
+'https://plantuml.com/object-diagram
+
+skinparam componentStyle rectangle
+
+skinparam component {
+ArrowFontSize 10
+ArrowFontColor<<dottedArrow>> dimgray
+}
+
+[View] <-r- [ViewModel] : Data streams
+[View] .[#dimgray]r.> [ViewModel] <<dottedArrow>> : UI events
+[View] <.[#dimgray]r. [ViewModel] <<dottedArrow>> : Data changed events
+
+[Model] -left->  [ViewModel] : Read
+[Model] <-left- [ViewModel] : Write
+[Model] .[#dimgray]left.> [ViewModel] <<dottedArrow>> : Model changed events
+@enduml
