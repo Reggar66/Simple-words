@@ -1,0 +1,41 @@
+@startuml
+'https://plantuml.com/object-diagram
+
+skinparam componentStyle rectangle
+
+skinparam component {
+ArrowFontSize 10
+ArrowFontColor<<dottedArrow>> dimgray
+}
+
+component Presentation {
+    [View]
+    [ViewModel]
+}
+
+component Model {
+    component Data {
+        [Repository]
+        component "Data Source" as dataSource {
+            [Remote]
+            [Local]
+        }
+}
+
+component Domain {
+    [Use Cases] <-[Entities]
+}
+
+[View] <-r- [ViewModel] : Data streams
+[View] .[#dimgray]r.> [ViewModel] <<dottedArrow>> : UI events
+[View] <.[#dimgray]r. [ViewModel] <<dottedArrow>> : Data changed events
+
+[Use Cases] -u->  [ViewModel] : Read
+[Use Cases] <--u- [ViewModel] : Write
+[Use Cases] .[#dimgray]u.> [ViewModel] <<dottedArrow>> : Model changed events
+
+[Repository] -> dataSource
+[Repository] <- dataSource
+
+Data <-u-> Domain
+@enduml
