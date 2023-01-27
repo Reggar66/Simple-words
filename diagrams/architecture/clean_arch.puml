@@ -1,0 +1,30 @@
+@startuml
+'https://plantuml.com/object-diagram
+
+skinparam componentStyle rectangle
+
+
+package Frameworks {
+    [UI]
+    [Data Base]
+    [External devices]
+    [Web]
+
+    package Adapters {
+        [Controllers]
+        [Presenters]
+
+        package "Application Rules" {
+            [Use Cases]
+            package "Enterprise Rules" {
+                [Entities]
+            }
+        }
+    }
+}
+
+[Data Base] -[hidden]d-> [UI]
+[External devices] -[hidden]d-> [Web]
+[Presenters] -[hidden]d-> [Controllers]
+
+@enduml
