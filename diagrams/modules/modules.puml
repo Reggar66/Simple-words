@@ -1,0 +1,29 @@
+@startuml
+'https://plantuml.com/component-diagram
+
+
+[app]
+
+[feature]
+
+[domain]
+
+[data]
+
+[core]
+
+[app] -r-> [feature]
+
+[feature] -r-> [domain]
+
+[domain] -r-> [data]
+
+[app] -d-> [core]
+
+[feature] -d-> [core]
+
+[domain] -d-> [core]
+
+[data] -d-> [core]
+
+@enduml

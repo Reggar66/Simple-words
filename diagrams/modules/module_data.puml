@@ -1,0 +1,10 @@
+@startuml
+'https://plantuml.com/component-diagram
+
+
+component data {
+    rectangle Model
+    rectangle Repositories
+}
+
+@enduml

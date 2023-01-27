@@ -1,0 +1,18 @@
+@startuml
+'https://plantuml.com/component-diagram
+
+component feature {
+    [account]
+    [changepassword]
+    [deleteaccount]
+    [exercise]
+    [quizcreate]
+    [quizdetails]
+    [quizedit]
+    [quizlist]
+    [signin]
+    [signup]
+    [welcome]
+}
+
+@enduml

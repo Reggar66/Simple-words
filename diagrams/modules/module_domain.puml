@@ -1,0 +1,12 @@
+@startuml
+'https://plantuml.com/component-diagram
+
+
+component domain {
+    rectangle "Use Cases"
+    rectangle Mapper
+    rectangle Model
+    rectangle DI
+}
+
+@enduml
