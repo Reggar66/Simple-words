@@ -31,7 +31,7 @@ component Domain {
 [View] <.[#dimgray]r. [ViewModel] <<dottedArrow>> : Data changed events
 
 [Use Cases] -u->  [ViewModel] : Read
-[Use Cases] <--u- [ViewModel] : Write
+[Use Cases] <-u- [ViewModel] : Write
 [Use Cases] .[#dimgray]u.> [ViewModel] <<dottedArrow>> : Model changed events
 
 [Repository] -> dataSource
