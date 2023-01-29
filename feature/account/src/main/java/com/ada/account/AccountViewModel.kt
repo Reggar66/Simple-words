@@ -21,7 +21,7 @@ class AccountViewModel @Inject constructor(
     private val updateUserUseCase: UpdateUserUseCase
 ) :
     ViewModel() {
-    private val _user = MutableStateFlow<User?>(null)//observeCurrentUserUseCase.invoke()
+    private val _user = MutableStateFlow<User?>(null)
 
     val user get() = _user.asStateFlow()
 
