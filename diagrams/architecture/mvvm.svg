@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="168px" preserveAspectRatio="none" style="width:1171px;height:168px;background:#FFFFFF;" version="1.1" viewBox="0 0 1171 168" width="1171.2px" zoomAndPan="magnify"><defs/><g><!--MD5=[854490cbfb8eedee4432d73740ee6d75]
+entity View--><g id="elem_View"><rect fill="#F1F1F1" height="90.2625" rx="6" ry="6" style="stroke:#181818;stroke-width:1.2;" width="117.6" x="16.8" y="57.6"/><text fill="#000000" font-family="sans-serif" font-size="33.6" lengthAdjust="spacing" textLength="69.6" x="40.8" y="116.4797">View</text></g><!--MD5=[be3f0af44b58f4c360fd24f0c6af699e]
+entity ViewModel--><g id="elem_ViewModel"><rect fill="#F1F1F1" height="90.2625" rx="6" ry="6" style="stroke:#181818;stroke-width:1.2;" width="208.8" x="463.2" y="57.6"/><text fill="#000000" font-family="sans-serif" font-size="33.6" lengthAdjust="spacing" textLength="160.8" x="487.2" y="116.4797">ViewModel</text></g><!--MD5=[d98cb1d0eeb2b90d1ef52cfc0fcf4fea]
+entity Model--><g id="elem_Model"><rect fill="#F1F1F1" height="90.2625" rx="6" ry="6" style="stroke:#181818;stroke-width:1.2;" width="139.2" x="1018.8" y="57.6"/><text fill="#000000" font-family="sans-serif" font-size="33.6" lengthAdjust="spacing" textLength="91.2" x="1042.8" y="116.4797">Model</text></g><!--MD5=[73cfb69b8bcc06f09fde2e3051d4bf57]
+reverse link View to ViewModel--><g id="link_View_ViewModel"><path d="M146.616,126.84 C170.976,133.824 198.624,140.52 224.4,144 C289.944,152.832 307.416,150.84 373.2,144 C402.36,140.976 433.584,135.456 462.288,129.432 " fill="none" id="View-backto-ViewModel" style="stroke:#181818;stroke-width:2.4;"/><polygon fill="#181818" points="134.928,123.384,152.9637,138.6625,146.4453,126.7532,158.3545,120.2348,134.928,123.384" style="stroke:#181818;stroke-width:2.4;"/><text fill="#000000" font-family="sans-serif" font-size="24" lengthAdjust="spacing" textLength="144" x="226.8" y="137.7141">Data streams</text></g><!--MD5=[d2e55c5af17cc384a897828e9fd07dc3]
+link View to ViewModel--><g id="link_View_ViewModel"><path d="M135.216,74.712 C148.488,69.6 162.696,65.064 176.4,62.4 C283.2,41.616 313.392,47.664 421.2,62.4 C430.968,63.744 441,65.544 451.032,67.68 " fill="none" id="View-to-ViewModel" style="stroke:#696969;stroke-width:2.4;stroke-dasharray:7.0,7.0;"/><polygon fill="#696969" points="462.768,70.32,443.7649,56.2629,451.0538,67.7168,439.5998,75.0057,462.768,70.32" style="stroke:#696969;stroke-width:2.4;"/><text fill="#696969" font-family="sans-serif" font-size="24" lengthAdjust="spacing" textLength="103.2" x="247.2" y="41.7141">UI events</text></g><!--MD5=[73cfb69b8bcc06f09fde2e3051d4bf57]
+reverse link View to ViewModel--><g id="link_View_ViewModel"><path d="M147.792,103.2 C230.736,103.2 367.584,103.2 462.384,103.2 " fill="none" id="View-backto-ViewModel-1" style="stroke:#696969;stroke-width:2.4;stroke-dasharray:7.0,7.0;"/><polygon fill="#696969" points="134.952,103.2,156.552,112.8,146.952,103.2,156.552,93.6,134.952,103.2" style="stroke:#696969;stroke-width:2.4;"/><text fill="#696969" font-family="sans-serif" font-size="24" lengthAdjust="spacing" textLength="240" x="178.8" y="89.7141">Data changed events</text></g><!--MD5=[8e240b2e0f131d793bfee5633b18994f]
+reverse link ViewModel to Model--><g id="link_ViewModel_Model"><path d="M684.384,131.184 C742.416,141.864 813.696,150.144 877.8,144 C925.248,139.44 977.904,129.24 1018.68,120.192 " fill="none" id="ViewModel-backto-Model" style="stroke:#181818;stroke-width:2.4;"/><polygon fill="#181818" points="672.216,128.856,691.6129,142.3645,683.9998,131.1234,695.2409,123.5103,672.216,128.856" style="stroke:#181818;stroke-width:2.4;"/><text fill="#000000" font-family="sans-serif" font-size="24" lengthAdjust="spacing" textLength="60" x="815.4" y="137.7141">Read</text></g><!--MD5=[a81ed837367d1de05a63ce14a488975b]
+link ViewModel to Model--><g id="link_ViewModel_Model"><path d="M672,70.32 C685.8,67.056 699.864,64.272 713.4,62.4 C829.632,46.44 861.888,41.832 977.4,62.4 C986.784,64.08 996.408,66.48 1005.888,69.288 " fill="none" id="ViewModel-to-Model" style="stroke:#181818;stroke-width:2.4;"/><polygon fill="#181818" points="1017.768,73.056,1000.0839,57.3718,1006.3302,69.426,994.276,75.6723,1017.768,73.056" style="stroke:#181818;stroke-width:2.4;"/><text fill="#000000" font-family="sans-serif" font-size="24" lengthAdjust="spacing" textLength="57.6" x="816.6" y="41.7141">Write</text></g><!--MD5=[8e240b2e0f131d793bfee5633b18994f]
+reverse link ViewModel to Model--><g id="link_ViewModel_Model"><path d="M684.672,103.2 C787.392,103.2 933.36,103.2 1018.728,103.2 " fill="none" id="ViewModel-backto-Model-1" style="stroke:#696969;stroke-width:2.4;stroke-dasharray:7.0,7.0;"/><polygon fill="#696969" points="672.36,103.2,693.96,112.8,684.36,103.2,693.96,93.6,672.36,103.2" style="stroke:#696969;stroke-width:2.4;"/><text fill="#696969" font-family="sans-serif" font-size="24" lengthAdjust="spacing" textLength="259.2" x="715.8" y="89.7141">Model changed events</text></g><!--MD5=[7858334712ee4766bf0906bf0f0eca08]
+@startuml
+'https://plantuml.com/object-diagram
+
+skinparam componentStyle rectangle
+
+skinparam component {
+ArrowFontSize 10
+ArrowFontColor<<dottedArrow>> dimgray
+}
+
+[View] <-r- [ViewModel] : Data streams
+[View] .[#dimgray]r.> [ViewModel] <<dottedArrow>> : UI events
+[View] <.[#dimgray]r. [ViewModel] <<dottedArrow>> : Data changed events
+
+[Model] -left->  [ViewModel] : Read
+[Model] <-left- [ViewModel] : Write
+[Model] .[#dimgray]left.> [ViewModel] <<dottedArrow>> : Model changed events
+@enduml
+
+@startuml
+
+skinparam componentStyle rectangle
+
+skinparam component {
+ArrowFontSize 10
+ArrowFontColor<<dottedArrow>> dimgray
+}
+
+[View] <-r- [ViewModel] : Data streams
+[View] .[#dimgray]r.> [ViewModel] <<dottedArrow>> : UI events
+[View] <.[#dimgray]r. [ViewModel] <<dottedArrow>> : Data changed events
+
+[Model] -left->  [ViewModel] : Read
+[Model] <-left- [ViewModel] : Write
+[Model] .[#dimgray]left.> [ViewModel] <<dottedArrow>> : Model changed events
+@enduml
+
+PlantUML version 1.2022.12(Sun Oct 23 20:12:26 CEST 2022)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: Cp1250
+Language: en
+Country: US
+--></g></svg>

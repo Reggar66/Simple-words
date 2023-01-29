@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="168px" preserveAspectRatio="none" style="width:422px;height:168px;background:#FFFFFF;" version="1.1" viewBox="0 0 422 168" width="422px" zoomAndPan="magnify"><defs/><g><!--MD5=[4541fb81c80c07473fe4b07432ef0971]
+entity app--><g id="elem_app"><rect fill="#F1F1F1" height="47.6094" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="64" x="7" y="7"/><rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="51" y="12"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="49" y="14"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="49" y="18"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="24" x="22" y="41.5332">app</text></g><!--MD5=[4ccc8985c802062957da43c6bff3e92c]
+entity feature--><g id="elem_feature"><rect fill="#F1F1F1" height="47.6094" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="85" x="106.5" y="7"/><rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="171.5" y="12"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="169.5" y="14"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="169.5" y="18"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="45" x="121.5" y="41.5332">feature</text></g><!--MD5=[8890788e37b11dd3053f547e2b5ce265]
+entity domain--><g id="elem_domain"><rect fill="#F1F1F1" height="47.6094" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="86" x="227" y="7"/><rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="293" y="12"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="291" y="14"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="291" y="18"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="46" x="242" y="41.5332">domain</text></g><!--MD5=[703ea5a149c5871c74522bf38bdfe548]
+entity data--><g id="elem_data"><rect fill="#F1F1F1" height="47.6094" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="68" x="348" y="7"/><rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="396" y="12"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="394" y="14"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="394" y="18"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="28" x="363" y="41.5332">data</text></g><!--MD5=[0d482ad21d5c7c11aa976e45da5ecfe6]
+entity core--><g id="elem_core"><rect fill="#F1F1F1" height="47.6094" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="68" x="175" y="115"/><rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="223" y="120"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="221" y="122"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="221" y="126"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="28" x="190" y="149.5332">core</text></g><!--MD5=[95f3a69106be66c67c21ea80d3095497]
+link app to feature--><g id="link_app_feature"><path d="M71.23,31 C81.23,31 91.23,31 101.24,31 " fill="none" id="app-to-feature" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="106.47,31,97.47,27,101.47,31,97.47,35,106.47,31" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[9aae441bdd26d87b68738aab7f6c7f5d]
+link feature to domain--><g id="link_feature_domain"><path d="M191.54,31 C201.54,31 211.55,31 221.55,31 " fill="none" id="feature-to-domain" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="226.79,31,217.79,27,221.79,31,217.79,35,226.79,31" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[29a9dfd8f9ad9788c6ffa05d34122601]
+link domain to data--><g id="link_domain_data"><path d="M313.31,31 C323.14,31 332.96,31 342.79,31 " fill="none" id="domain-to-data" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="347.92,31,338.92,27,342.92,31,338.92,35,347.92,31" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[3ca5629ec7114117f93847c258b7b725]
+link app to core--><g id="link_app_core"><path d="M71.38,52.19 C99.66,69.82 140.75,95.44 170.67,114.1 " fill="none" id="app-to-core" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="175,116.8,169.4757,108.6464,170.756,114.1564,165.2459,115.4368,175,116.8" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[dfc9661183ed1d07543a805ecfbd91da]
+link feature to core--><g id="link_feature_core"><path d="M162.02,55 C171.16,71.14 183.42,92.82 193.13,109.97 " fill="none" id="feature-to-core" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="195.8,114.68,194.8633,104.8758,193.3439,110.3248,187.8949,108.8055,195.8,114.68" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[d6644c7a2fd647196fb1004878150c76]
+link domain to core--><g id="link_domain_core"><path d="M256.76,55 C247.48,71.14 235,92.82 225.13,109.97 " fill="none" id="domain-to-core" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="222.42,114.68,230.385,108.887,224.9207,110.3503,223.4574,104.8859,222.42,114.68" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[299f53acfc57a5287ba8cb1aea40da8a]
+link data to core--><g id="link_data_core"><path d="M347.82,52.94 C318.91,70.65 277.52,96.02 247.46,114.44 " fill="none" id="data-to-core" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="243.11,117.1,252.8725,115.7989,247.3707,114.4835,248.6861,108.9817,243.11,117.1" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[cd21e74dcc02e1f0a42918c6a5114b7b]
+@startuml
+'https://plantuml.com/component-diagram
+
+
+[app]
+
+[feature]
+
+[domain]
+
+[data]
+
+[core]
+
+[app] -r-> [feature]
+
+[feature] -r-> [domain]
+
+[domain] -r-> [data]
+
+[app] -d-> [core]
+
+[feature] -d-> [core]
+
+[domain] -d-> [core]
+
+[data] -d-> [core]
+
+@enduml
+
+@startuml
+
+
+[app]
+
+[feature]
+
+[domain]
+
+[data]
+
+[core]
+
+[app] -r-> [feature]
+
+[feature] -r-> [domain]
+
+[domain] -r-> [data]
+
+[app] -d-> [core]
+
+[feature] -d-> [core]
+
+[domain] -d-> [core]
+
+[data] -d-> [core]
+
+@enduml
+
+PlantUML version 1.2022.12(Sun Oct 23 20:12:26 CEST 2022)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: Cp1250
+Language: en
+Country: US
+--></g></svg>

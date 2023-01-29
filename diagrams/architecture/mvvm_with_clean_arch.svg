@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="594px" preserveAspectRatio="none" style="width:628px;height:594px;background:#FFFFFF;" version="1.1" viewBox="0 0 628 594" width="628px" zoomAndPan="magnify"><defs/><g><!--MD5=[8fd473fd151a2794da4f2c8684676405]
+cluster Presentation--><g id="cluster_Presentation"><rect fill="none" height="90" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1.0;" width="306" x="7" y="7"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="90" x="115" y="23.5332">Presentation</text></g><!--MD5=[15636c1ca4a123c16a2a1a8e90aca7a9]
+cluster Model--><g id="cluster_Model"><rect fill="none" height="445" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1.0;" width="488" x="134" y="143"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="44" x="356" y="159.5332">Model</text></g><!--MD5=[f21b1f164e99c6b37934f23ad048ad54]
+cluster Data--><g id="cluster_Data"><rect fill="none" height="206" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1.0;" width="424" x="166" y="350"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="31" x="362.5" y="366.5332">Data</text></g><!--MD5=[1d7913945181ae65a4d1585d9b6f6dc6]
+cluster dataSource--><g id="cluster_dataSource"><rect fill="none" height="106" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1.0;" width="226" x="324" y="410"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="85" x="394.5" y="426.5332">Data Source</text></g><!--MD5=[121a8bf1197281ab89ed693fab589f94]
+cluster Domain--><g id="cluster_Domain"><rect fill="none" height="106" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1.0;" width="256" x="166" y="195"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="52" x="268" y="211.5332">Domain</text></g><!--MD5=[854490cbfb8eedee4432d73740ee6d75]
+entity View--><g id="elem_View"><rect fill="#F1F1F1" height="37.6094" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="49" x="23.5" y="43"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="29" x="33.5" y="67.5332">View</text></g><!--MD5=[be3f0af44b58f4c360fd24f0c6af699e]
+entity ViewModel--><g id="elem_ViewModel"><rect fill="#F1F1F1" height="37.6094" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="87" x="209.5" y="43"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="67" x="219.5" y="67.5332">ViewModel</text></g><!--MD5=[4e260e4024c27e03c495c33059d2b5ff]
+entity Repository--><g id="elem_Repository"><rect fill="#F1F1F1" height="37.6094" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="88" x="209" y="454"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="68" x="219" y="478.5332">Repository</text></g><!--MD5=[7425065d5ecaf9f84cf5f7ac0239ef1c]
+entity Remote--><g id="elem_Remote"><rect fill="#F1F1F1" height="37.6094" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="69" x="456.5" y="454"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="49" x="466.5" y="478.5332">Remote</text></g><!--MD5=[6e068d565667c9e269ccd7d3db7b5a95]
+entity Local--><g id="elem_Local"><rect fill="#F1F1F1" height="37.6094" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="54" x="367" y="454"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="34" x="377" y="478.5332">Local</text></g><!--MD5=[ae94c1d0aa37d34b3e3f4c726d353a0a]
+entity Use Cases--><g id="elem_Use Cases"><rect fill="#F1F1F1" height="37.6094" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="88" x="209" y="239"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="68" x="219" y="263.5332">Use Cases</text></g><!--MD5=[c50b3378b09b932373c7c3bb734d8dba]
+entity Entities--><g id="elem_Entities"><rect fill="#F1F1F1" height="37.6094" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="66" x="332" y="239"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="46" x="342" y="263.5332">Entities</text></g><!--MD5=[35d1b25aa2e7df162fce8158f9462de5]
+reverse link Use Cases to Entities--><g id="link_Use Cases_Entities"><path d="M302.34,258 C312.19,258 322.04,258 331.89,258 " fill="none" id="Use Cases-backto-Entities" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="297.19,258,306.19,262,302.19,258,306.19,254,297.19,258" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[73cfb69b8bcc06f09fde2e3051d4bf57]
+reverse link View to ViewModel--><g id="link_View_ViewModel"><path d="M77.59,71.85 C87.74,74.76 99.26,77.55 110,79 C137.31,82.68 144.59,81.85 172,79 C184.15,77.74 197.16,75.44 209.12,72.93 " fill="none" id="View-backto-ViewModel" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="72.72,70.41,80.2349,76.776,77.5189,71.8139,82.4811,69.0978,72.72,70.41" style="stroke:#181818;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="60" x="111" y="76.3809">Data streams</text></g><!--MD5=[d2e55c5af17cc384a897828e9fd07dc3]
+link View to ViewModel--><g id="link_View_ViewModel"><path d="M72.84,50.13 C78.37,48 84.29,46.11 90,45 C134.5,36.34 147.08,38.86 192,45 C196.07,45.56 200.25,46.31 204.43,47.2 " fill="none" id="View-to-ViewModel" style="stroke:#696969;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#696969" points="209.32,48.29,201.402,42.4329,204.4391,47.2053,199.6666,50.2424,209.32,48.29" style="stroke:#696969;stroke-width:1.0;"/><text fill="#696969" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="43" x="119.5" y="36.3809">UI events</text></g><!--MD5=[73cfb69b8bcc06f09fde2e3051d4bf57]
+reverse link View to ViewModel--><g id="link_View_ViewModel"><path d="M78.08,62 C112.64,62 169.66,62 209.16,62 " fill="none" id="View-backto-ViewModel-1" style="stroke:#696969;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#696969" points="72.73,62,81.73,66,77.73,62,81.73,58,72.73,62" style="stroke:#696969;stroke-width:1.0;"/><text fill="#696969" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="100" x="91" y="56.3809">Data changed events</text></g><!--MD5=[1378b67fb6130ae802174de29bbe3a6a]
+reverse link ViewModel to Use Cases--><g id="link_ViewModel_Use Cases"><path d="M205.97,83.78 C186.78,95.29 171.49,110.57 183,127 C188.97,135.52 197.55,127.74 205,135 C234.35,163.59 246.15,212.29 250.58,238.69 " fill="none" id="ViewModel-backto-Use Cases" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="210.38,81.24,200.5859,82.2774,206.0503,83.7407,204.587,89.205,210.38,81.24" style="stroke:#181818;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="25" x="184" y="124.3809">Read</text></g><!--MD5=[59fd38f5664e188b2b39f7e30622a2d7]
+link ViewModel to Use Cases--><g id="link_ViewModel_Use Cases"><path d="M251.66,81.04 C251.01,90.54 250.32,102.4 250,113 C248.72,155.59 250.48,205.28 251.79,233.75 " fill="none" id="ViewModel-to-Use Cases" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="252.03,238.81,255.5887,229.6265,251.7874,233.8159,247.5981,230.0147,252.03,238.81" style="stroke:#181818;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="24" x="251" y="124.3809">Write</text></g><!--MD5=[1378b67fb6130ae802174de29bbe3a6a]
+reverse link ViewModel to Use Cases--><g id="link_ViewModel_Use Cases"><path d="M268.23,85.53 C272.97,93.8 277.59,103.48 280,113 C291.28,157.63 273.11,211.14 261.5,238.66 " fill="none" id="ViewModel-backto-Use Cases-1" style="stroke:#696969;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#696969" points="265.59,81.08,266.7522,90.86,268.1457,85.3775,273.6282,86.771,265.59,81.08" style="stroke:#696969;stroke-width:1.0;"/><text fill="#696969" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="108" x="283" y="124.3809">Model changed events</text></g><!--MD5=[d2329c9d7f7d129be10db0285ab88da4]
+link Repository to dataSource--><g id="link_Repository_dataSource"><path d="M297.13,487.05 C302.85,486.57 308.57,485.19 314.2913,482.9125 C317.1519,481.7738 320.0128,480.4106 322.8742,478.8234 C323.2319,478.625 323.5896,478.4231 323.9473,478.2177 " fill="none" id="Repository-to-dataSource" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="323.9473,478.2177,314.1506,479.2307,319.6113,480.7076,318.1344,486.1683,323.9473,478.2177" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[2a6256cdb4c402525b0ad1f74f0467ef]
+reverse link Repository to dataSource--><g id="link_Repository_dataSource"><path d="M302.22,459.61 C307.095,460.475 311.9675,461.9925 316.84,464.16 C318.0581,464.7019 319.2763,465.2844 320.4944,465.9075 C321.1035,466.219 321.7126,466.5407 322.3217,466.8725 C322.6262,467.0384 322.9308,467.2069 323.2354,467.3779 C323.3876,467.4634 323.5399,467.5495 323.6922,467.6363 C323.7684,467.6796 323.8445,467.7232 323.9206,467.7669 " fill="none" id="Repository-backto-dataSource" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="297.13,458.95,305.5408,464.0742,302.0885,459.593,306.5697,456.1407,297.13,458.95" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[df50870e182983cf8f0524073fbad5fd]
+link Domain to Data--><g id="link_Domain_Data"><path d="M174,301.8625 C174,304.5086 174,307.2375 174,310.0372 C174,315.6367 174,321.5199 174,327.5922 C174,333.6645 174,339.9258 174,346.2815 C174,347.076 174,347.872 174,348.6692 C174,349.0678 174,349.4668 174,349.866 " fill="none" id="Domain-Data" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="174,349.866,178,340.866,174,344.866,170,340.866,174,349.866" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="174,301.8625,170,310.8625,174,306.8625,178,310.8625,174,301.8625" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[9ea15cb8378849892549f9a5da9d6c5d]
+@startuml
+'https://plantuml.com/object-diagram
+
+skinparam componentStyle rectangle
+
+skinparam component {
+ArrowFontSize 10
+ArrowFontColor<<dottedArrow>> dimgray
+}
+
+component Presentation {
+    [View]
+    [ViewModel]
+}
+
+component Model {
+    component Data {
+        [Repository]
+        component "Data Source" as dataSource {
+            [Remote]
+            [Local]
+        }
+}
+
+component Domain {
+    [Use Cases] <-[Entities]
+}
+
+[View] <-r- [ViewModel] : Data streams
+[View] .[#dimgray]r.> [ViewModel] <<dottedArrow>> : UI events
+[View] <.[#dimgray]r. [ViewModel] <<dottedArrow>> : Data changed events
+
+[Use Cases] -u->  [ViewModel] : Read
+[Use Cases] <-u- [ViewModel] : Write
+[Use Cases] .[#dimgray]u.> [ViewModel] <<dottedArrow>> : Model changed events
+
+[Repository] -> dataSource
+[Repository] <- dataSource
+
+Data <-u-> Domain
+@enduml
+
+@startuml
+
+skinparam componentStyle rectangle
+
+skinparam component {
+ArrowFontSize 10
+ArrowFontColor<<dottedArrow>> dimgray
+}
+
+component Presentation {
+    [View]
+    [ViewModel]
+}
+
+component Model {
+    component Data {
+        [Repository]
+        component "Data Source" as dataSource {
+            [Remote]
+            [Local]
+        }
+}
+
+component Domain {
+    [Use Cases] <-[Entities]
+}
+
+[View] <-r- [ViewModel] : Data streams
+[View] .[#dimgray]r.> [ViewModel] <<dottedArrow>> : UI events
+[View] <.[#dimgray]r. [ViewModel] <<dottedArrow>> : Data changed events
+
+[Use Cases] -u->  [ViewModel] : Read
+[Use Cases] <-u- [ViewModel] : Write
+[Use Cases] .[#dimgray]u.> [ViewModel] <<dottedArrow>> : Model changed events
+
+[Repository] -> dataSource
+[Repository] <- dataSource
+
+Data <-u-> Domain
+@enduml
+
+PlantUML version 1.2022.12(Sun Oct 23 20:12:26 CEST 2022)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: Cp1250
+Language: en
+Country: US
+--></g></svg>

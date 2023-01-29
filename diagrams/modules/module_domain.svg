@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="201px" preserveAspectRatio="none" style="width:236px;height:201px;background:#FFFFFF;" version="1.1" viewBox="0 0 236 201" width="236px" zoomAndPan="magnify"><defs/><g><!--MD5=[27f772719433d509ddbc20ff768eba08]
+cluster domain--><g id="cluster_domain"><rect fill="none" height="188" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1.0;" width="223" x="7" y="7"/><rect fill="none" height="10" style="stroke:#181818;stroke-width:1.0;" width="15" x="210" y="12"/><rect fill="none" height="2" style="stroke:#181818;stroke-width:1.0;" width="4" x="208" y="14"/><rect fill="none" height="2" style="stroke:#181818;stroke-width:1.0;" width="4" x="208" y="18"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="51" x="93" y="34.5332">domain</text></g><!--MD5=[ae94c1d0aa37d34b3e3f4c726d353a0a]
+entity Use Cases--><g id="elem_Use Cases"><rect fill="#F1F1F1" height="37.6094" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="88" x="23" y="43"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="68" x="33" y="67.5332">Use Cases</text></g><!--MD5=[11863beae7a45a7457fff86200c5b650]
+entity Mapper--><g id="elem_Mapper"><rect fill="#F1F1F1" height="37.6094" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="68" x="146" y="43"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="48" x="156" y="67.5332">Mapper</text></g><!--MD5=[d98cb1d0eeb2b90d1ef52cfc0fcf4fea]
+entity Model--><g id="elem_Model"><rect fill="#F1F1F1" height="37.6094" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="58" x="38" y="141"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="38" x="48" y="165.5332">Model</text></g><!--MD5=[9a9f7a7118ae17816e018c2bf6f0b153]
+entity DI--><g id="elem_DI"><rect fill="#F1F1F1" height="37.6094" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="33" x="131.5" y="141"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="13" x="141.5" y="165.5332">DI</text></g><!--MD5=[672629d91639f4a573039ccaa0a41814]
+@startuml
+'https://plantuml.com/component-diagram
+
+
+component domain {
+    rectangle "Use Cases"
+    rectangle Mapper
+    rectangle Model
+    rectangle DI
+}
+
+@enduml
+
+@startuml
+
+
+component domain {
+    rectangle "Use Cases"
+    rectangle Mapper
+    rectangle Model
+    rectangle DI
+}
+
+@enduml
+
+PlantUML version 1.2022.12(Sun Oct 23 20:12:26 CEST 2022)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: Cp1250
+Language: en
+Country: US
+--></g></svg>
