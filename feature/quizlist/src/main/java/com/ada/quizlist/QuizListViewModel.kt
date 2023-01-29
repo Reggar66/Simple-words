@@ -18,10 +18,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class QuizListViewModel @Inject constructor(
-    val realTimeDatabaseRepository: RealTimeDatabaseRepository,
     private val getQuizzesUseCase: GetQuizzesUseCase,
-    private val observeCurrentUserUseCase: ObserveCurrentUserUseCase,
-    private val signOutUseCase: SignOutUseCase,
+    observeCurrentUserUseCase: ObserveCurrentUserUseCase,
     private val removeQuizWithWordsUseCase: RemoveQuizWithWordsUseCase
 ) : ViewModel() {
 
@@ -33,12 +31,9 @@ class QuizListViewModel @Inject constructor(
 
     val user = observeCurrentUserUseCase.invoke()
 
-
     init {
         fetchQuizzes()
     }
-
-    fun signOut() = signOutUseCase.invoke()
 
     private fun fetchQuizzes() = viewModelScope.launch {
         debugLog { "fetchQuizzes: launched." }

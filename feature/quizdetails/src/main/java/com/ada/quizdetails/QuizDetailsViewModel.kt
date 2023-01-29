@@ -76,7 +76,8 @@ class QuizDetailsViewModel @Inject constructor(
                             it.copy(words = _words.toList().sortedByWord())
                         }
                     }
-                    Event.Moved -> {/* TODO */
+                    Event.Moved -> {
+                        // not used
                     }
                 }
             }
